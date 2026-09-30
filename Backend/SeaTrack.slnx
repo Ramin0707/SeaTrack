@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Application/Application.csproj" />
+  <Project Path="Domain/Domain.csproj" />
+  <Project Path="Infrastructur/Infrastructur.csproj" />
+  <Project Path="SeaTrack/SeaTrack.csproj" />
+</Solution>
