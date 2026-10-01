@@ -1,17 +1,54 @@
 using Application.Features.Identity.Register.Interfaces;
 using Infrastructur.Data;
 using Infrastructur.Identity;
+using Infrastructur.Identity.Options;
 using Infrastructur.Identity.Register;
 using Infrastructur.Identity.Seeding;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Application.Features.Identity.Login.Interfaces;
+using Infrastructur.Identity.Login;
+using Application.Features.Identity.Tokens.Interfaces;
+using Infrastructur.Identity.Services;
+using Application.Features.Identity.GetMe.Interfaces;
+using Infrastructur.Identity.GetMe;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Paste your access token without the Bearer prefix."
+    });
 
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
+// Database
 var connectionString = builder.Configuration
     .GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException(
@@ -20,6 +57,7 @@ var connectionString = builder.Configuration
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+// Identity
 builder.Services
     .AddIdentityCore<ApplicationUser>(options =>
     {
@@ -34,10 +72,82 @@ builder.Services
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
 
-builder.Services.AddScoped<IRegisterHandler, RegisterHandler>();
-builder.Services.AddScoped<IdentitySeeder>();
+// JWT settings
+var jwtSection = builder.Configuration
+    .GetSection(JwtOptions.SectionName);
+
+var jwtOptions = jwtSection.Get<JwtOptions>()
+    ?? throw new InvalidOperationException(
+        "JWT settings were not found.");
+
+if (string.IsNullOrWhiteSpace(jwtOptions.Issuer)
+    || string.IsNullOrWhiteSpace(jwtOptions.Audience)
+    || string.IsNullOrWhiteSpace(jwtOptions.SecretKey)
+    || jwtOptions.ExpirationMinutes <= 0)
+{
+    throw new InvalidOperationException(
+        "JWT settings are incomplete or invalid.");
+}
+
+byte[] keyBytes;
+
+try
+{
+    keyBytes = Convert.FromBase64String(jwtOptions.SecretKey);
+}
+catch (FormatException)
+{
+    throw new InvalidOperationException(
+        "JWT SecretKey must be a valid Base64 string.");
+}
+
+if (keyBytes.Length < 32)
+{
+    throw new InvalidOperationException(
+        "JWT SecretKey must contain at least 32 random bytes.");
+}
+
+builder.Services.Configure<JwtOptions>(jwtSection);
+
+// Authentication
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.MapInboundClaims = false;
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = jwtOptions.Issuer,
+
+            ValidateAudience = true,
+            ValidAudience = jwtOptions.Audience,
+
+            ValidateLifetime = true,
+            RequireExpirationTime = true,
+
+            ValidateIssuerSigningKey = true,
+            RequireSignedTokens = true,
+            IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+
+            ValidAlgorithms = new[] { SecurityAlgorithms.HmacSha256 },
+
+            NameClaimType = "sub",
+            RoleClaimType = "role",
+
+            ClockSkew = TimeSpan.FromSeconds(30)
+        };
+    });
 
 builder.Services.AddAuthorization();
+
+// Handlers and seeding
+builder.Services.AddScoped<IRegisterHandler, RegisterHandler>();
+builder.Services.AddScoped<IdentitySeeder>();
+builder.Services.AddScoped<ILoginHandler, LoginHandler>();
+builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddScoped<IGetMeHandler, GetMeHandler>();
 
 var app = builder.Build();
 
@@ -56,6 +166,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
