@@ -1,20 +1,18 @@
-﻿using Infrastructur.Identity;
+﻿using Domain.Entities;
+using Infrastructur.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructur.Data
 {
-    public class AppDbContext:IdentityDbContext<ApplicationUser>
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
-           : base(options)
+            : base(options)
         {
         }
+
+        public DbSet<ShippingOrder> ShippingOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -28,7 +26,16 @@ namespace Infrastructur.Data
                     .HasMaxLength(200)
                     .IsRequired();
             });
+
+            builder.Entity<ShippingOrder>(entity =>
+            {
+                entity.ToTable("ShippingOrders", "shipping");
+                entity.Property(order => order.Weight)
+                 .HasPrecision(18, 2);
+
+                entity.Property(order => order.Volume)
+                    .HasPrecision(18, 2);
+            });
         }
     }
 }
-
