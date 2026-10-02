@@ -1,19 +1,25 @@
+using Application.Features.Identity.GetMe.Interfaces;
+using Application.Features.Identity.Login.Interfaces;
 using Application.Features.Identity.Register.Interfaces;
+using Application.Features.Identity.Tokens.Interfaces;
+using Application.Features.Shipping.GetById.Interfaces;
+using Application.Features.ShippingOrders.Create.Interfaces;
+using Application.Features.ShippingOrders.GetMy.Interfaces;
 using Infrastructur.Data;
+using Infrastructur.Features.Shipping.GetById;
+using Infrastructur.Features.ShippingOrders.Create;
+using Infrastructur.Features.ShippingOrders.GetMy;
 using Infrastructur.Identity;
+using Infrastructur.Identity.GetMe;
+using Infrastructur.Identity.Login;
 using Infrastructur.Identity.Options;
 using Infrastructur.Identity.Register;
 using Infrastructur.Identity.Seeding;
+using Infrastructur.Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Application.Features.Identity.Login.Interfaces;
-using Infrastructur.Identity.Login;
-using Application.Features.Identity.Tokens.Interfaces;
-using Infrastructur.Identity.Services;
-using Application.Features.Identity.GetMe.Interfaces;
-using Infrastructur.Identity.GetMe;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -148,6 +154,9 @@ builder.Services.AddScoped<IdentitySeeder>();
 builder.Services.AddScoped<ILoginHandler, LoginHandler>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IGetMeHandler, GetMeHandler>();
+builder.Services.AddScoped<ICreateShippingOrderHandler, CreateShippingOrderHandler>();
+builder.Services.AddScoped<IGetMyShippingOrdersHandler, GetMyShippingOrdersHandler>();
+builder.Services.AddScoped<IGetShippingOrderByIdHandler, GetShippingOrderByIdHandler>();
 
 var app = builder.Build();
 
