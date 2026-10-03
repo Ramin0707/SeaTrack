@@ -8,6 +8,8 @@ using Application.Features.Shipping.Customer.GetById.Interfaces;
 using Application.Features.Shipping.Customer.GetMy.Interfaces;
 using Application.Features.Shipping.Customer.Update.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.GetAll.Interfaces;
+using LogisticsAdminGetShippingOrderByIdHandlerInterface = Application.Features.Shipping.LogisticsAdmin.GetById.Interfaces.IGetShippingOrderByIdHandler;
+using Application.Features.Shipping.LogisticsAdmin.Quote.Create.Interfaces;
 using Infrastructur.Data;
 using Infrastructur.Features.ShippingOrders.Customer.Cancel;
 using Infrastructur.Features.ShippingOrders.Customer.Create;
@@ -15,6 +17,8 @@ using Infrastructur.Features.ShippingOrders.Customer.GetById;
 using Infrastructur.Features.ShippingOrders.Customer.GetMy;
 using Infrastructur.Features.ShippingOrders.Customer.Update;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.GetAll;
+using LogisticsAdminGetShippingOrderByIdHandler = Infrastructur.Features.ShippingOrders.LogisticsAdmin.GetById.GetShippingOrderByIdHandler;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Quote.Create;
 using Infrastructur.Identity;
 using Infrastructur.Identity.GetMe;
 using Infrastructur.Identity.Login;
@@ -34,6 +38,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
+    options.CustomSchemaIds(type => type.FullName);
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -166,7 +171,8 @@ builder.Services.AddScoped<IGetShippingOrderByIdHandler, GetShippingOrderByIdHan
 builder.Services.AddScoped<IUpdateShippingOrderHandler, UpdateShippingOrderHandler>();
 builder.Services.AddScoped<ICancelShippingOrderHandler, CancelShippingOrderHandler>();
 builder.Services.AddScoped<IGetAllShippingOrdersHandler, GetAllShippingOrdersHandler>();
-builder.Services.AddScoped<IGetShippingOrderByIdHandler,GetShippingOrderByIdHandler>();
+builder.Services.AddScoped<LogisticsAdminGetShippingOrderByIdHandlerInterface, LogisticsAdminGetShippingOrderByIdHandler>();
+builder.Services.AddScoped<ICreateQuoteHandler, CreateQuoteHandler>();
 
 var app = builder.Build();
 
