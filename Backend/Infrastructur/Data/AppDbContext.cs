@@ -14,6 +14,8 @@ namespace Infrastructur.Data
 
         public DbSet<ShippingOrder> ShippingOrders { get; set; }
 
+        public DbSet<Quote> Quotes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -30,11 +32,32 @@ namespace Infrastructur.Data
             builder.Entity<ShippingOrder>(entity =>
             {
                 entity.ToTable("ShippingOrders", "shipping");
+
                 entity.Property(order => order.Weight)
-                 .HasPrecision(18, 2);
+                    .HasPrecision(18, 2);
 
                 entity.Property(order => order.Volume)
                     .HasPrecision(18, 2);
+            });
+
+            builder.Entity<Quote>(entity =>
+            {
+                entity.ToTable("Quotes", "shipping");
+
+                entity.Property(quote => quote.Price)
+                    .HasPrecision(18, 2);
+
+                entity.Property(quote => quote.Currency)
+                    .HasMaxLength(3)
+                    .IsRequired();
+
+                entity.Property(quote => quote.Notes)
+                    .HasMaxLength(1000);
+
+                entity.HasOne(quote => quote.ShippingOrder)
+                    .WithOne()
+                    .HasForeignKey<Quote>(quote => quote.ShippingOrderId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }
