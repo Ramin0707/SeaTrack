@@ -6,18 +6,18 @@ using Application.Features.Shipping.Customer.Cancel.Interfaces;
 using Application.Features.Shipping.Customer.Create.Interfaces;
 using Application.Features.Shipping.Customer.GetById.Interfaces;
 using Application.Features.Shipping.Customer.GetMy.Interfaces;
+using Application.Features.Shipping.Customer.Quote.GetByShippingOrderId.Interfaces;
 using Application.Features.Shipping.Customer.Update.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.GetAll.Interfaces;
-using LogisticsAdminGetShippingOrderByIdHandlerInterface = Application.Features.Shipping.LogisticsAdmin.GetById.Interfaces.IGetShippingOrderByIdHandler;
 using Application.Features.Shipping.LogisticsAdmin.Quote.Create.Interfaces;
 using Infrastructur.Data;
 using Infrastructur.Features.ShippingOrders.Customer.Cancel;
 using Infrastructur.Features.ShippingOrders.Customer.Create;
 using Infrastructur.Features.ShippingOrders.Customer.GetById;
 using Infrastructur.Features.ShippingOrders.Customer.GetMy;
+using Infrastructur.Features.ShippingOrders.Customer.Quote.GetByShippingOrderId;
 using Infrastructur.Features.ShippingOrders.Customer.Update;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.GetAll;
-using LogisticsAdminGetShippingOrderByIdHandler = Infrastructur.Features.ShippingOrders.LogisticsAdmin.GetById.GetShippingOrderByIdHandler;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Quote.Create;
 using Infrastructur.Identity;
 using Infrastructur.Identity.GetMe;
@@ -31,6 +31,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using LogisticsAdminGetShippingOrderByIdHandler = Infrastructur.Features.ShippingOrders.LogisticsAdmin.GetById.GetShippingOrderByIdHandler;
+using LogisticsAdminGetShippingOrderByIdHandlerInterface = Application.Features.Shipping.LogisticsAdmin.GetById.Interfaces.IGetShippingOrderByIdHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -173,6 +175,7 @@ builder.Services.AddScoped<ICancelShippingOrderHandler, CancelShippingOrderHandl
 builder.Services.AddScoped<IGetAllShippingOrdersHandler, GetAllShippingOrdersHandler>();
 builder.Services.AddScoped<LogisticsAdminGetShippingOrderByIdHandlerInterface, LogisticsAdminGetShippingOrderByIdHandler>();
 builder.Services.AddScoped<ICreateQuoteHandler, CreateQuoteHandler>();
+builder.Services.AddScoped< IGetQuoteByShippingOrderIdHandler, GetQuoteByShippingOrderIdHandler>();
 
 var app = builder.Build();
 

@@ -9,6 +9,8 @@ using Application.Features.Shipping.Customer.Update.DTOs;
 using Application.Features.Shipping.Customer.Update.Interfaces;
 using Application.Features.Shipping.Customer.Cancel.DTOs;
 using Application.Features.Shipping.Customer.Cancel.Interfaces;
+using Application.Features.Shipping.Customer.Quote.GetByShippingOrderId.DTOs;
+using Application.Features.Shipping.Customer.Quote.GetByShippingOrderId.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,19 +26,22 @@ public class ShippingOrdersController : ControllerBase
     private readonly IGetShippingOrderByIdHandler _getShippingOrderByIdHandler;
     private readonly IUpdateShippingOrderHandler _updateShippingOrderHandler;
     private readonly ICancelShippingOrderHandler _cancelShippingOrderHandler;
+    private readonly IGetQuoteByShippingOrderIdHandler _getQuoteByShippingOrderIdHandler;
 
     public ShippingOrdersController(
         ICreateShippingOrderHandler createShippingOrderHandler,
         IGetMyShippingOrdersHandler getMyShippingOrdersHandler,
         IGetShippingOrderByIdHandler getShippingOrderByIdHandler,
         IUpdateShippingOrderHandler updateShippingOrderHandler,
-        ICancelShippingOrderHandler cancelShippingOrderHandler)
+        ICancelShippingOrderHandler cancelShippingOrderHandler,
+        IGetQuoteByShippingOrderIdHandler getQuoteByShippingOrderIdHandler)
     {
         _createShippingOrderHandler = createShippingOrderHandler;
         _getMyShippingOrdersHandler = getMyShippingOrdersHandler;
         _getShippingOrderByIdHandler = getShippingOrderByIdHandler;
         _updateShippingOrderHandler = updateShippingOrderHandler;
         _cancelShippingOrderHandler = cancelShippingOrderHandler;
+        _getQuoteByShippingOrderIdHandler = getQuoteByShippingOrderIdHandler;
     }
 
     [HttpPost]
@@ -87,6 +92,29 @@ public class ShippingOrdersController : ControllerBase
         }
 
         var result = await _getShippingOrderByIdHandler.HandleAsync(
+            id,
+            customerId);
+
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+    [HttpGet("{id:int}/quote")]
+    public async Task<ActionResult<GetQuoteByShippingOrderIdResponseDto>> GetQuote(
+        int id)
+    {
+        var customerId = User.FindFirstValue("sub");
+
+        if (string.IsNullOrWhiteSpace(customerId))
+        {
+            return Unauthorized();
+        }
+
+        var result = await _getQuoteByShippingOrderIdHandler.HandleAsync(
             id,
             customerId);
 
