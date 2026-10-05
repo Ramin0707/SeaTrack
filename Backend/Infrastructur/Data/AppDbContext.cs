@@ -15,10 +15,14 @@ namespace Infrastructur.Data
         public DbSet<ShippingOrder> ShippingOrders { get; set; }
 
         public DbSet<Quote> Quotes { get; set; }
+        public DbSet<Invoice> Invoices => Set<Invoice>();
+        public DbSet<Payment> Payments => Set<Payment>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new Configurations.InvoiceConfiguration());
+            builder.ApplyConfiguration(new Configurations.PaymentConfiguration());
 
             builder.HasDefaultSchema("identity");
 

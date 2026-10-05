@@ -9,6 +9,14 @@ using Application.Features.Shipping.Customer.Update.DTOs;
 using Application.Features.Shipping.Customer.Update.Interfaces;
 using Application.Features.Shipping.Customer.Cancel.DTOs;
 using Application.Features.Shipping.Customer.Cancel.Interfaces;
+using Application.Features.Shipping.Customer.Quote.GetByShippingOrderId.DTOs;
+using Application.Features.Shipping.Customer.Quote.GetByShippingOrderId.Interfaces;
+using Application.Features.Shipping.Customer.Quote.Accept.DTOs;
+using Application.Features.Shipping.Customer.Quote.Accept.Interfaces;
+using Application.Features.Shipping.Customer.Quote.Reject.DTOs;
+using Application.Features.Shipping.Customer.Quote.Reject.Interfaces;
+using Application.Features.Shipping.Customer.Payment.Pay.DTOs;
+using Application.Features.Shipping.Customer.Payment.Pay.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,19 +32,31 @@ public class ShippingOrdersController : ControllerBase
     private readonly IGetShippingOrderByIdHandler _getShippingOrderByIdHandler;
     private readonly IUpdateShippingOrderHandler _updateShippingOrderHandler;
     private readonly ICancelShippingOrderHandler _cancelShippingOrderHandler;
+    private readonly IGetQuoteByShippingOrderIdHandler _getQuoteByShippingOrderIdHandler;
+    private readonly IAcceptQuoteHandler _acceptQuoteHandler;
+    private readonly IRejectQuoteHandler _rejectQuoteHandler;
+    private readonly IPayInvoiceHandler _payInvoiceHandler;
 
     public ShippingOrdersController(
         ICreateShippingOrderHandler createShippingOrderHandler,
         IGetMyShippingOrdersHandler getMyShippingOrdersHandler,
         IGetShippingOrderByIdHandler getShippingOrderByIdHandler,
         IUpdateShippingOrderHandler updateShippingOrderHandler,
-        ICancelShippingOrderHandler cancelShippingOrderHandler)
+        ICancelShippingOrderHandler cancelShippingOrderHandler,
+        IGetQuoteByShippingOrderIdHandler getQuoteByShippingOrderIdHandler,
+        IAcceptQuoteHandler acceptQuoteHandler,
+        IRejectQuoteHandler rejectQuoteHandler,
+        IPayInvoiceHandler payInvoiceHandler)
     {
         _createShippingOrderHandler = createShippingOrderHandler;
         _getMyShippingOrdersHandler = getMyShippingOrdersHandler;
         _getShippingOrderByIdHandler = getShippingOrderByIdHandler;
         _updateShippingOrderHandler = updateShippingOrderHandler;
         _cancelShippingOrderHandler = cancelShippingOrderHandler;
+        _getQuoteByShippingOrderIdHandler = getQuoteByShippingOrderIdHandler;
+        _acceptQuoteHandler = acceptQuoteHandler;
+        _rejectQuoteHandler = rejectQuoteHandler;
+        _payInvoiceHandler = payInvoiceHandler;
     }
 
     [HttpPost]
@@ -70,7 +90,8 @@ public class ShippingOrdersController : ControllerBase
             return Unauthorized();
         }
 
-        var result = await _getMyShippingOrdersHandler.HandleAsync(customerId);
+        var result = await _getMyShippingOrdersHandler.HandleAsync(
+            customerId);
 
         return Ok(result);
     }
@@ -88,6 +109,98 @@ public class ShippingOrdersController : ControllerBase
 
         var result = await _getShippingOrderByIdHandler.HandleAsync(
             id,
+            customerId);
+
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+    [HttpGet("{id:int}/quote")]
+    public async Task<ActionResult<GetQuoteByShippingOrderIdResponseDto>> GetQuote(
+        int id)
+    {
+        var customerId = User.FindFirstValue("sub");
+
+        if (string.IsNullOrWhiteSpace(customerId))
+        {
+            return Unauthorized();
+        }
+
+        var result = await _getQuoteByShippingOrderIdHandler.HandleAsync(
+            id,
+            customerId);
+
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+    [HttpPatch("{id:int}/quote/accept")]
+    public async Task<ActionResult<AcceptQuoteResponseDto>> AcceptQuote(
+        int id)
+    {
+        var customerId = User.FindFirstValue("sub");
+
+        if (string.IsNullOrWhiteSpace(customerId))
+        {
+            return Unauthorized();
+        }
+
+        var result = await _acceptQuoteHandler.HandleAsync(
+            id,
+            customerId);
+
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+    [HttpPatch("{id:int}/quote/reject")]
+    public async Task<ActionResult<RejectQuoteResponseDto>> RejectQuote(
+        int id)
+    {
+        var customerId = User.FindFirstValue("sub");
+
+        if (string.IsNullOrWhiteSpace(customerId))
+        {
+            return Unauthorized();
+        }
+
+        var result = await _rejectQuoteHandler.HandleAsync(
+            id,
+            customerId);
+
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+    [HttpPost("invoices/{invoiceId:int}/pay")]
+    public async Task<ActionResult<PayInvoiceResponseDto>> PayInvoice(
+        int invoiceId)
+    {
+        var customerId = User.FindFirstValue("sub");
+
+        if (string.IsNullOrWhiteSpace(customerId))
+        {
+            return Unauthorized();
+        }
+
+        var result = await _payInvoiceHandler.HandleAsync(
+            invoiceId,
             customerId);
 
         if (result is null)
