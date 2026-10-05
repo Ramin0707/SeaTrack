@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\ShippingOrders\Update\" />
+  </ItemGroup>
+
 </Project>
