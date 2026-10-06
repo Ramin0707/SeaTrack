@@ -14,6 +14,8 @@ using Application.Features.Shipping.Customer.Update.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.GetAll.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Invoice.Create.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Quote.Create.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Create.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.Interfaces;
 using Infrastructur.Data;
 using Infrastructur.Features.ShippingOrders.Customer.Cancel;
 using Infrastructur.Features.ShippingOrders.Customer.Create;
@@ -27,6 +29,8 @@ using Infrastructur.Features.ShippingOrders.Customer.Update;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.GetAll;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Invoice.Create;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Quote.Create;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Create;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Start;
 using Infrastructur.Identity;
 using Infrastructur.Identity.GetMe;
 using Infrastructur.Identity.Login;
@@ -188,6 +192,8 @@ builder.Services.AddScoped<IAcceptQuoteHandler, AcceptQuoteHandler>();
 builder.Services.AddScoped<IRejectQuoteHandler, RejectQuoteHandler>();
 builder.Services.AddScoped<ICreateInvoiceHandler, CreateInvoiceHandler>();
 builder.Services.AddScoped<IPayInvoiceHandler, PayInvoiceHandler>();
+builder.Services.AddScoped<ICreateShipmentHandler, CreateShipmentHandler>();
+builder.Services.AddScoped<IStartShipmentHandler, StartShipmentHandler>();
 
 var app = builder.Build();
 
