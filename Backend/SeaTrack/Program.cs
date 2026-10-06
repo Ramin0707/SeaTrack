@@ -1,58 +1,23 @@
-using Application.Features.Identity.GetMe.Interfaces;
-using Application.Features.Identity.Login.Interfaces;
-using Application.Features.Identity.Register.Interfaces;
-using Application.Features.Identity.Tokens.Interfaces;
-using Application.Features.Shipping.Customer.Cancel.Interfaces;
-using Application.Features.Shipping.Customer.Create.Interfaces;
-using Application.Features.Shipping.Customer.GetById.Interfaces;
-using Application.Features.Shipping.Customer.GetMy.Interfaces;
-using Application.Features.Shipping.Customer.Payment.Pay.Interfaces;
-using Application.Features.Shipping.Customer.Quote.Accept.Interfaces;
-using Application.Features.Shipping.Customer.Quote.GetByShippingOrderId.Interfaces;
-using Application.Features.Shipping.Customer.Quote.Reject.Interfaces;
-using Application.Features.Shipping.Customer.Update.Interfaces;
-using Application.Features.Shipping.LogisticsAdmin.GetAll.Interfaces;
-using Application.Features.Shipping.LogisticsAdmin.Invoice.Create.Interfaces;
-using Application.Features.Shipping.LogisticsAdmin.Quote.Create.Interfaces;
-using Application.Features.Shipping.LogisticsAdmin.Shipment.Create.Interfaces;
-using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.Interfaces;
 using Infrastructur.Data;
-using Infrastructur.Features.ShippingOrders.Customer.Cancel;
-using Infrastructur.Features.ShippingOrders.Customer.Create;
-using Infrastructur.Features.ShippingOrders.Customer.GetById;
-using Infrastructur.Features.ShippingOrders.Customer.GetMy;
-using Infrastructur.Features.ShippingOrders.Customer.Payment.Pay;
-using Infrastructur.Features.ShippingOrders.Customer.Quote.Accept;
-using Infrastructur.Features.ShippingOrders.Customer.Quote.GetByShippingOrderId;
-using Infrastructur.Features.ShippingOrders.Customer.Quote.Reject;
-using Infrastructur.Features.ShippingOrders.Customer.Update;
-using Infrastructur.Features.ShippingOrders.LogisticsAdmin.GetAll;
-using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Invoice.Create;
-using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Quote.Create;
-using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Create;
-using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Start;
+using Infrastructur.DependencyInjection;
 using Infrastructur.Identity;
-using Infrastructur.Identity.GetMe;
-using Infrastructur.Identity.Login;
 using Infrastructur.Identity.Options;
-using Infrastructur.Identity.Register;
 using Infrastructur.Identity.Seeding;
-using Infrastructur.Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using LogisticsAdminGetShippingOrderByIdHandler = Infrastructur.Features.ShippingOrders.LogisticsAdmin.GetById.GetShippingOrderByIdHandler;
-using LogisticsAdminGetShippingOrderByIdHandlerInterface = Application.Features.Shipping.LogisticsAdmin.GetById.Interfaces.IGetShippingOrderByIdHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.CustomSchemaIds(type => type.FullName);
+
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -162,7 +127,10 @@ builder.Services
             RequireSignedTokens = true,
             IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
 
-            ValidAlgorithms = new[] { SecurityAlgorithms.HmacSha256 },
+            ValidAlgorithms = new[]
+            {
+                SecurityAlgorithms.HmacSha256
+            },
 
             NameClaimType = "sub",
             RoleClaimType = "role",
@@ -173,30 +141,12 @@ builder.Services
 
 builder.Services.AddAuthorization();
 
-// Handlers and seeding
-builder.Services.AddScoped<IRegisterHandler, RegisterHandler>();
-builder.Services.AddScoped<IdentitySeeder>();
-builder.Services.AddScoped<ILoginHandler, LoginHandler>();
-builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
-builder.Services.AddScoped<IGetMeHandler, GetMeHandler>();
-builder.Services.AddScoped<ICreateShippingOrderHandler, CreateShippingOrderHandler>();
-builder.Services.AddScoped<IGetMyShippingOrdersHandler, GetMyShippingOrdersHandler>();
-builder.Services.AddScoped<IGetShippingOrderByIdHandler, GetShippingOrderByIdHandler>();
-builder.Services.AddScoped<IUpdateShippingOrderHandler, UpdateShippingOrderHandler>();
-builder.Services.AddScoped<ICancelShippingOrderHandler, CancelShippingOrderHandler>();
-builder.Services.AddScoped<IGetAllShippingOrdersHandler, GetAllShippingOrdersHandler>();
-builder.Services.AddScoped<LogisticsAdminGetShippingOrderByIdHandlerInterface, LogisticsAdminGetShippingOrderByIdHandler>();
-builder.Services.AddScoped<ICreateQuoteHandler, CreateQuoteHandler>();
-builder.Services.AddScoped<IGetQuoteByShippingOrderIdHandler, GetQuoteByShippingOrderIdHandler>();
-builder.Services.AddScoped<IAcceptQuoteHandler, AcceptQuoteHandler>();
-builder.Services.AddScoped<IRejectQuoteHandler, RejectQuoteHandler>();
-builder.Services.AddScoped<ICreateInvoiceHandler, CreateInvoiceHandler>();
-builder.Services.AddScoped<IPayInvoiceHandler, PayInvoiceHandler>();
-builder.Services.AddScoped<ICreateShipmentHandler, CreateShipmentHandler>();
-builder.Services.AddScoped<IStartShipmentHandler, StartShipmentHandler>();
+// Application / Infrastructure services
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
+// Seed Identity roles and users
 await using (var scope = app.Services.CreateAsyncScope())
 {
     var seeder = scope.ServiceProvider
