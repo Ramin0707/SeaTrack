@@ -17,6 +17,7 @@ namespace Infrastructur.Data
         public DbSet<Quote> Quotes { get; set; }
         public DbSet<Invoice> Invoices => Set<Invoice>();
         public DbSet<Payment> Payments => Set<Payment>();
+        public DbSet<Shipment> Shipments => Set<Shipment>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

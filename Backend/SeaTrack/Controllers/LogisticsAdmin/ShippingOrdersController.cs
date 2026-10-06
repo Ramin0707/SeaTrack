@@ -6,6 +6,10 @@ using Application.Features.Shipping.LogisticsAdmin.Quote.Create.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Quote.Create.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Invoice.Create.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Invoice.Create.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Create.DTOs;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Create.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.DTOs;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,17 +24,23 @@ public class ShippingOrdersController : ControllerBase
     private readonly IGetShippingOrderByIdHandler _getShippingOrderByIdHandler;
     private readonly ICreateQuoteHandler _createQuoteHandler;
     private readonly ICreateInvoiceHandler _createInvoiceHandler;
+    private readonly ICreateShipmentHandler _createShipmentHandler;
+    private readonly IStartShipmentHandler _startShipmentHandler;
 
     public ShippingOrdersController(
         IGetAllShippingOrdersHandler getAllShippingOrdersHandler,
         IGetShippingOrderByIdHandler getShippingOrderByIdHandler,
         ICreateQuoteHandler createQuoteHandler,
-        ICreateInvoiceHandler createInvoiceHandler)
+        ICreateInvoiceHandler createInvoiceHandler,
+        ICreateShipmentHandler createShipmentHandler,
+        IStartShipmentHandler startShipmentHandler)
     {
         _getAllShippingOrdersHandler = getAllShippingOrdersHandler;
         _getShippingOrderByIdHandler = getShippingOrderByIdHandler;
         _createQuoteHandler = createQuoteHandler;
         _createInvoiceHandler = createInvoiceHandler;
+        _createShipmentHandler = createShipmentHandler;
+        _startShipmentHandler = startShipmentHandler;
     }
 
     [HttpGet]
@@ -77,6 +87,34 @@ public class ShippingOrdersController : ControllerBase
         int id)
     {
         var result = await _createInvoiceHandler.HandleAsync(id);
+
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+    [HttpPost("{id:int}/shipment")]
+    public async Task<ActionResult<CreateShipmentResponseDto>> CreateShipment(
+        int id)
+    {
+        var result = await _createShipmentHandler.HandleAsync(id);
+
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+    [HttpPatch("{id:int}/shipment/start")]
+    public async Task<ActionResult<StartShipmentResponseDto>> StartShipment(
+        int id)
+    {
+        var result = await _startShipmentHandler.HandleAsync(id);
 
         if (result is null)
         {
