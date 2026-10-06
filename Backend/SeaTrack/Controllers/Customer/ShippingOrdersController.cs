@@ -17,6 +17,8 @@ using Application.Features.Shipping.Customer.Quote.Reject.DTOs;
 using Application.Features.Shipping.Customer.Quote.Reject.Interfaces;
 using Application.Features.Shipping.Customer.Payment.Pay.DTOs;
 using Application.Features.Shipping.Customer.Payment.Pay.Interfaces;
+using Application.Features.Shipping.Customer.Shipment.GetByShippingOrderId.DTOs;
+using Application.Features.Shipping.Customer.Shipment.GetByShippingOrderId.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,6 +38,7 @@ public class ShippingOrdersController : ControllerBase
     private readonly IAcceptQuoteHandler _acceptQuoteHandler;
     private readonly IRejectQuoteHandler _rejectQuoteHandler;
     private readonly IPayInvoiceHandler _payInvoiceHandler;
+    private readonly IGetShipmentHandler _getShipmentHandler;
 
     public ShippingOrdersController(
         ICreateShippingOrderHandler createShippingOrderHandler,
@@ -46,7 +49,8 @@ public class ShippingOrdersController : ControllerBase
         IGetQuoteByShippingOrderIdHandler getQuoteByShippingOrderIdHandler,
         IAcceptQuoteHandler acceptQuoteHandler,
         IRejectQuoteHandler rejectQuoteHandler,
-        IPayInvoiceHandler payInvoiceHandler)
+        IPayInvoiceHandler payInvoiceHandler,
+        IGetShipmentHandler getShipmentHandler)
     {
         _createShippingOrderHandler = createShippingOrderHandler;
         _getMyShippingOrdersHandler = getMyShippingOrdersHandler;
@@ -57,6 +61,7 @@ public class ShippingOrdersController : ControllerBase
         _acceptQuoteHandler = acceptQuoteHandler;
         _rejectQuoteHandler = rejectQuoteHandler;
         _payInvoiceHandler = payInvoiceHandler;
+        _getShipmentHandler = getShipmentHandler;
     }
 
     [HttpPost]
@@ -201,6 +206,29 @@ public class ShippingOrdersController : ControllerBase
 
         var result = await _payInvoiceHandler.HandleAsync(
             invoiceId,
+            customerId);
+
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+    [HttpGet("{id:int}/shipment")]
+    public async Task<ActionResult<GetShipmentResponseDto>> GetShipment(
+        int id)
+    {
+        var customerId = User.FindFirstValue("sub");
+
+        if (string.IsNullOrWhiteSpace(customerId))
+        {
+            return Unauthorized();
+        }
+
+        var result = await _getShipmentHandler.HandleAsync(
+            id,
             customerId);
 
         if (result is null)

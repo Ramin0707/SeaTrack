@@ -10,6 +10,8 @@ using Application.Features.Shipping.LogisticsAdmin.Shipment.Create.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Create.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Deliver.DTOs;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Deliver.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +28,7 @@ public class ShippingOrdersController : ControllerBase
     private readonly ICreateInvoiceHandler _createInvoiceHandler;
     private readonly ICreateShipmentHandler _createShipmentHandler;
     private readonly IStartShipmentHandler _startShipmentHandler;
+    private readonly IDeliverShipmentHandler _deliverShipmentHandler;
 
     public ShippingOrdersController(
         IGetAllShippingOrdersHandler getAllShippingOrdersHandler,
@@ -33,7 +36,8 @@ public class ShippingOrdersController : ControllerBase
         ICreateQuoteHandler createQuoteHandler,
         ICreateInvoiceHandler createInvoiceHandler,
         ICreateShipmentHandler createShipmentHandler,
-        IStartShipmentHandler startShipmentHandler)
+        IStartShipmentHandler startShipmentHandler,
+        IDeliverShipmentHandler deliverShipmentHandler)
     {
         _getAllShippingOrdersHandler = getAllShippingOrdersHandler;
         _getShippingOrderByIdHandler = getShippingOrderByIdHandler;
@@ -41,6 +45,7 @@ public class ShippingOrdersController : ControllerBase
         _createInvoiceHandler = createInvoiceHandler;
         _createShipmentHandler = createShipmentHandler;
         _startShipmentHandler = startShipmentHandler;
+        _deliverShipmentHandler = deliverShipmentHandler;
     }
 
     [HttpGet]
@@ -115,6 +120,20 @@ public class ShippingOrdersController : ControllerBase
         int id)
     {
         var result = await _startShipmentHandler.HandleAsync(id);
+
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+    [HttpPatch("{id:int}/shipment/deliver")]
+    public async Task<ActionResult<DeliverShipmentResponseDto>> DeliverShipment(
+        int id)
+    {
+        var result = await _deliverShipmentHandler.HandleAsync(id);
 
         if (result is null)
         {
