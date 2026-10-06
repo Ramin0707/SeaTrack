@@ -45,6 +45,9 @@ using Infrastructur.Identity.Register;
 using Infrastructur.Identity.Seeding;
 using Infrastructur.Identity.Services;
 
+using Application.Features.Shipping.Public.Tracking.GetByTrackingNumber.Interfaces;
+using Infrastructur.Features.ShippingOrders.Public.Tracking.GetByTrackingNumber;
+
 using Microsoft.Extensions.DependencyInjection;
 
 using LogisticsAdminGetShippingOrderByIdHandler =
@@ -142,6 +145,11 @@ public static class ServiceRegistration
         services.AddScoped<
             IDeliverShipmentHandler,
             DeliverShipmentHandler>();
+
+        // Public - Tracking
+        services.AddScoped<
+            IGetTrackingByTrackingNumberHandler,
+            GetTrackingByTrackingNumberHandler>();
 
         return services;
     }
