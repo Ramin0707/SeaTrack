@@ -1,21 +1,21 @@
-﻿using Application.Features.Shipping.LogisticsAdmin.Shipment.Deliver.DTOs;
-using Application.Features.Shipping.LogisticsAdmin.Shipment.Deliver.Interfaces;
+﻿using Application.Features.Shipping.LogisticsAdmin.Shipment.Arrive.DTOs;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Arrive.Interfaces;
 using Domain.Enums;
 using Infrastructur.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Deliver;
+namespace Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Arrive;
 
-public class DeliverShipmentHandler : IDeliverShipmentHandler
+public class ArriveShipmentHandler : IArriveShipmentHandler
 {
     private readonly AppDbContext _context;
 
-    public DeliverShipmentHandler(AppDbContext context)
+    public ArriveShipmentHandler(AppDbContext context)
     {
         _context = context;
     }
 
-    public async Task<DeliverShipmentResponseDto?> HandleAsync(
+    public async Task<ArriveShipmentResponseDto?> HandleAsync(
         int shippingOrderId)
     {
         var shipment = await _context.Shipments
@@ -25,8 +25,7 @@ public class DeliverShipmentHandler : IDeliverShipmentHandler
         if (shipment is null)
             return null;
 
-        // Shipment должен быть выгружен в порту назначения
-        if (shipment.Status != ShipmentStatus.Unloaded)
+        if (shipment.Status != ShipmentStatus.InTransit)
             return null;
 
         var shippingOrder = await _context.ShippingOrders
@@ -39,23 +38,18 @@ public class DeliverShipmentHandler : IDeliverShipmentHandler
         if (shippingOrder.Status != ShippingOrderStatus.InTransit)
             return null;
 
-        var deliveredAtUtc = DateTime.UtcNow;
-
-        shipment.Status = ShipmentStatus.Delivered;
-        shipment.DeliveredAtUtc = deliveredAtUtc;
-
-        shippingOrder.Status = ShippingOrderStatus.Delivered;
+        shipment.Status = ShipmentStatus.Arrived;
 
         await _context.SaveChangesAsync();
 
-        return new DeliverShipmentResponseDto
+        return new ArriveShipmentResponseDto
         {
             ShipmentId = shipment.Id,
             ShippingOrderId = shippingOrder.Id,
             TrackingNumber = shipment.TrackingNumber,
             ShipmentStatus = shipment.Status,
             ShippingOrderStatus = shippingOrder.Status,
-            DeliveredAtUtc = shipment.DeliveredAtUtc
+            ArrivedAtUtc = DateTime.UtcNow
         };
     }
 }

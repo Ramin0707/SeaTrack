@@ -2,28 +2,24 @@
 using Application.Features.Shipping.LogisticsAdmin.GetAll.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.GetById.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.GetById.Interfaces;
-
-using Application.Features.Shipping.LogisticsAdmin.Quote.Create.DTOs;
-using Application.Features.Shipping.LogisticsAdmin.Quote.Create.Interfaces;
-
 using Application.Features.Shipping.LogisticsAdmin.Invoice.Create.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Invoice.Create.Interfaces;
-
+using Application.Features.Shipping.LogisticsAdmin.Quote.Create.DTOs;
+using Application.Features.Shipping.LogisticsAdmin.Quote.Create.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Arrive.DTOs;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Arrive.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Create.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Create.Interfaces;
-
-using Application.Features.Shipping.LogisticsAdmin.Shipment.Load.DTOs;
-using Application.Features.Shipping.LogisticsAdmin.Shipment.Load.Interfaces;
-
-using Application.Features.Shipping.LogisticsAdmin.Shipment.Depart.DTOs;
-using Application.Features.Shipping.LogisticsAdmin.Shipment.Depart.Interfaces;
-
-using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.DTOs;
-using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.Interfaces;
-
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Deliver.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Deliver.Interfaces;
-
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Depart.DTOs;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Depart.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Load.DTOs;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Load.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.DTOs;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Unload.DTOs;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Unload.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,9 +40,12 @@ public class ShippingOrdersController : ControllerBase
     private readonly ILoadShipmentHandler _loadShipmentHandler;
     private readonly IDepartShipmentHandler _departShipmentHandler;
     private readonly IStartShipmentHandler _startShipmentHandler;
+    private readonly IArriveShipmentHandler _arriveShipmentHandler;
     private readonly IDeliverShipmentHandler _deliverShipmentHandler;
+    private readonly IUnloadShipmentHandler _unloadShipmentHandler;
 
     public ShippingOrdersController(
+        IUnloadShipmentHandler unloadShipmentHandler,
         IGetAllShippingOrdersHandler getAllShippingOrdersHandler,
         IGetShippingOrderByIdHandler getShippingOrderByIdHandler,
         ICreateQuoteHandler createQuoteHandler,
@@ -55,6 +54,7 @@ public class ShippingOrdersController : ControllerBase
         ILoadShipmentHandler loadShipmentHandler,
         IDepartShipmentHandler departShipmentHandler,
         IStartShipmentHandler startShipmentHandler,
+        IArriveShipmentHandler arriveShipmentHandler,
         IDeliverShipmentHandler deliverShipmentHandler)
     {
         _getAllShippingOrdersHandler = getAllShippingOrdersHandler;
@@ -67,7 +67,9 @@ public class ShippingOrdersController : ControllerBase
         _loadShipmentHandler = loadShipmentHandler;
         _departShipmentHandler = departShipmentHandler;
         _startShipmentHandler = startShipmentHandler;
+        _arriveShipmentHandler = arriveShipmentHandler;
         _deliverShipmentHandler = deliverShipmentHandler;
+        _unloadShipmentHandler = unloadShipmentHandler;
     }
 
     // =========================================================
@@ -198,14 +200,45 @@ public class ShippingOrdersController : ControllerBase
         return Ok(result);
     }
 
-    // InTransit -> Delivered
-    // Позже расширим до:
-    // InTransit -> Arrived -> Unloaded -> Delivered
+    // InTransit -> Arrived
+    [HttpPatch("{id:int}/shipment/arrive")]
+    public async Task<ActionResult<ArriveShipmentResponseDto>> ArriveShipment(
+        int id)
+    {
+        var result = await _arriveShipmentHandler.HandleAsync(id);
+
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+    // Сейчас старый Deliver.
+    // Позже изменим на Unloaded -> Delivered.
     [HttpPatch("{id:int}/shipment/deliver")]
     public async Task<ActionResult<DeliverShipmentResponseDto>> DeliverShipment(
         int id)
     {
         var result = await _deliverShipmentHandler.HandleAsync(id);
+
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+
+
+    // Arrived -> Unloaded
+    [HttpPatch("{id:int}/shipment/unload")]
+    public async Task<ActionResult<UnloadShipmentResponseDto>> UnloadShipment(
+        int id)
+    {
+        var result = await _unloadShipmentHandler.HandleAsync(id);
 
         if (result is null)
         {
