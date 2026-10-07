@@ -19,7 +19,11 @@ using Application.Features.Shipping.LogisticsAdmin.Invoice.Create.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Quote.Create.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Create.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Deliver.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Depart.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Load.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.Interfaces;
+
+using Application.Features.Shipping.Public.Tracking.GetByTrackingNumber.Interfaces;
 
 using Infrastructur.Features.ShippingOrders.Customer.Cancel;
 using Infrastructur.Features.ShippingOrders.Customer.Create;
@@ -37,16 +41,17 @@ using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Invoice.Create;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Quote.Create;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Create;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Deliver;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Depart;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Load;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Start;
+
+using Infrastructur.Features.ShippingOrders.Public.Tracking.GetByTrackingNumber;
 
 using Infrastructur.Identity.GetMe;
 using Infrastructur.Identity.Login;
 using Infrastructur.Identity.Register;
 using Infrastructur.Identity.Seeding;
 using Infrastructur.Identity.Services;
-
-using Application.Features.Shipping.Public.Tracking.GetByTrackingNumber.Interfaces;
-using Infrastructur.Features.ShippingOrders.Public.Tracking.GetByTrackingNumber;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -63,14 +68,34 @@ public static class ServiceRegistration
     public static IServiceCollection AddApplicationServices(
         this IServiceCollection services)
     {
+        // =========================================================
         // Identity
-        services.AddScoped<IRegisterHandler, RegisterHandler>();
-        services.AddScoped<ILoginHandler, LoginHandler>();
-        services.AddScoped<IJwtTokenService, JwtTokenService>();
-        services.AddScoped<IGetMeHandler, GetMeHandler>();
-        services.AddScoped<IdentitySeeder>();
+        // =========================================================
 
+        services.AddScoped<
+            IRegisterHandler,
+            RegisterHandler>();
+
+        services.AddScoped<
+            ILoginHandler,
+            LoginHandler>();
+
+        services.AddScoped<
+            IJwtTokenService,
+            JwtTokenService>();
+
+        services.AddScoped<
+            IGetMeHandler,
+            GetMeHandler>();
+
+        services.AddScoped<
+            IdentitySeeder>();
+
+
+        // =========================================================
         // Customer - Shipping Orders
+        // =========================================================
+
         services.AddScoped<
             ICreateShippingOrderHandler,
             CreateShippingOrderHandler>();
@@ -91,7 +116,11 @@ public static class ServiceRegistration
             ICancelShippingOrderHandler,
             CancelShippingOrderHandler>();
 
+
+        // =========================================================
         // Customer - Quote
+        // =========================================================
+
         services.AddScoped<
             IGetQuoteByShippingOrderIdHandler,
             GetQuoteByShippingOrderIdHandler>();
@@ -104,17 +133,29 @@ public static class ServiceRegistration
             IRejectQuoteHandler,
             RejectQuoteHandler>();
 
+
+        // =========================================================
         // Customer - Payment
+        // =========================================================
+
         services.AddScoped<
             IPayInvoiceHandler,
             PayInvoiceHandler>();
 
+
+        // =========================================================
         // Customer - Shipment / Tracking
+        // =========================================================
+
         services.AddScoped<
             IGetShipmentHandler,
             GetShipmentHandler>();
 
+
+        // =========================================================
         // Logistics Admin - Shipping Orders
+        // =========================================================
+
         services.AddScoped<
             IGetAllShippingOrdersHandler,
             GetAllShippingOrdersHandler>();
@@ -123,33 +164,64 @@ public static class ServiceRegistration
             LogisticsAdminGetShippingOrderByIdHandlerInterface,
             LogisticsAdminGetShippingOrderByIdHandler>();
 
+
+        // =========================================================
         // Logistics Admin - Quote
+        // =========================================================
+
         services.AddScoped<
             ICreateQuoteHandler,
             CreateQuoteHandler>();
 
+
+        // =========================================================
         // Logistics Admin - Invoice
+        // =========================================================
+
         services.AddScoped<
             ICreateInvoiceHandler,
             CreateInvoiceHandler>();
 
+
+        // =========================================================
         // Logistics Admin - Shipment
+        // =========================================================
+
         services.AddScoped<
             ICreateShipmentHandler,
             CreateShipmentHandler>();
 
+        // Preparing -> Loaded
+        services.AddScoped<
+            ILoadShipmentHandler,
+            LoadShipmentHandler>();
+
+        // Loaded -> Departed
+        services.AddScoped<
+            IDepartShipmentHandler,
+            DepartShipmentHandler>();
+
+        // Departed -> InTransit
         services.AddScoped<
             IStartShipmentHandler,
             StartShipmentHandler>();
 
+        // InTransit -> Delivered
+        // Позже расширим:
+        // InTransit -> Arrived -> Unloaded -> Delivered
         services.AddScoped<
             IDeliverShipmentHandler,
             DeliverShipmentHandler>();
 
+
+        // =========================================================
         // Public - Tracking
+        // =========================================================
+
         services.AddScoped<
             IGetTrackingByTrackingNumberHandler,
             GetTrackingByTrackingNumberHandler>();
+
 
         return services;
     }

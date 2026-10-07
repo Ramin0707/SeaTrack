@@ -23,7 +23,8 @@ public class StartShipmentHandler : IStartShipmentHandler
         if (shipment is null)
             return null;
 
-        if (shipment.Status != ShipmentStatus.Preparing)
+        // Shipment должен уже покинуть порт
+        if (shipment.Status != ShipmentStatus.Departed)
             return null;
 
         var shippingOrder = await _context.ShippingOrders
@@ -32,15 +33,13 @@ public class StartShipmentHandler : IStartShipmentHandler
         if (shippingOrder is null)
             return null;
 
-        if (shippingOrder.Status != ShippingOrderStatus.Confirmed)
+        // После Depart заказ уже находится в InTransit
+        if (shippingOrder.Status != ShippingOrderStatus.InTransit)
             return null;
 
-        var shippedAtUtc = DateTime.UtcNow;
-
+        // Depart уже установил ShippedAtUtc.
+        // Здесь дату отправления повторно не меняем.
         shipment.Status = ShipmentStatus.InTransit;
-        shipment.ShippedAtUtc = shippedAtUtc;
-
-        shippingOrder.Status = ShippingOrderStatus.InTransit;
 
         await _context.SaveChangesAsync();
 

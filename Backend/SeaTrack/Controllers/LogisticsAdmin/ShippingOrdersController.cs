@@ -2,16 +2,28 @@
 using Application.Features.Shipping.LogisticsAdmin.GetAll.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.GetById.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.GetById.Interfaces;
+
 using Application.Features.Shipping.LogisticsAdmin.Quote.Create.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Quote.Create.Interfaces;
+
 using Application.Features.Shipping.LogisticsAdmin.Invoice.Create.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Invoice.Create.Interfaces;
+
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Create.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Create.Interfaces;
+
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Load.DTOs;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Load.Interfaces;
+
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Depart.DTOs;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Depart.Interfaces;
+
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.Interfaces;
+
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Deliver.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Deliver.Interfaces;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,9 +36,13 @@ public class ShippingOrdersController : ControllerBase
 {
     private readonly IGetAllShippingOrdersHandler _getAllShippingOrdersHandler;
     private readonly IGetShippingOrderByIdHandler _getShippingOrderByIdHandler;
+
     private readonly ICreateQuoteHandler _createQuoteHandler;
     private readonly ICreateInvoiceHandler _createInvoiceHandler;
+
     private readonly ICreateShipmentHandler _createShipmentHandler;
+    private readonly ILoadShipmentHandler _loadShipmentHandler;
+    private readonly IDepartShipmentHandler _departShipmentHandler;
     private readonly IStartShipmentHandler _startShipmentHandler;
     private readonly IDeliverShipmentHandler _deliverShipmentHandler;
 
@@ -36,17 +52,27 @@ public class ShippingOrdersController : ControllerBase
         ICreateQuoteHandler createQuoteHandler,
         ICreateInvoiceHandler createInvoiceHandler,
         ICreateShipmentHandler createShipmentHandler,
+        ILoadShipmentHandler loadShipmentHandler,
+        IDepartShipmentHandler departShipmentHandler,
         IStartShipmentHandler startShipmentHandler,
         IDeliverShipmentHandler deliverShipmentHandler)
     {
         _getAllShippingOrdersHandler = getAllShippingOrdersHandler;
         _getShippingOrderByIdHandler = getShippingOrderByIdHandler;
+
         _createQuoteHandler = createQuoteHandler;
         _createInvoiceHandler = createInvoiceHandler;
+
         _createShipmentHandler = createShipmentHandler;
+        _loadShipmentHandler = loadShipmentHandler;
+        _departShipmentHandler = departShipmentHandler;
         _startShipmentHandler = startShipmentHandler;
         _deliverShipmentHandler = deliverShipmentHandler;
     }
+
+    // =========================================================
+    // Shipping Orders
+    // =========================================================
 
     [HttpGet]
     public async Task<ActionResult<List<GetAllShippingOrderResponseDto>>> GetAll()
@@ -70,6 +96,10 @@ public class ShippingOrdersController : ControllerBase
         return Ok(result);
     }
 
+    // =========================================================
+    // Quote
+    // =========================================================
+
     [HttpPost("{id:int}/quote")]
     public async Task<ActionResult<CreateQuoteResponseDto>> CreateQuote(
         int id,
@@ -87,6 +117,10 @@ public class ShippingOrdersController : ControllerBase
         return Ok(result);
     }
 
+    // =========================================================
+    // Invoice
+    // =========================================================
+
     [HttpPost("{id:int}/invoice")]
     public async Task<ActionResult<CreateInvoiceResponseDto>> CreateInvoice(
         int id)
@@ -100,6 +134,10 @@ public class ShippingOrdersController : ControllerBase
 
         return Ok(result);
     }
+
+    // =========================================================
+    // Shipment
+    // =========================================================
 
     [HttpPost("{id:int}/shipment")]
     public async Task<ActionResult<CreateShipmentResponseDto>> CreateShipment(
@@ -115,6 +153,37 @@ public class ShippingOrdersController : ControllerBase
         return Ok(result);
     }
 
+    // Preparing -> Loaded
+    [HttpPatch("{id:int}/shipment/load")]
+    public async Task<ActionResult<LoadShipmentResponseDto>> LoadShipment(
+        int id)
+    {
+        var result = await _loadShipmentHandler.HandleAsync(id);
+
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+    // Loaded -> Departed
+    [HttpPatch("{id:int}/shipment/depart")]
+    public async Task<ActionResult<DepartShipmentResponseDto>> DepartShipment(
+        int id)
+    {
+        var result = await _departShipmentHandler.HandleAsync(id);
+
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+    // Departed -> InTransit
     [HttpPatch("{id:int}/shipment/start")]
     public async Task<ActionResult<StartShipmentResponseDto>> StartShipment(
         int id)
@@ -129,6 +198,9 @@ public class ShippingOrdersController : ControllerBase
         return Ok(result);
     }
 
+    // InTransit -> Delivered
+    // Позже расширим до:
+    // InTransit -> Arrived -> Unloaded -> Delivered
     [HttpPatch("{id:int}/shipment/deliver")]
     public async Task<ActionResult<DeliverShipmentResponseDto>> DeliverShipment(
         int id)
