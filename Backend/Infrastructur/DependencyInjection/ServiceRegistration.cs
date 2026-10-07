@@ -44,7 +44,10 @@ using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Deliver;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Depart;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Load;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Start;
-
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Arrive.Interfaces;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Arrive;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Unload.Interfaces;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Unload;
 using Infrastructur.Features.ShippingOrders.Public.Tracking.GetByTrackingNumber;
 
 using Infrastructur.Identity.GetMe;
@@ -222,6 +225,16 @@ public static class ServiceRegistration
             IGetTrackingByTrackingNumberHandler,
             GetTrackingByTrackingNumberHandler>();
 
+
+
+        services.AddScoped<
+          IArriveShipmentHandler,
+          ArriveShipmentHandler>();
+
+
+        services.AddScoped<
+    IUnloadShipmentHandler,
+    UnloadShipmentHandler>();
 
         return services;
     }
