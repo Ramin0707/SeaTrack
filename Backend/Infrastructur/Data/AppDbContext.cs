@@ -12,20 +12,65 @@ namespace Infrastructur.Data
         {
         }
 
+        // =========================================================
+        // Shipping
+        // =========================================================
+
         public DbSet<ShippingOrder> ShippingOrders { get; set; }
 
         public DbSet<Quote> Quotes { get; set; }
+
         public DbSet<Invoice> Invoices => Set<Invoice>();
+
         public DbSet<Payment> Payments => Set<Payment>();
+
         public DbSet<Shipment> Shipments => Set<Shipment>();
+
+
+        // =========================================================
+        // Ports
+        // =========================================================
+
+        public DbSet<Port> Ports => Set<Port>();
+
+        public DbSet<Terminal> Terminals => Set<Terminal>();
+
+        public DbSet<Berth> Berths => Set<Berth>();
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfiguration(new Configurations.InvoiceConfiguration());
-            builder.ApplyConfiguration(new Configurations.PaymentConfiguration());
+
+            // =====================================================
+            // Configurations
+            // =====================================================
+
+            builder.ApplyConfiguration(
+                new Configurations.InvoiceConfiguration());
+
+            builder.ApplyConfiguration(
+                new Configurations.PaymentConfiguration());
+            builder.ApplyConfiguration(
+                 new Configurations.PortConfiguration());
+
+            builder.ApplyConfiguration(
+                new Configurations.TerminalConfiguration());
+
+            builder.ApplyConfiguration(
+                new Configurations.BerthConfiguration());
+
+
+            // =====================================================
+            // Default Schema
+            // =====================================================
 
             builder.HasDefaultSchema("identity");
+
+
+            // =====================================================
+            // Identity
+            // =====================================================
 
             builder.Entity<ApplicationUser>(entity =>
             {
@@ -33,6 +78,11 @@ namespace Infrastructur.Data
                     .HasMaxLength(200)
                     .IsRequired();
             });
+
+
+            // =====================================================
+            // Shipping Order
+            // =====================================================
 
             builder.Entity<ShippingOrder>(entity =>
             {
@@ -44,6 +94,11 @@ namespace Infrastructur.Data
                 entity.Property(order => order.Volume)
                     .HasPrecision(18, 2);
             });
+
+
+            // =====================================================
+            // Quote
+            // =====================================================
 
             builder.Entity<Quote>(entity =>
             {
@@ -61,7 +116,8 @@ namespace Infrastructur.Data
 
                 entity.HasOne(quote => quote.ShippingOrder)
                     .WithOne()
-                    .HasForeignKey<Quote>(quote => quote.ShippingOrderId)
+                    .HasForeignKey<Quote>(
+                        quote => quote.ShippingOrderId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
         }
