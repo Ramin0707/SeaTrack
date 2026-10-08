@@ -17,6 +17,11 @@ using Application.Features.Logistics.Terminals.Delete.Interfaces;
 using Application.Features.Logistics.Terminals.GetAll.Interfaces;
 using Application.Features.Logistics.Terminals.GetById.Interfaces;
 using Application.Features.Logistics.Terminals.Update.Interfaces;
+using Application.Features.Logistics.Vessels.Create.Interfaces;
+using Application.Features.Logistics.Vessels.Delete.Interfaces;
+using Application.Features.Logistics.Vessels.GetAll.Interfaces;
+using Application.Features.Logistics.Vessels.GetById.Interfaces;
+using Application.Features.Logistics.Vessels.Update.Interfaces;
 using Application.Features.Shipping.Customer.Cancel.Interfaces;
 using Application.Features.Shipping.Customer.Create.Interfaces;
 using Application.Features.Shipping.Customer.GetById.Interfaces;
@@ -53,6 +58,11 @@ using Infrastructur.Features.Logistics.Terminals.Delete;
 using Infrastructur.Features.Logistics.Terminals.GetAll;
 using Infrastructur.Features.Logistics.Terminals.GetById;
 using Infrastructur.Features.Logistics.Terminals.Update;
+using Infrastructur.Features.Logistics.Vessels.Create;
+using Infrastructur.Features.Logistics.Vessels.Delete;
+using Infrastructur.Features.Logistics.Vessels.GetAll;
+using Infrastructur.Features.Logistics.Vessels.GetById;
+using Infrastructur.Features.Logistics.Vessels.Update;
 using Infrastructur.Features.ShippingOrders.Customer.Cancel;
 using Infrastructur.Features.ShippingOrders.Customer.Create;
 using Infrastructur.Features.ShippingOrders.Customer.GetById;
@@ -344,6 +354,33 @@ public static class ServiceRegistration
         services.AddScoped<
             IDeleteBerthHandler,
             DeleteBerthHandler>();
+
+        // =========================================================
+        // Logistics - Vessels
+        // =========================================================
+
+        services.AddScoped<
+            ICreateVesselHandler,
+            CreateVesselHandler>();
+
+        services.AddScoped<
+            IGetAllVesselsHandler,
+            GetAllVesselsHandler>();
+
+        services.AddScoped<
+            IGetVesselByIdHandler,
+            GetVesselByIdHandler>();
+
+        services.AddScoped<
+         IUpdateVesselHandler,
+         UpdateVesselHandler>();
+
+
+        services.AddScoped<
+            IDeleteVesselHandler,
+            DeleteVesselHandler>();
+
+
 
         return services;
     }
