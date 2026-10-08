@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Logistics\Terminals\Update - Copy %282%29\" />
     <Folder Include="Features\WebSiteAdmin\" />
   </ItemGroup>
 

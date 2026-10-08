@@ -2,7 +2,16 @@
 using Application.Features.Identity.Login.Interfaces;
 using Application.Features.Identity.Register.Interfaces;
 using Application.Features.Identity.Tokens.Interfaces;
-
+using Application.Features.Logistics.Ports.Create.Interfaces;
+using Application.Features.Logistics.Ports.Delete.Interfaces;
+using Application.Features.Logistics.Ports.GetAll.Interfaces;
+using Application.Features.Logistics.Ports.GetById.Interfaces;
+using Application.Features.Logistics.Ports.Update.Interfaces;
+using Application.Features.Logistics.Terminals.Create.Interfaces;
+using Application.Features.Logistics.Terminals.Delete.Interfaces;
+using Application.Features.Logistics.Terminals.GetAll.Interfaces;
+using Application.Features.Logistics.Terminals.GetById.Interfaces;
+using Application.Features.Logistics.Terminals.Update.Interfaces;
 using Application.Features.Shipping.Customer.Cancel.Interfaces;
 using Application.Features.Shipping.Customer.Create.Interfaces;
 using Application.Features.Shipping.Customer.GetById.Interfaces;
@@ -13,18 +22,27 @@ using Application.Features.Shipping.Customer.Quote.GetByShippingOrderId.Interfac
 using Application.Features.Shipping.Customer.Quote.Reject.Interfaces;
 using Application.Features.Shipping.Customer.Shipment.GetByShippingOrderId.Interfaces;
 using Application.Features.Shipping.Customer.Update.Interfaces;
-
 using Application.Features.Shipping.LogisticsAdmin.GetAll.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Invoice.Create.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Quote.Create.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Arrive.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Create.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Deliver.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Depart.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Load.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.Interfaces;
-
+using Application.Features.Shipping.LogisticsAdmin.Shipment.Unload.Interfaces;
 using Application.Features.Shipping.Public.Tracking.GetByTrackingNumber.Interfaces;
-
+using Infrastructur.Features.Logistics.Ports.Create;
+using Infrastructur.Features.Logistics.Ports.Delete;
+using Infrastructur.Features.Logistics.Ports.GetAll;
+using Infrastructur.Features.Logistics.Ports.GetById;
+using Infrastructur.Features.Logistics.Ports.Update;
+using Infrastructur.Features.Logistics.Terminals.Create;
+using Infrastructur.Features.Logistics.Terminals.Delete;
+using Infrastructur.Features.Logistics.Terminals.GetAll;
+using Infrastructur.Features.Logistics.Terminals.GetById;
+using Infrastructur.Features.Logistics.Terminals.Update;
 using Infrastructur.Features.ShippingOrders.Customer.Cancel;
 using Infrastructur.Features.ShippingOrders.Customer.Create;
 using Infrastructur.Features.ShippingOrders.Customer.GetById;
@@ -35,35 +53,27 @@ using Infrastructur.Features.ShippingOrders.Customer.Quote.GetByShippingOrderId;
 using Infrastructur.Features.ShippingOrders.Customer.Quote.Reject;
 using Infrastructur.Features.ShippingOrders.Customer.Shipment.GetByShippingOrderId;
 using Infrastructur.Features.ShippingOrders.Customer.Update;
-
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.GetAll;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Invoice.Create;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Quote.Create;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Arrive;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Create;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Deliver;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Depart;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Load;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Start;
-using Application.Features.Shipping.LogisticsAdmin.Shipment.Arrive.Interfaces;
-using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Arrive;
-using Application.Features.Shipping.LogisticsAdmin.Shipment.Unload.Interfaces;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Unload;
 using Infrastructur.Features.ShippingOrders.Public.Tracking.GetByTrackingNumber;
-
 using Infrastructur.Identity.GetMe;
 using Infrastructur.Identity.Login;
 using Infrastructur.Identity.Register;
 using Infrastructur.Identity.Seeding;
 using Infrastructur.Identity.Services;
-
 using Microsoft.Extensions.DependencyInjection;
-
 using LogisticsAdminGetShippingOrderByIdHandler =
     Infrastructur.Features.ShippingOrders.LogisticsAdmin.GetById.GetShippingOrderByIdHandler;
-
 using LogisticsAdminGetShippingOrderByIdHandlerInterface =
     Application.Features.Shipping.LogisticsAdmin.GetById.Interfaces.IGetShippingOrderByIdHandler;
-
 namespace Infrastructur.DependencyInjection;
 
 public static class ServiceRegistration
@@ -75,24 +85,11 @@ public static class ServiceRegistration
         // Identity
         // =========================================================
 
-        services.AddScoped<
-            IRegisterHandler,
-            RegisterHandler>();
-
-        services.AddScoped<
-            ILoginHandler,
-            LoginHandler>();
-
-        services.AddScoped<
-            IJwtTokenService,
-            JwtTokenService>();
-
-        services.AddScoped<
-            IGetMeHandler,
-            GetMeHandler>();
-
-        services.AddScoped<
-            IdentitySeeder>();
+        services.AddScoped<IRegisterHandler, RegisterHandler>();
+        services.AddScoped<ILoginHandler, LoginHandler>();
+        services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<IGetMeHandler, GetMeHandler>();
+        services.AddScoped<IdentitySeeder>();
 
 
         // =========================================================
@@ -194,27 +191,38 @@ public static class ServiceRegistration
             ICreateShipmentHandler,
             CreateShipmentHandler>();
 
-        // Preparing -> Loaded
         services.AddScoped<
             ILoadShipmentHandler,
             LoadShipmentHandler>();
 
-        // Loaded -> Departed
         services.AddScoped<
             IDepartShipmentHandler,
             DepartShipmentHandler>();
 
-        // Departed -> InTransit
         services.AddScoped<
             IStartShipmentHandler,
             StartShipmentHandler>();
 
-        // InTransit -> Delivered
-        // Позже расширим:
-        // InTransit -> Arrived -> Unloaded -> Delivered
+        services.AddScoped<
+            IArriveShipmentHandler,
+            ArriveShipmentHandler>();
+
+        services.AddScoped<
+            IUnloadShipmentHandler,
+            UnloadShipmentHandler>();
+
         services.AddScoped<
             IDeliverShipmentHandler,
             DeliverShipmentHandler>();
+
+
+        // =========================================================
+        // Logistics - Ports
+        // =========================================================
+
+        services.AddScoped<
+            IGetAllPortsHandler,
+            GetAllPortsHandler>();
 
 
         // =========================================================
@@ -227,15 +235,82 @@ public static class ServiceRegistration
 
 
 
+        // =========================================================
+        // Logistics - Ports
+        // =========================================================
+
         services.AddScoped<
-          IArriveShipmentHandler,
-          ArriveShipmentHandler>();
+            IGetAllPortsHandler,
+            GetAllPortsHandler>();
+
+        services.AddScoped<
+            ICreatePortHandler,
+            CreatePortHandler>();
+
+        services.AddScoped<
+    IGetPortByIdHandler,
+    GetPortByIdHandler>();
 
 
+        // =========================================================
+        // Logistics - Ports
+        // =========================================================
+
         services.AddScoped<
-    IUnloadShipmentHandler,
-    UnloadShipmentHandler>();
+            IGetAllPortsHandler,
+            GetAllPortsHandler>();
+
+        services.AddScoped<
+            IGetPortByIdHandler,
+            GetPortByIdHandler>();
+
+        services.AddScoped<
+            ICreatePortHandler,
+            CreatePortHandler>();
+
+        services.AddScoped<
+            IUpdatePortHandler,
+            UpdatePortHandler>();
+
+        services.AddScoped<
+             IDeletePortHandler,
+             DeletePortHandler>();
+
+
+        // =========================================================
+        // Logistics - Terminals
+        // =========================================================
+
+        services.AddScoped<
+            ICreateTerminalHandler,
+            CreateTerminalHandler>();
+
+
+        // =========================================================
+        // Logistics - Terminals
+        // =========================================================
+
+        services.AddScoped<
+            ICreateTerminalHandler,
+            CreateTerminalHandler>();
+
+        services.AddScoped<
+            IGetAllTerminalsHandler,
+            GetAllTerminalsHandler>();
+
+        services.AddScoped<
+            IGetTerminalByIdHandler,
+            GetTerminalByIdHandler>();
+
+        services.AddScoped<
+            IUpdateTerminalHandler,
+            UpdateTerminalHandler>();
+
+        services.AddScoped<
+            IDeleteTerminalHandler,
+            DeleteTerminalHandler>();
 
         return services;
     }
+
 }
