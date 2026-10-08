@@ -2,6 +2,11 @@
 using Application.Features.Identity.Login.Interfaces;
 using Application.Features.Identity.Register.Interfaces;
 using Application.Features.Identity.Tokens.Interfaces;
+using Application.Features.Logistics.Berths.Create.Interfaces;
+using Application.Features.Logistics.Berths.Delete.Interfaces;
+using Application.Features.Logistics.Berths.GetAll.Interfaces;
+using Application.Features.Logistics.Berths.GetById.Interfaces;
+using Application.Features.Logistics.Berths.Update.Interfaces;
 using Application.Features.Logistics.Ports.Create.Interfaces;
 using Application.Features.Logistics.Ports.Delete.Interfaces;
 using Application.Features.Logistics.Ports.GetAll.Interfaces;
@@ -33,6 +38,11 @@ using Application.Features.Shipping.LogisticsAdmin.Shipment.Load.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Unload.Interfaces;
 using Application.Features.Shipping.Public.Tracking.GetByTrackingNumber.Interfaces;
+using Infrastructur.Features.Logistics.Berths.Create;
+using Infrastructur.Features.Logistics.Berths.Delete;
+using Infrastructur.Features.Logistics.Berths.GetAll;
+using Infrastructur.Features.Logistics.Berths.GetById;
+using Infrastructur.Features.Logistics.Berths.Update;
 using Infrastructur.Features.Logistics.Ports.Create;
 using Infrastructur.Features.Logistics.Ports.Delete;
 using Infrastructur.Features.Logistics.Ports.GetAll;
@@ -309,6 +319,31 @@ public static class ServiceRegistration
         services.AddScoped<
             IDeleteTerminalHandler,
             DeleteTerminalHandler>();
+
+
+
+        // =========================================================
+        // Logistics - Berths
+        // =========================================================
+
+        services.AddScoped<
+            ICreateBerthHandler,
+            CreateBerthHandler>();
+
+        services.AddScoped<
+            IGetAllBerthsHandler,
+            GetAllBerthsHandler>();
+        services.AddScoped<
+            IGetBerthByIdHandler,
+            GetBerthByIdHandler>();
+
+        services.AddScoped<
+            IUpdateBerthHandler,
+            UpdateBerthHandler>();
+
+        services.AddScoped<
+            IDeleteBerthHandler,
+            DeleteBerthHandler>();
 
         return services;
     }
