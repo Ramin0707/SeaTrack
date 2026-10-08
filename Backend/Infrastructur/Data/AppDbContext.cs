@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Infrastructur.Data.Configurations;
 using Infrastructur.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ namespace Infrastructur.Data
         public DbSet<Payment> Payments => Set<Payment>();
 
         public DbSet<Shipment> Shipments => Set<Shipment>();
+        public DbSet<Vessel> Vessels => Set<Vessel>();
 
 
         // =========================================================
@@ -59,6 +61,8 @@ namespace Infrastructur.Data
 
             builder.ApplyConfiguration(
                 new Configurations.BerthConfiguration());
+
+            builder.ApplyConfiguration(new VesselConfiguration());
 
 
             // =====================================================
