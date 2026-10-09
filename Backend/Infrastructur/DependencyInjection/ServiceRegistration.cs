@@ -7,6 +7,11 @@ using Application.Features.Logistics.Berths.Delete.Interfaces;
 using Application.Features.Logistics.Berths.GetAll.Interfaces;
 using Application.Features.Logistics.Berths.GetById.Interfaces;
 using Application.Features.Logistics.Berths.Update.Interfaces;
+using Application.Features.Logistics.Containers.Create.Interfaces;
+using Application.Features.Logistics.Containers.Delete.Interfaces;
+using Application.Features.Logistics.Containers.GetAll.Interfaces;
+using Application.Features.Logistics.Containers.GetById.Interfaces;
+using Application.Features.Logistics.Containers.Update.Interfaces;
 using Application.Features.Logistics.Ports.Create.Interfaces;
 using Application.Features.Logistics.Ports.Delete.Interfaces;
 using Application.Features.Logistics.Ports.GetAll.Interfaces;
@@ -48,6 +53,11 @@ using Infrastructur.Features.Logistics.Berths.Delete;
 using Infrastructur.Features.Logistics.Berths.GetAll;
 using Infrastructur.Features.Logistics.Berths.GetById;
 using Infrastructur.Features.Logistics.Berths.Update;
+using Infrastructur.Features.Logistics.Containers.Create;
+using Infrastructur.Features.Logistics.Containers.Delete;
+using Infrastructur.Features.Logistics.Containers.GetAll;
+using Infrastructur.Features.Logistics.Containers.GetById;
+using Infrastructur.Features.Logistics.Containers.Update;
 using Infrastructur.Features.Logistics.Ports.Create;
 using Infrastructur.Features.Logistics.Ports.Delete;
 using Infrastructur.Features.Logistics.Ports.GetAll;
@@ -381,6 +391,29 @@ public static class ServiceRegistration
             DeleteVesselHandler>();
 
 
+
+        // =========================================================
+        // Logistics - Containers
+        // =========================================================
+
+        services.AddScoped<
+            ICreateContainerHandler,
+            CreateContainerHandler>();
+
+        services.AddScoped<
+            IGetAllContainersHandler,
+            GetAllContainersHandler>();
+
+        services.AddScoped<
+            IGetContainerByIdHandler,
+            GetContainerByIdHandler>();
+        services.AddScoped<
+            IUpdateContainerHandler,
+            UpdateContainerHandler>();
+
+        services.AddScoped<
+            IDeleteContainerHandler,
+            DeleteContainerHandler>();
 
         return services;
     }

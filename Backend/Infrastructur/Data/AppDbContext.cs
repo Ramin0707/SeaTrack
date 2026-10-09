@@ -39,7 +39,7 @@ namespace Infrastructur.Data
 
         public DbSet<Berth> Berths => Set<Berth>();
 
-
+        public DbSet<Container> Containers => Set<Container>();
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -63,7 +63,7 @@ namespace Infrastructur.Data
                 new Configurations.BerthConfiguration());
 
             builder.ApplyConfiguration(new VesselConfiguration());
-
+            builder.ApplyConfiguration(new ContainerConfiguration());
 
             // =====================================================
             // Default Schema
