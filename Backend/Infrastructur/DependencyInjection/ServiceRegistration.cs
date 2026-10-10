@@ -12,11 +12,21 @@ using Application.Features.Logistics.Containers.Delete.Interfaces;
 using Application.Features.Logistics.Containers.GetAll.Interfaces;
 using Application.Features.Logistics.Containers.GetById.Interfaces;
 using Application.Features.Logistics.Containers.Update.Interfaces;
+using Application.Features.Logistics.PortCalls.Create.Interfaces;
+using Application.Features.Logistics.PortCalls.Delete.Interfaces;
+using Application.Features.Logistics.PortCalls.GetAll.Interfaces;
+using Application.Features.Logistics.PortCalls.GetById.Interfaces;
+using Application.Features.Logistics.PortCalls.Update.Interfaces;
 using Application.Features.Logistics.Ports.Create.Interfaces;
 using Application.Features.Logistics.Ports.Delete.Interfaces;
 using Application.Features.Logistics.Ports.GetAll.Interfaces;
 using Application.Features.Logistics.Ports.GetById.Interfaces;
 using Application.Features.Logistics.Ports.Update.Interfaces;
+using Application.Features.Logistics.Routes.Create.Interfaces;
+using Application.Features.Logistics.Routes.Delete.Interfaces;
+using Application.Features.Logistics.Routes.GetAll.Interfaces;
+using Application.Features.Logistics.Routes.GetById.Interfaces;
+using Application.Features.Logistics.Routes.Update.Interfaces;
 using Application.Features.Logistics.Terminals.Create.Interfaces;
 using Application.Features.Logistics.Terminals.Delete.Interfaces;
 using Application.Features.Logistics.Terminals.GetAll.Interfaces;
@@ -27,6 +37,11 @@ using Application.Features.Logistics.Vessels.Delete.Interfaces;
 using Application.Features.Logistics.Vessels.GetAll.Interfaces;
 using Application.Features.Logistics.Vessels.GetById.Interfaces;
 using Application.Features.Logistics.Vessels.Update.Interfaces;
+using Application.Features.Logistics.Voyages.Create.Interfaces;
+using Application.Features.Logistics.Voyages.Delete.Interfaces;
+using Application.Features.Logistics.Voyages.GetAll.Interfaces;
+using Application.Features.Logistics.Voyages.GetById.Interfaces;
+using Application.Features.Logistics.Voyages.Update.Interfaces;
 using Application.Features.Shipping.Customer.Cancel.Interfaces;
 using Application.Features.Shipping.Customer.Create.Interfaces;
 using Application.Features.Shipping.Customer.GetById.Interfaces;
@@ -58,11 +73,21 @@ using Infrastructur.Features.Logistics.Containers.Delete;
 using Infrastructur.Features.Logistics.Containers.GetAll;
 using Infrastructur.Features.Logistics.Containers.GetById;
 using Infrastructur.Features.Logistics.Containers.Update;
+using Infrastructur.Features.Logistics.PortCalls.Create;
+using Infrastructur.Features.Logistics.PortCalls.Delete;
+using Infrastructur.Features.Logistics.PortCalls.GetAll;
+using Infrastructur.Features.Logistics.PortCalls.GetById;
+using Infrastructur.Features.Logistics.PortCalls.Update;
 using Infrastructur.Features.Logistics.Ports.Create;
 using Infrastructur.Features.Logistics.Ports.Delete;
 using Infrastructur.Features.Logistics.Ports.GetAll;
 using Infrastructur.Features.Logistics.Ports.GetById;
 using Infrastructur.Features.Logistics.Ports.Update;
+using Infrastructur.Features.Logistics.Routes.Create;
+using Infrastructur.Features.Logistics.Routes.Delete;
+using Infrastructur.Features.Logistics.Routes.GetAll;
+using Infrastructur.Features.Logistics.Routes.GetById;
+using Infrastructur.Features.Logistics.Routes.Update;
 using Infrastructur.Features.Logistics.Terminals.Create;
 using Infrastructur.Features.Logistics.Terminals.Delete;
 using Infrastructur.Features.Logistics.Terminals.GetAll;
@@ -73,6 +98,11 @@ using Infrastructur.Features.Logistics.Vessels.Delete;
 using Infrastructur.Features.Logistics.Vessels.GetAll;
 using Infrastructur.Features.Logistics.Vessels.GetById;
 using Infrastructur.Features.Logistics.Vessels.Update;
+using Infrastructur.Features.Logistics.Voyages.Create;
+using Infrastructur.Features.Logistics.Voyages.Delete;
+using Infrastructur.Features.Logistics.Voyages.GetAll;
+using Infrastructur.Features.Logistics.Voyages.GetById;
+using Infrastructur.Features.Logistics.Voyages.Update;
 using Infrastructur.Features.ShippingOrders.Customer.Cancel;
 using Infrastructur.Features.ShippingOrders.Customer.Create;
 using Infrastructur.Features.ShippingOrders.Customer.GetById;
@@ -414,6 +444,78 @@ public static class ServiceRegistration
         services.AddScoped<
             IDeleteContainerHandler,
             DeleteContainerHandler>();
+
+
+
+        // =========================================================
+        // Logistics - Routes
+        // =========================================================
+
+        services.AddScoped<
+            ICreateRouteHandler,
+            CreateRouteHandler>();
+
+        services.AddScoped<
+            IGetAllRoutesHandler,
+            GetAllRoutesHandler>();
+
+        services.AddScoped<
+            IGetRouteByIdHandler,
+            GetRouteByIdHandler>();
+
+        services.AddScoped<
+            IUpdateRouteHandler,
+            UpdateRouteHandler>();
+
+        services.AddScoped<
+            IDeleteRouteHandler,
+            DeleteRouteHandler>();
+
+
+        // Logistics - Voyages
+        services.AddScoped<
+            ICreateVoyageHandler,
+            CreateVoyageHandler>();
+
+        services.AddScoped<
+            IGetAllVoyagesHandler,
+            GetAllVoyagesHandler>();
+
+        services.AddScoped<
+            IGetVoyageByIdHandler,
+            GetVoyageByIdHandler>();
+
+        services.AddScoped<
+            IUpdateVoyageHandler,
+            UpdateVoyageHandler>();
+
+        services.AddScoped<
+            IDeleteVoyageHandler,
+            DeleteVoyageHandler>();
+
+
+
+        // Logistics - Port Calls
+        services.AddScoped<
+            ICreatePortCallHandler,
+            CreatePortCallHandler>();
+
+        services.AddScoped<
+            IGetAllPortCallsHandler,
+            GetAllPortCallsHandler>();
+
+        services.AddScoped<
+            IGetPortCallByIdHandler,
+            GetPortCallByIdHandler>();
+
+        services.AddScoped<
+            IUpdatePortCallHandler,
+            UpdatePortCallHandler>();
+
+        services.AddScoped<
+            IDeletePortCallHandler,
+            DeletePortCallHandler>();
+
 
         return services;
     }

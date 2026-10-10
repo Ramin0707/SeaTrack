@@ -27,8 +27,9 @@ namespace Infrastructur.Data
 
         public DbSet<Shipment> Shipments => Set<Shipment>();
         public DbSet<Vessel> Vessels => Set<Vessel>();
-
-
+        public DbSet<Route> Routes => Set<Route>();
+        public DbSet<Voyage> Voyages => Set<Voyage>();
+        public DbSet<PortCall> PortCalls => Set<PortCall>();
         // =========================================================
         // Ports
         // =========================================================
@@ -64,7 +65,9 @@ namespace Infrastructur.Data
 
             builder.ApplyConfiguration(new VesselConfiguration());
             builder.ApplyConfiguration(new ContainerConfiguration());
-
+            builder.ApplyConfiguration(new RouteConfiguration());
+            builder.ApplyConfiguration(new VoyageConfiguration());
+            builder.ApplyConfiguration(new PortCallConfiguration());
             // =====================================================
             // Default Schema
             // =====================================================
