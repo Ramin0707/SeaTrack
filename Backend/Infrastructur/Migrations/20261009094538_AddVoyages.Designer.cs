@@ -4,6 +4,7 @@ using Infrastructur.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructur.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20261009094538_AddVoyages")]
+    partial class AddVoyages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,54 +235,6 @@ namespace Infrastructur.Migrations
                         .IsUnique();
 
                     b.ToTable("Ports", "logistics");
-                });
-
-            modelBuilder.Entity("Domain.Entities.PortCall", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("ActualArrivalUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ActualDepartureUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("BerthId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("EstimatedArrivalUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EstimatedDepartureUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("PortId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TerminalId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VoyageId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BerthId");
-
-                    b.HasIndex("PortId");
-
-                    b.HasIndex("TerminalId");
-
-                    b.HasIndex("VoyageId");
-
-                    b.ToTable("PortCalls", "logistics");
                 });
 
             modelBuilder.Entity("Domain.Entities.Quote", b =>
@@ -828,41 +783,6 @@ namespace Infrastructur.Migrations
                         .IsRequired();
 
                     b.Navigation("Invoice");
-                });
-
-            modelBuilder.Entity("Domain.Entities.PortCall", b =>
-                {
-                    b.HasOne("Domain.Entities.Berth", "Berth")
-                        .WithMany()
-                        .HasForeignKey("BerthId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Port", "Port")
-                        .WithMany()
-                        .HasForeignKey("PortId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Terminal", "Terminal")
-                        .WithMany()
-                        .HasForeignKey("TerminalId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Voyage", "Voyage")
-                        .WithMany()
-                        .HasForeignKey("VoyageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Berth");
-
-                    b.Navigation("Port");
-
-                    b.Navigation("Terminal");
-
-                    b.Navigation("Voyage");
                 });
 
             modelBuilder.Entity("Domain.Entities.Quote", b =>
