@@ -24,4 +24,9 @@ public class ShippingOrder:BaseEntity
     public ShippingOrderStatus Status { get; set; } = ShippingOrderStatus.AwaitingQuote;
 
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
+    public int? ContainerId { get; set; }
+    public int? VoyageId { get; set; }
+
+    public Container? Container { get; set; }
+    public Voyage? Voyage { get; set; }
 }

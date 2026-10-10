@@ -31,7 +31,24 @@ public class GetShippingOrderByIdHandler : IGetShippingOrderByIdHandler
                 ContainerType = order.ContainerType,
                 DesiredShippingDate = order.DesiredShippingDate,
                 Status = order.Status,
-                CreatedAtUtc = order.CreatedAtUtc
+                CreatedAtUtc = order.CreatedAtUtc,
+                ContainerId = order.ContainerId,
+                ContainerNumber = order.Container != null
+    ? order.Container.ContainerNumber
+    : null,
+
+                VoyageId = order.VoyageId,
+                VoyageNumber = order.Voyage != null
+    ? order.Voyage.VoyageNumber
+    : null,
+
+                VesselName = order.Voyage != null
+    ? order.Voyage.Vessel.Name
+    : null,
+
+                RouteName = order.Voyage != null
+    ? order.Voyage.Route.Name
+    : null
             })
             .FirstOrDefaultAsync();
     }

@@ -30,6 +30,7 @@ namespace Infrastructur.Data
         public DbSet<Route> Routes => Set<Route>();
         public DbSet<Voyage> Voyages => Set<Voyage>();
         public DbSet<PortCall> PortCalls => Set<PortCall>();
+        
         // =========================================================
         // Ports
         // =========================================================
@@ -68,6 +69,7 @@ namespace Infrastructur.Data
             builder.ApplyConfiguration(new RouteConfiguration());
             builder.ApplyConfiguration(new VoyageConfiguration());
             builder.ApplyConfiguration(new PortCallConfiguration());
+            builder.ApplyConfiguration(new ShippingOrderConfiguration());
             // =====================================================
             // Default Schema
             // =====================================================

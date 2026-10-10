@@ -25,4 +25,17 @@ public class GetShippingOrderByIdResponseDto
     public ShippingOrderStatus Status { get; set; }
 
     public DateTime CreatedAtUtc { get; set; }
+
+
+    public int? ContainerId { get; set; }
+
+    public string? ContainerNumber { get; set; }
+
+    public int? VoyageId { get; set; }
+
+    public string? VoyageNumber { get; set; }
+
+    public string? VesselName { get; set; }
+
+    public string? RouteName { get; set; }
 }

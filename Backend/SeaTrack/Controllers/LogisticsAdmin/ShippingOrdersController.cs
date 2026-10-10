@@ -20,6 +20,9 @@ using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Unload.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Unload.Interfaces;
+using Application.Features.ShippingOrders.LogisticsAdmin.Assignment.DTOs;
+using Application.Features.ShippingOrders.LogisticsAdmin.Assignment.Interfaces;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Assignment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,8 +46,10 @@ public class ShippingOrdersController : ControllerBase
     private readonly IArriveShipmentHandler _arriveShipmentHandler;
     private readonly IDeliverShipmentHandler _deliverShipmentHandler;
     private readonly IUnloadShipmentHandler _unloadShipmentHandler;
+    private readonly IAssignShippingOrderHandler _assignShippingOrderHandler;
 
     public ShippingOrdersController(
+        IAssignShippingOrderHandler assignShippingOrderHandler,
         IUnloadShipmentHandler unloadShipmentHandler,
         IGetAllShippingOrdersHandler getAllShippingOrdersHandler,
         IGetShippingOrderByIdHandler getShippingOrderByIdHandler,
@@ -55,7 +60,8 @@ public class ShippingOrdersController : ControllerBase
         IDepartShipmentHandler departShipmentHandler,
         IStartShipmentHandler startShipmentHandler,
         IArriveShipmentHandler arriveShipmentHandler,
-        IDeliverShipmentHandler deliverShipmentHandler)
+        IDeliverShipmentHandler deliverShipmentHandler
+       )
     {
         _getAllShippingOrdersHandler = getAllShippingOrdersHandler;
         _getShippingOrderByIdHandler = getShippingOrderByIdHandler;
@@ -70,6 +76,7 @@ public class ShippingOrdersController : ControllerBase
         _arriveShipmentHandler = arriveShipmentHandler;
         _deliverShipmentHandler = deliverShipmentHandler;
         _unloadShipmentHandler = unloadShipmentHandler;
+        _assignShippingOrderHandler = assignShippingOrderHandler;
     }
 
     // =========================================================
@@ -246,5 +253,28 @@ public class ShippingOrdersController : ControllerBase
         }
 
         return Ok(result);
+    }
+
+
+
+    [HttpPatch("{id:int}/assignment")]
+    public async Task<IActionResult> Assign(
+    int id,
+    [FromBody] AssignShippingOrderRequestDto request)
+    {
+        var assigned = await _assignShippingOrderHandler.HandleAsync(id, request);
+
+        if (!assigned)
+        {
+            return BadRequest(new
+            {
+                message = "Order assignment failed. Check order status, container availability and voyage."
+            });
+        }
+
+        return Ok(new
+        {
+            message = "Container and voyage assigned successfully."
+        });
     }
 }
