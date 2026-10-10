@@ -63,6 +63,7 @@ using Application.Features.Shipping.LogisticsAdmin.Shipment.Load.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Unload.Interfaces;
 using Application.Features.Shipping.Public.Tracking.GetByTrackingNumber.Interfaces;
+using Application.Features.ShippingOrders.LogisticsAdmin.Assignment.Interfaces;
 using Infrastructur.Features.Logistics.Berths.Create;
 using Infrastructur.Features.Logistics.Berths.Delete;
 using Infrastructur.Features.Logistics.Berths.GetAll;
@@ -113,6 +114,7 @@ using Infrastructur.Features.ShippingOrders.Customer.Quote.GetByShippingOrderId;
 using Infrastructur.Features.ShippingOrders.Customer.Quote.Reject;
 using Infrastructur.Features.ShippingOrders.Customer.Shipment.GetByShippingOrderId;
 using Infrastructur.Features.ShippingOrders.Customer.Update;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Assignment;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.GetAll;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Invoice.Create;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Quote.Create;
@@ -516,6 +518,11 @@ public static class ServiceRegistration
             IDeletePortCallHandler,
             DeletePortCallHandler>();
 
+
+
+        services.AddScoped<
+            IAssignShippingOrderHandler,
+            AssignShippingOrderHandler>();
 
         return services;
     }
