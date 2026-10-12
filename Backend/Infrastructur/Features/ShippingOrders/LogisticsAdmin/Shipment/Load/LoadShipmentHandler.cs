@@ -36,6 +36,7 @@ public class LoadShipmentHandler : ILoadShipmentHandler
             return null;
 
         shipment.Status = ShipmentStatus.Loaded;
+        shipment.LoadedAtUtc = DateTime.UtcNow;
 
         await _context.SaveChangesAsync();
 

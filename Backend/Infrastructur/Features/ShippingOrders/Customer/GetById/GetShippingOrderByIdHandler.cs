@@ -34,7 +34,8 @@ public class GetShippingOrderByIdHandler : IGetShippingOrderByIdHandler
                 ContainerType = order.ContainerType,
                 DesiredShippingDate = order.DesiredShippingDate,
                 Status = order.Status,
-                CreatedAtUtc = order.CreatedAtUtc
+                CreatedAtUtc = order.CreatedAtUtc,
+                
             })
             .FirstOrDefaultAsync();
     }

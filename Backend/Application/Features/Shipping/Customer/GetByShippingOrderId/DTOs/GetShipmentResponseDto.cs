@@ -17,4 +17,9 @@ public class GetShipmentResponseDto
     public DateTime? ShippedAtUtc { get; set; }
 
     public DateTime? DeliveredAtUtc { get; set; }
+    public DateTime? LoadedAtUtc { get; set; }
+
+    public DateTime? ArrivedAtUtc { get; set; }
+
+    public DateTime? UnloadedAtUtc { get; set; }
 }

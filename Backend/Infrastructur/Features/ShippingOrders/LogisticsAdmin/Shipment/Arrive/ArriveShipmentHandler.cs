@@ -38,7 +38,12 @@ public class ArriveShipmentHandler : IArriveShipmentHandler
         if (shippingOrder.Status != ShippingOrderStatus.InTransit)
             return null;
 
+        var arrivedAtUtc = DateTime.UtcNow;
+
         shipment.Status = ShipmentStatus.Arrived;
+        shipment.ArrivedAtUtc = arrivedAtUtc;
+
+        await _context.SaveChangesAsync();
 
         await _context.SaveChangesAsync();
 
@@ -49,7 +54,7 @@ public class ArriveShipmentHandler : IArriveShipmentHandler
             TrackingNumber = shipment.TrackingNumber,
             ShipmentStatus = shipment.Status,
             ShippingOrderStatus = shippingOrder.Status,
-            ArrivedAtUtc = DateTime.UtcNow
+            ArrivedAtUtc = arrivedAtUtc
         };
     }
 }
