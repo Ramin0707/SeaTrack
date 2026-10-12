@@ -26,6 +26,9 @@ public class CreateShipmentHandler : ICreateShipmentHandler
         if (order.Status != ShippingOrderStatus.Confirmed)
             return null;
 
+        if (order.ContainerId is null || order.VoyageId is null)
+            return null;
+
         var shipmentExists = await _context.Shipments
             .AnyAsync(x => x.ShippingOrderId == shippingOrderId);
 

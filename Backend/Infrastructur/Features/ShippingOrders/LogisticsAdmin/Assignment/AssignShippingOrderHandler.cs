@@ -28,6 +28,9 @@ public class AssignShippingOrderHandler : IAssignShippingOrderHandler
         if (order.Status != ShippingOrderStatus.Confirmed)
             return false;
 
+        if (order.ContainerId is not null || order.VoyageId is not null)
+            return false;
+
         var container = await _context.Containers
             .FirstOrDefaultAsync(container =>
                 container.Id == request.ContainerId &&
