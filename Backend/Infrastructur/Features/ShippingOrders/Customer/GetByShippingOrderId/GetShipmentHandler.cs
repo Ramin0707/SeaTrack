@@ -40,7 +40,10 @@ public class GetShipmentHandler : IGetShipmentHandler
             TrackingNumber = shipment.TrackingNumber,
             Status = shipment.Status,
             CreatedAtUtc = shipment.CreatedAtUtc,
+            LoadedAtUtc = shipment.LoadedAtUtc,
             ShippedAtUtc = shipment.ShippedAtUtc,
+            ArrivedAtUtc = shipment.ArrivedAtUtc,
+            UnloadedAtUtc = shipment.UnloadedAtUtc,
             DeliveredAtUtc = shipment.DeliveredAtUtc
         };
     }

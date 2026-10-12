@@ -59,6 +59,7 @@ using Application.Features.Shipping.LogisticsAdmin.Shipment.Arrive.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Create.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Deliver.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Depart.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.GetAll.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Load.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Unload.Interfaces;
@@ -122,6 +123,7 @@ using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Arrive;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Create;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Deliver;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Depart;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.GetAll;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Load;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Start;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Unload;
@@ -132,10 +134,15 @@ using Infrastructur.Identity.Register;
 using Infrastructur.Identity.Seeding;
 using Infrastructur.Identity.Services;
 using Microsoft.Extensions.DependencyInjection;
+using LogisticsAdminGetShipmentHandler =
+    Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.GetByShippingOrderId.GetShipmentHandler;
+using LogisticsAdminGetShipmentHandlerInterface =
+    Application.Features.Shipping.LogisticsAdmin.Shipment.GetByShippingOrderId.Interfaces.IGetShipmentHandler;
 using LogisticsAdminGetShippingOrderByIdHandler =
     Infrastructur.Features.ShippingOrders.LogisticsAdmin.GetById.GetShippingOrderByIdHandler;
 using LogisticsAdminGetShippingOrderByIdHandlerInterface =
     Application.Features.Shipping.LogisticsAdmin.GetById.Interfaces.IGetShippingOrderByIdHandler;
+
 namespace Infrastructur.DependencyInjection;
 
 public static class ServiceRegistration
@@ -523,6 +530,18 @@ public static class ServiceRegistration
         services.AddScoped<
             IAssignShippingOrderHandler,
             AssignShippingOrderHandler>();
+
+
+
+
+        services.AddScoped<
+            LogisticsAdminGetShipmentHandlerInterface,
+            LogisticsAdminGetShipmentHandler>();
+
+
+        services.AddScoped<
+            IGetAllShipmentsHandler,
+            GetAllShipmentsHandler>();
 
         return services;
     }

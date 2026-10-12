@@ -17,4 +17,9 @@ public class Shipment : BaseEntity
     public DateTime? DeliveredAtUtc { get; set; }
 
     public ShippingOrder ShippingOrder { get; set; } = null!;
+    public DateTime? LoadedAtUtc { get; set; }
+
+    public DateTime? ArrivedAtUtc { get; set; }
+
+    public DateTime? UnloadedAtUtc { get; set; }
 }

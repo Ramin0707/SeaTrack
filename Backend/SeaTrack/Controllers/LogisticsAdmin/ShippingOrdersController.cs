@@ -14,6 +14,8 @@ using Application.Features.Shipping.LogisticsAdmin.Shipment.Deliver.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Deliver.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Depart.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Depart.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.GetAll.DTOs;
+using Application.Features.Shipping.LogisticsAdmin.Shipment.GetAll.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Load.DTOs;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Load.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.DTOs;
@@ -25,6 +27,11 @@ using Application.Features.ShippingOrders.LogisticsAdmin.Assignment.Interfaces;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Assignment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using LogisticsAdminGetShipmentHandler =
+    Application.Features.Shipping.LogisticsAdmin.Shipment.GetByShippingOrderId.Interfaces.IGetShipmentHandler;
+
+using LogisticsAdminGetShipmentResponseDto =
+    Application.Features.Shipping.LogisticsAdmin.Shipment.GetByShippingOrderId.DTOs.GetShipmentResponseDto;
 
 namespace SeaTrack.Controllers.LogisticsAdmin;
 
@@ -47,6 +54,8 @@ public class ShippingOrdersController : ControllerBase
     private readonly IDeliverShipmentHandler _deliverShipmentHandler;
     private readonly IUnloadShipmentHandler _unloadShipmentHandler;
     private readonly IAssignShippingOrderHandler _assignShippingOrderHandler;
+    private readonly LogisticsAdminGetShipmentHandler _getShipmentHandler;
+    private readonly IGetAllShipmentsHandler _getAllShipmentsHandler;
 
     public ShippingOrdersController(
         IAssignShippingOrderHandler assignShippingOrderHandler,
@@ -60,7 +69,9 @@ public class ShippingOrdersController : ControllerBase
         IDepartShipmentHandler departShipmentHandler,
         IStartShipmentHandler startShipmentHandler,
         IArriveShipmentHandler arriveShipmentHandler,
-        IDeliverShipmentHandler deliverShipmentHandler
+        IDeliverShipmentHandler deliverShipmentHandler,
+        LogisticsAdminGetShipmentHandler getShipmentHandler,
+        IGetAllShipmentsHandler getAllShipmentsHandler
        )
     {
         _getAllShippingOrdersHandler = getAllShippingOrdersHandler;
@@ -77,6 +88,8 @@ public class ShippingOrdersController : ControllerBase
         _deliverShipmentHandler = deliverShipmentHandler;
         _unloadShipmentHandler = unloadShipmentHandler;
         _assignShippingOrderHandler = assignShippingOrderHandler;
+        _getShipmentHandler = getShipmentHandler;
+        _getAllShipmentsHandler = getAllShipmentsHandler;
     }
 
     // =========================================================
@@ -276,5 +289,31 @@ public class ShippingOrdersController : ControllerBase
         {
             message = "Container and voyage assigned successfully."
         });
+    }
+
+
+    [HttpGet("{id:int}/shipment")]
+    public async Task<ActionResult<LogisticsAdminGetShipmentResponseDto>> GetShipment(
+    int id)
+    {
+        var result = await _getShipmentHandler.HandleAsync(id);
+
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+
+
+
+    [HttpGet("shipments")]
+    public async Task<ActionResult<List<GetAllShipmentsResponseDto>>> GetAllShipments()
+    {
+        var result = await _getAllShipmentsHandler.HandleAsync();
+
+        return Ok(result);
     }
 }

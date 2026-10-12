@@ -377,10 +377,16 @@ namespace Infrastructur.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("ArrivedAtUtc")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeliveredAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LoadedAtUtc")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("ShippedAtUtc")
@@ -395,6 +401,9 @@ namespace Infrastructur.Migrations
                     b.Property<string>("TrackingNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UnloadedAtUtc")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

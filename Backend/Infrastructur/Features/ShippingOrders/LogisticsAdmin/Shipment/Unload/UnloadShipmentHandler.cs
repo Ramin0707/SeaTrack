@@ -38,7 +38,12 @@ public class UnloadShipmentHandler : IUnloadShipmentHandler
         if (shippingOrder.Status != ShippingOrderStatus.InTransit)
             return null;
 
+        var unloadedAtUtc = DateTime.UtcNow;
+
         shipment.Status = ShipmentStatus.Unloaded;
+        shipment.UnloadedAtUtc = unloadedAtUtc;
+
+        await _context.SaveChangesAsync();
 
         await _context.SaveChangesAsync();
 
@@ -49,7 +54,7 @@ public class UnloadShipmentHandler : IUnloadShipmentHandler
             TrackingNumber = shipment.TrackingNumber,
             ShipmentStatus = shipment.Status,
             ShippingOrderStatus = shippingOrder.Status,
-            UnloadedAtUtc = DateTime.UtcNow
+            UnloadedAtUtc = unloadedAtUtc
         };
     }
 }
