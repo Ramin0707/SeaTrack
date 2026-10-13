@@ -52,6 +52,7 @@ using Application.Features.Shipping.Customer.Quote.GetByShippingOrderId.Interfac
 using Application.Features.Shipping.Customer.Quote.Reject.Interfaces;
 using Application.Features.Shipping.Customer.Shipment.GetByShippingOrderId.Interfaces;
 using Application.Features.Shipping.Customer.Update.Interfaces;
+using Application.Features.Shipping.LogisticsAdmin.Customers.GetAll.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.GetAll.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Invoice.Create.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Quote.Create.Interfaces;
@@ -116,6 +117,7 @@ using Infrastructur.Features.ShippingOrders.Customer.Quote.Reject;
 using Infrastructur.Features.ShippingOrders.Customer.Shipment.GetByShippingOrderId;
 using Infrastructur.Features.ShippingOrders.Customer.Update;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Assignment;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Customers.GetAll;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.GetAll;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Invoice.Create;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Quote.Create;
@@ -543,6 +545,8 @@ public static class ServiceRegistration
             IGetAllShipmentsHandler,
             GetAllShipmentsHandler>();
 
+
+        services.AddScoped<IGetCustomersHandler, GetCustomersHandler>();
         return services;
     }
 
