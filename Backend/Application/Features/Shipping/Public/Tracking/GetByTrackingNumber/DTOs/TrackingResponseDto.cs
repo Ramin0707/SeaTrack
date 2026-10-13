@@ -14,7 +14,14 @@ public class TrackingResponseDto
 
     public DateTime CreatedAtUtc { get; set; }
 
+    public DateTime? LoadedAtUtc { get; set; }
+
     public DateTime? ShippedAtUtc { get; set; }
 
+    public DateTime? ArrivedAtUtc { get; set; }
+
+    public DateTime? UnloadedAtUtc { get; set; }
+
     public DateTime? DeliveredAtUtc { get; set; }
+    public List<TrackingPortCallDto> PortCalls { get; set; } = new();
 }
