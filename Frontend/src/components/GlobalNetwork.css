@@ -1,0 +1,640 @@
+/* =========================================
+   SEATRACK — GLOBAL NETWORK
+========================================= */
+
+.global-network {
+  position: relative;
+  overflow: hidden;
+
+  padding: 120px 0;
+
+  background: #031f2e;
+  color: #ffffff;
+}
+
+
+/* =========================================
+   BACKGROUND DECORATION
+========================================= */
+
+.global-network::before {
+  content: "";
+
+  position: absolute;
+
+  width: 520px;
+  height: 520px;
+
+  right: -250px;
+  top: -180px;
+
+  border: 1px solid rgba(37, 200, 195, 0.07);
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.global-network::after {
+  content: "";
+
+  position: absolute;
+
+  width: 330px;
+  height: 330px;
+
+  right: -150px;
+  top: -80px;
+
+  border: 1px solid rgba(37, 200, 195, 0.05);
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.global-network-container {
+  position: relative;
+  z-index: 2;
+
+  width: min(1180px, calc(100% - 48px));
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns: 0.78fr 1.22fr;
+
+  gap: 75px;
+
+  align-items: center;
+}
+
+
+/* =========================================
+   LEFT CONTENT
+========================================= */
+
+.global-network-content {
+  max-width: 460px;
+}
+
+
+/* LABEL */
+
+.global-network-label {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 24px;
+
+  color: #25c8c3;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 4px;
+}
+
+.global-network-label::before {
+  content: "";
+
+  width: 34px;
+  height: 1px;
+
+  background: #25c8c3;
+}
+
+
+/* TITLE */
+
+.global-network-content h2 {
+  margin: 0 0 25px;
+
+  color: #ffffff;
+
+  font-size: clamp(46px, 4.8vw, 67px);
+  font-weight: 800;
+
+  line-height: 0.98;
+  letter-spacing: -2.5px;
+}
+
+
+/* DESCRIPTION */
+
+.global-network-content p {
+  max-width: 440px;
+
+  margin: 0 0 33px;
+
+  color: #8fb2c4;
+
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+
+/* LINK */
+
+.global-network-link {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 13px;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.global-network-link span {
+  color: #ff9b36;
+
+  font-size: 18px;
+
+  transition: transform 0.25s ease;
+}
+
+.global-network-link:hover {
+  color: #25c8c3;
+}
+
+.global-network-link:hover span {
+  transform: translateX(5px);
+}
+
+
+/* =========================================
+   RIGHT MAP PANEL
+========================================= */
+
+.global-network-visual {
+  position: relative;
+  overflow: hidden;
+
+  width: 100%;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(10, 59, 79, 0.92),
+      rgba(5, 42, 59, 0.96)
+    );
+
+  border: 1px solid rgba(105, 192, 207, 0.18);
+
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================================
+   TOP STATS
+========================================= */
+
+.network-stats {
+  position: relative;
+  z-index: 10;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  background: rgba(6, 47, 65, 0.82);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.network-stats > div {
+  padding: 25px 24px;
+}
+
+.network-stats > div:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.network-stats strong {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #ffffff;
+
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.network-stats span {
+  color: #83a9ba;
+
+  font-size: 11px;
+}
+
+
+/* =========================================
+   MAP AREA
+========================================= */
+
+.network-map {
+  position: relative;
+  overflow: hidden;
+
+  width: 100%;
+  height: 390px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(37, 200, 195, 0.08),
+      transparent 60%
+    ),
+    #04293a;
+}
+
+
+/* =========================================
+   MAP IMAGE
+========================================= */
+
+.network-map-image {
+  position: absolute;
+
+  z-index: 1;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  object-position: center;
+
+  display: block;
+
+  opacity: 0.9;
+}
+
+
+/* dark overlay so UI stays readable */
+
+.network-map-overlay {
+  position: absolute;
+
+  z-index: 2;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3, 31, 46, 0.12) 0%,
+      rgba(3, 31, 46, 0.02) 45%,
+      rgba(3, 31, 46, 0.22) 100%
+    );
+}
+
+
+/* =========================================
+   LOCATION POINTS
+========================================= */
+
+.network-location {
+  position: absolute;
+
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  transform: translate(-50%, -50%);
+}
+
+
+/* POINT */
+
+.network-dot {
+  position: relative;
+
+  display: block;
+
+  width: 9px;
+  height: 9px;
+
+  flex: 0 0 9px;
+
+  border-radius: 50%;
+
+  background: #25c8c3;
+
+  box-shadow:
+    0 0 0 5px rgba(37, 200, 195, 0.12),
+    0 0 16px rgba(37, 200, 195, 0.8);
+}
+
+
+/* pulse */
+
+.network-dot::before {
+  content: "";
+
+  position: absolute;
+
+  inset: -6px;
+
+  border: 1px solid rgba(37, 200, 195, 0.4);
+
+  border-radius: 50%;
+
+  animation: networkPulse 2.3s infinite;
+}
+
+
+/* ORANGE POINT */
+
+.network-dot.orange {
+  background: #ff9b36;
+
+  box-shadow:
+    0 0 0 5px rgba(255, 155, 54, 0.12),
+    0 0 16px rgba(255, 155, 54, 0.8);
+}
+
+.network-dot.orange::before {
+  border-color: rgba(255, 155, 54, 0.4);
+}
+
+
+/* =========================================
+   LOCATION LABEL
+========================================= */
+
+.network-location-info {
+  display: flex;
+  flex-direction: column;
+
+  padding: 5px 8px;
+
+  border-radius: 5px;
+
+  background: rgba(3, 31, 46, 0.68);
+
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.network-location-info strong {
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.network-location-info small {
+  margin-top: 1px;
+
+  color: #79a4b7;
+
+  font-size: 7px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   LOCATION POSITIONS
+========================================= */
+
+/*
+   These are visual positions on our map.
+   Later we can make them data-driven.
+*/
+
+.location-baku {
+  left: 59%;
+  top: 43%;
+}
+
+.location-istanbul {
+  left: 52%;
+  top: 42%;
+}
+
+.location-dubai {
+  left: 61%;
+  top: 54%;
+}
+
+.location-singapore {
+  left: 77%;
+  top: 68%;
+}
+
+
+/* =========================================
+   BOTTOM INFO BAR
+========================================= */
+
+.network-bottom {
+  position: relative;
+  z-index: 10;
+
+  min-height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 0 24px;
+
+  background: rgba(5, 43, 59, 0.96);
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.network-bottom span {
+  color: #25c8c3;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.network-bottom strong {
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   PULSE ANIMATION
+========================================= */
+
+@keyframes networkPulse {
+
+  0% {
+    transform: scale(0.7);
+    opacity: 0.8;
+  }
+
+  70% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .global-network {
+    padding: 95px 0;
+  }
+
+  .global-network-container {
+    grid-template-columns: 1fr;
+
+    gap: 55px;
+  }
+
+  .global-network-content {
+    max-width: 650px;
+  }
+
+  .global-network-visual {
+    max-width: 800px;
+  }
+
+  .network-map {
+    height: 430px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+  .global-network {
+    padding: 75px 0 80px;
+  }
+
+  .global-network-container {
+    width: min(100% - 30px, 1180px);
+
+    gap: 45px;
+  }
+
+  .global-network-content h2 {
+    font-size: 43px;
+
+    letter-spacing: -1.8px;
+  }
+
+  .global-network-content p {
+    font-size: 14px;
+  }
+
+
+  /* STATS */
+
+  .network-stats > div {
+    padding: 18px 12px;
+  }
+
+  .network-stats strong {
+    font-size: 18px;
+  }
+
+  .network-stats span {
+    font-size: 8px;
+  }
+
+
+  /* MAP */
+
+  .network-map {
+    height: 280px;
+  }
+
+
+  /* smaller points */
+
+  .network-dot {
+    width: 7px;
+    height: 7px;
+
+    flex-basis: 7px;
+  }
+
+  .network-location-info {
+    padding: 4px 6px;
+  }
+
+  .network-location-info strong {
+    font-size: 7px;
+  }
+
+  .network-location-info small {
+    display: none;
+  }
+
+
+  /* BOTTOM */
+
+  .network-bottom {
+    min-height: 52px;
+
+    padding: 0 15px;
+  }
+
+  .network-bottom span {
+    font-size: 7px;
+
+    letter-spacing: 1px;
+  }
+
+  .network-bottom strong {
+    font-size: 9px;
+  }
+}

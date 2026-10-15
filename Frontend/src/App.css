@@ -1,0 +1,66 @@
+/* =========================
+   SEATRACK — GLOBAL COLORS
+   ========================= */
+
+:root {
+  --bg-main: #031f2f;
+  --bg-secondary: #06283b;
+  --bg-card: #083249;
+  --bg-card-hover: #0b3b55;
+
+  --accent: #19c7c3;
+  --accent-hover: #28ddd7;
+
+  --text-primary: #ffffff;
+  --text-secondary: #a9bdc9;
+  --text-muted: #718b99;
+
+  --border: rgba(255, 255, 255, 0.10);
+
+  --container-width: 1400px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background: var(--bg-main);
+  color: var(--text-primary);
+
+  font-family:
+    Inter,
+    Arial,
+    Helvetica,
+    sans-serif;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-main);
+}
+
+.container {
+  width: min(90%, var(--container-width));
+  margin: 0 auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}

@@ -1,0 +1,526 @@
+/* =========================================
+   SEATRACK — WHY SEATRACK
+========================================= */
+
+.why-seatrack {
+  position: relative;
+  overflow: hidden;
+
+  padding: 120px 0;
+
+  background: #031f2e;
+  color: #ffffff;
+}
+
+
+/* =========================================
+   BACKGROUND DECORATION
+========================================= */
+
+.why-seatrack::before {
+  content: "";
+
+  position: absolute;
+
+  width: 520px;
+  height: 520px;
+
+  left: -300px;
+  top: 80px;
+
+  border: 1px solid rgba(37, 200, 195, 0.06);
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.why-seatrack::after {
+  content: "";
+
+  position: absolute;
+
+  width: 340px;
+  height: 340px;
+
+  right: -200px;
+  bottom: -120px;
+
+  border: 1px solid rgba(37, 200, 195, 0.05);
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.why-seatrack-container {
+  position: relative;
+  z-index: 2;
+
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+
+  gap: 85px;
+  align-items: center;
+}
+
+
+/* =========================================
+   LEFT SIDE
+========================================= */
+
+.why-seatrack-left {
+  max-width: 530px;
+}
+
+
+/* =========================================
+   LABEL
+========================================= */
+
+.why-seatrack-label {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 24px;
+
+  color: #25c8c3;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 4px;
+}
+
+.why-seatrack-label::before {
+  content: "";
+
+  display: block;
+
+  width: 34px;
+  height: 1px;
+
+  background: #25c8c3;
+}
+
+
+/* =========================================
+   TITLE
+========================================= */
+
+.why-seatrack-left h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: clamp(48px, 4.7vw, 66px);
+  font-weight: 800;
+
+  line-height: 0.98;
+  letter-spacing: -2.5px;
+}
+
+.why-seatrack-left h2 span {
+  color: #25c8c3;
+}
+
+
+/* =========================================
+   DESCRIPTION
+========================================= */
+
+.why-seatrack-description {
+  max-width: 500px;
+
+  margin: 27px 0 0;
+
+  color: #8fb2c4;
+
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+
+/* =========================================
+   IMAGE
+========================================= */
+
+.why-seatrack-image {
+  position: relative;
+  overflow: hidden;
+
+  width: 100%;
+  height: 285px;
+
+  margin-top: 36px;
+
+  border: 1px solid rgba(105, 192, 207, 0.16);
+  border-radius: 16px;
+
+  background: #062c3d;
+
+  box-shadow:
+    0 24px 55px rgba(0, 0, 0, 0.2);
+}
+
+.why-seatrack-image img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition: transform 0.7s ease;
+}
+
+.why-seatrack-image:hover img {
+  transform: scale(1.04);
+}
+
+
+/* =========================================
+   IMAGE GRADIENT
+========================================= */
+
+.why-seatrack-image::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3, 31, 46, 0.02) 20%,
+      rgba(3, 31, 46, 0.18) 52%,
+      rgba(3, 31, 46, 0.92) 100%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   IMAGE TEXT
+========================================= */
+
+.why-image-overlay {
+  position: absolute;
+  z-index: 3;
+
+  left: 26px;
+  right: 26px;
+  bottom: 24px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.why-image-overlay span {
+  color: #25c8c3;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 2.5px;
+}
+
+.why-image-overlay strong {
+  color: #ffffff;
+
+  font-size: 21px;
+  font-weight: 800;
+
+  line-height: 1.15;
+
+  text-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.35);
+}
+
+
+/* =========================================
+   DISCOVER LINK
+========================================= */
+
+.why-seatrack-link {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 13px;
+
+  margin-top: 27px;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition: color 0.25s ease;
+}
+
+.why-seatrack-link > span {
+  color: #ff9b36;
+
+  font-size: 19px;
+
+  transition: transform 0.25s ease;
+}
+
+.why-seatrack-link:hover {
+  color: #25c8c3;
+}
+
+.why-seatrack-link:hover > span {
+  transform: translateX(5px);
+}
+
+
+/* =========================================
+   RIGHT SIDE
+========================================= */
+
+.why-seatrack-right {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+
+/* =========================================
+   ADVANTAGE ITEM
+========================================= */
+
+.why-seatrack-item {
+  position: relative;
+
+  min-height: 145px;
+
+  display: grid;
+
+  grid-template-columns: 55px 1fr 35px;
+
+  gap: 20px;
+
+  align-items: center;
+
+  padding: 28px 10px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+
+  transition:
+    padding-left 0.3s ease,
+    background 0.3s ease;
+}
+
+.why-seatrack-item:hover {
+  padding-left: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(37, 200, 195, 0.055),
+      transparent 80%
+    );
+}
+
+
+/* =========================================
+   NUMBER
+========================================= */
+
+.why-item-number {
+  color: #25c8c3;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+
+/* =========================================
+   ITEM CONTENT
+========================================= */
+
+.why-item-content h3 {
+  margin: 0 0 9px;
+
+  color: #ffffff;
+
+  font-size: 21px;
+  font-weight: 800;
+
+  line-height: 1.2;
+}
+
+.why-item-content p {
+  max-width: 430px;
+
+  margin: 0;
+
+  color: #7fa3b4;
+
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+
+/* =========================================
+   ARROW
+========================================= */
+
+.why-item-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  color: #ff9b36;
+
+  border: 1px solid rgba(255, 155, 54, 0.18);
+  border-radius: 50%;
+
+  font-size: 16px;
+
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.why-seatrack-item:hover .why-item-arrow {
+  color: #031f2e;
+
+  background: #ff9b36;
+
+  transform: translateX(4px);
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .why-seatrack {
+    padding: 95px 0;
+  }
+
+  .why-seatrack-container {
+    grid-template-columns: 1fr;
+
+    gap: 65px;
+  }
+
+  .why-seatrack-left {
+    max-width: 720px;
+  }
+
+  .why-seatrack-image {
+    max-width: 680px;
+    height: 340px;
+  }
+
+  .why-seatrack-right {
+    max-width: 760px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+  .why-seatrack {
+    padding: 75px 0;
+  }
+
+  .why-seatrack-container {
+    width: min(100% - 30px, 1180px);
+
+    gap: 50px;
+  }
+
+  .why-seatrack-left h2 {
+    font-size: 43px;
+
+    letter-spacing: -1.8px;
+  }
+
+  .why-seatrack-description {
+    font-size: 14px;
+  }
+
+
+  /* IMAGE */
+
+  .why-seatrack-image {
+    height: 230px;
+
+    margin-top: 30px;
+  }
+
+  .why-image-overlay {
+    left: 20px;
+    right: 20px;
+    bottom: 19px;
+  }
+
+  .why-image-overlay strong {
+    font-size: 18px;
+  }
+
+
+  /* ITEMS */
+
+  .why-seatrack-item {
+    min-height: auto;
+
+    grid-template-columns: 40px 1fr 30px;
+
+    gap: 13px;
+
+    padding: 24px 4px;
+  }
+
+  .why-seatrack-item:hover {
+    padding-left: 8px;
+  }
+
+  .why-item-content h3 {
+    font-size: 18px;
+  }
+
+  .why-item-content p {
+    font-size: 12px;
+  }
+
+  .why-item-arrow {
+    width: 30px;
+    height: 30px;
+
+    font-size: 14px;
+  }
+}

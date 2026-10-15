@@ -1,0 +1,891 @@
+/* =========================================
+   SEATRACK — SERVICES PAGE
+========================================= */
+
+.services-page {
+  min-height: 100vh;
+
+  background: #031f2e;
+  color: #ffffff;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.services-page-hero {
+  position: relative;
+  overflow: hidden;
+
+  min-height: 640px;
+
+  display: flex;
+  align-items: center;
+
+  background:
+    radial-gradient(
+      circle at 75% 35%,
+      rgba(37, 200, 195, 0.1),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #073246 0%,
+      #04283a 48%,
+      #021b28 100%
+    );
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.07);
+}
+
+
+/* =========================================
+   HERO GRID BACKGROUND
+========================================= */
+
+.services-page-hero::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 90px 90px;
+
+  opacity: 0.55;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   HERO BACKGROUND DECORATION
+========================================= */
+
+.services-hero-bg {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+}
+
+.services-hero-circle {
+  position: absolute;
+
+  border:
+    1px solid rgba(37, 200, 195, 0.07);
+
+  border-radius: 50%;
+}
+
+.circle-one {
+  width: 620px;
+  height: 620px;
+
+  right: -250px;
+  top: -270px;
+}
+
+.circle-two {
+  width: 450px;
+  height: 450px;
+
+  right: -165px;
+  top: -185px;
+}
+
+.circle-three {
+  width: 270px;
+  height: 270px;
+
+  right: -75px;
+  top: -95px;
+}
+
+
+/* =========================================
+   HERO CONTAINER
+========================================= */
+
+.services-hero-container {
+  position: relative;
+  z-index: 3;
+
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr) 330px;
+
+  gap: 90px;
+
+  align-items: center;
+}
+
+
+/* =========================================
+   HERO CONTENT
+========================================= */
+
+.services-hero-content {
+  max-width: 830px;
+}
+
+
+/* LABEL */
+
+.services-page-label {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 28px;
+
+  color: #25c8c3;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 4px;
+}
+
+.services-page-label::before {
+  content: "";
+
+  width: 36px;
+  height: 1px;
+
+  background: #25c8c3;
+}
+
+
+/* =========================================
+   HERO TITLE
+========================================= */
+
+.services-hero-content h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(58px, 5.7vw, 84px);
+
+  font-weight: 800;
+
+  line-height: 0.97;
+
+  letter-spacing: -4px;
+}
+
+.services-hero-content h1 span {
+  color: #25c8c3;
+}
+
+
+/* =========================================
+   HERO DESCRIPTION
+========================================= */
+
+.services-hero-description {
+  max-width: 680px;
+
+  margin: 30px 0 0;
+
+  color: #91afbd;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================
+   HERO STATS
+========================================= */
+
+.services-hero-stats {
+  display: flex;
+
+  gap: 52px;
+
+  margin-top: 43px;
+  padding-top: 27px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.08);
+}
+
+.services-hero-stat {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.services-hero-stat strong {
+  color: #ffffff;
+
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.services-hero-stat span {
+  color: #688c9d;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================
+   HERO SERVICES INDEX
+========================================= */
+
+.services-hero-index {
+  position: relative;
+
+  padding: 32px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.09);
+
+  border-radius: 14px;
+
+  background:
+    rgba(5, 47, 65, 0.62);
+
+  backdrop-filter: blur(10px);
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.12);
+}
+
+.services-index-title {
+  display: block;
+
+  margin-bottom: 17px;
+
+  color: #25c8c3;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 2.5px;
+}
+
+.services-index-item {
+  display: grid;
+
+  grid-template-columns: 38px 1fr;
+
+  align-items: center;
+
+  min-height: 61px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.07);
+}
+
+.services-index-item:last-child {
+  border-bottom: none;
+}
+
+.services-index-item > span {
+  color: #ff9b36;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.services-index-item p {
+  margin: 0;
+
+  color: #d7e3e8;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* =========================================
+   SCROLL INDICATOR
+========================================= */
+
+.services-scroll-indicator {
+  position: absolute;
+
+  z-index: 3;
+
+  left: 50%;
+  bottom: 25px;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  color: #587d8e;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+}
+
+.services-scroll-indicator > span {
+  width: 27px;
+  height: 1px;
+
+  background: #ff9b36;
+}
+
+
+/* =========================================
+   SERVICE DETAIL
+========================================= */
+
+.service-detail {
+  position: relative;
+  overflow: hidden;
+
+  padding: 120px 0;
+
+  background: #031f2e;
+}
+
+
+/* subtle separator */
+
+.service-detail::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: min(1180px, calc(100% - 48px));
+  height: 1px;
+
+  transform: translateX(-50%);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(37, 200, 195, 0.16),
+      rgba(255, 155, 54, 0.13),
+      transparent
+    );
+}
+
+
+/* =========================================
+   SERVICE CONTAINER
+========================================= */
+
+.service-detail-container {
+  position: relative;
+  z-index: 2;
+
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 0.95fr);
+
+  gap: 85px;
+
+  align-items: center;
+}
+
+
+/* =========================================
+   SERVICE IMAGE
+========================================= */
+
+.service-detail-image {
+  position: relative;
+
+  overflow: hidden;
+
+  height: 570px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.09);
+
+  border-radius: 16px;
+
+  background: #0b4055;
+
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.2);
+}
+
+.service-detail-image img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.7s ease;
+}
+
+.service-detail-image:hover img {
+  transform: scale(1.035);
+}
+
+
+/* IMAGE GRADIENT */
+
+.service-detail-image::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3, 31, 46, 0.01) 30%,
+      rgba(3, 31, 46, 0.12) 58%,
+      rgba(3, 31, 46, 0.88) 100%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   IMAGE NUMBER
+========================================= */
+
+.service-image-number {
+  position: absolute;
+
+  z-index: 3;
+
+  top: 26px;
+  right: 28px;
+
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+
+/* =========================================
+   IMAGE BADGE
+========================================= */
+
+.service-image-badge {
+  position: absolute;
+
+  z-index: 3;
+
+  left: 28px;
+  bottom: 27px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.service-image-badge > span {
+  width: 28px;
+  height: 1px;
+
+  background: #ff9b36;
+}
+
+
+/* =========================================
+   SERVICE CONTENT
+========================================= */
+
+.service-detail-content {
+  max-width: 520px;
+}
+
+
+/* LABEL */
+
+.service-detail-label {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 23px;
+
+  color: #25c8c3;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+}
+
+.service-detail-label::before {
+  content: "";
+
+  width: 28px;
+  height: 1px;
+
+  background: #25c8c3;
+}
+
+
+/* =========================================
+   SERVICE TITLE
+========================================= */
+
+.service-detail-content h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(43px, 4vw, 58px);
+
+  font-weight: 800;
+
+  line-height: 1.02;
+
+  letter-spacing: -2.5px;
+}
+
+.service-detail-content h2 > span {
+  color: #25c8c3;
+}
+
+
+/* =========================================
+   SERVICE DESCRIPTION
+========================================= */
+
+.service-detail-description {
+  margin: 25px 0 0;
+
+  color: #8eacbb;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================
+   BENEFITS
+========================================= */
+
+.service-benefits {
+  margin-top: 35px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.08);
+}
+
+.service-benefit {
+  display: grid;
+
+  grid-template-columns: 38px 1fr;
+
+  gap: 18px;
+
+  padding: 20px 0;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.08);
+}
+
+.service-benefit > span {
+  padding-top: 3px;
+
+  color: #ff9b36;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.service-benefit h3 {
+  margin: 0 0 6px;
+
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.service-benefit p {
+  max-width: 400px;
+
+  margin: 0;
+
+  color: #789baa;
+
+  font-size: 12px;
+
+  line-height: 1.65;
+}
+
+
+/* =========================================
+   SERVICE BUTTON
+========================================= */
+
+.service-detail-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+
+  min-height: 52px;
+
+  margin-top: 32px;
+
+  padding: 0 25px;
+
+  color: #071f2b;
+
+  background: #ff9b36;
+
+  border: 1px solid #ff9b36;
+  border-radius: 4px;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 12px 30px rgba(255, 155, 54, 0.1);
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.service-detail-button > span {
+  font-size: 18px;
+
+  transition:
+    transform 0.25s ease;
+}
+
+.service-detail-button:hover {
+  background: #ffad59;
+
+  transform: translateY(-2px);
+}
+
+.service-detail-button:hover > span {
+  transform: translateX(4px);
+}
+
+
+/* =========================================
+   SEA FREIGHT DECORATION
+========================================= */
+
+.service-detail-sea::after {
+  content: "";
+
+  position: absolute;
+
+  width: 520px;
+  height: 520px;
+
+  right: -350px;
+  bottom: -280px;
+
+  border:
+    1px solid rgba(37, 200, 195, 0.05);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .services-page-hero {
+    min-height: auto;
+
+    padding: 100px 0;
+  }
+
+  .services-hero-container {
+    grid-template-columns: 1fr;
+
+    gap: 55px;
+  }
+
+  .services-hero-index {
+    max-width: 620px;
+  }
+
+  .services-scroll-indicator {
+    display: none;
+  }
+
+
+  .service-detail {
+    padding: 90px 0;
+  }
+
+  .service-detail-container {
+    grid-template-columns: 1fr;
+
+    gap: 60px;
+  }
+
+  .service-detail-image {
+    height: 500px;
+  }
+
+  .service-detail-content {
+    max-width: 720px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+  .services-page-hero {
+    padding: 75px 0;
+  }
+
+  .services-hero-container,
+  .service-detail-container {
+    width: min(100% - 30px, 1180px);
+  }
+
+
+  /* HERO */
+
+  .services-page-label {
+    margin-bottom: 22px;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+  }
+
+  .services-hero-content h1 {
+    font-size: 44px;
+
+    line-height: 1;
+
+    letter-spacing: -2px;
+  }
+
+  .services-hero-description {
+    margin-top: 24px;
+
+    font-size: 13px;
+  }
+
+  .services-hero-stats {
+    flex-wrap: wrap;
+
+    gap: 25px 35px;
+
+    margin-top: 32px;
+  }
+
+  .services-hero-index {
+    padding: 24px;
+  }
+
+
+  /* SERVICE */
+
+  .service-detail {
+    padding: 70px 0;
+  }
+
+  .service-detail-container {
+    gap: 45px;
+  }
+
+  .service-detail-image {
+    height: 350px;
+
+    border-radius: 12px;
+  }
+
+  .service-detail-content h2 {
+    font-size: 40px;
+
+    letter-spacing: -1.8px;
+  }
+
+  .service-detail-description {
+    font-size: 13px;
+  }
+
+  .service-benefit {
+    grid-template-columns: 30px 1fr;
+
+    gap: 12px;
+  }
+
+  .service-detail-button {
+    width: 100%;
+  }
+}
