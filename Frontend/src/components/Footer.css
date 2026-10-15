@@ -1,0 +1,563 @@
+/* =========================================
+   SEATRACK — FOOTER
+========================================= */
+
+.footer {
+  position: relative;
+  overflow: hidden;
+
+  background: #021824;
+  color: #ffffff;
+
+  padding: 0 0 38px;
+}
+
+.footer-top-line {
+  width: 100%;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(37, 200, 195, 0.55),
+      rgba(255, 155, 54, 0.45),
+      transparent
+    );
+}
+
+.footer-container {
+  position: relative;
+  z-index: 3;
+
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.footer-main {
+  display: grid;
+  grid-template-columns: 1.65fr 0.75fr 1fr 1.05fr;
+
+  gap: 65px;
+
+  padding: 82px 0 62px;
+}
+
+
+/* =========================================
+   BRAND
+========================================= */
+
+.footer-brand {
+  max-width: 340px;
+}
+
+.footer-logo {
+  display: inline-block;
+
+  color: #ffffff;
+
+  font-size: 29px;
+  font-weight: 900;
+
+  letter-spacing: -1.5px;
+
+  text-decoration: none;
+}
+
+.footer-logo span {
+  color: #25c8c3;
+}
+
+.footer-description {
+  max-width: 315px;
+
+  margin: 23px 0 0;
+
+  color: #789bab;
+
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+
+/* BRAND LINE */
+
+.footer-brand-line {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 27px;
+
+  color: #25c8c3;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.footer-brand-line > span {
+  width: 27px;
+  height: 1px;
+
+  background: #25c8c3;
+}
+
+
+/* =========================================
+   SOCIALS
+========================================= */
+
+.footer-socials {
+  display: flex;
+
+  gap: 9px;
+
+  margin-top: 28px;
+}
+
+.footer-socials a {
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+
+  color: #8eacbb;
+
+  background: rgba(255, 255, 255, 0.02);
+
+  font-size: 11px;
+  font-weight: 800;
+
+  text-decoration: none;
+
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.footer-socials a:hover {
+  color: #031f2e;
+
+  background: #25c8c3;
+  border-color: #25c8c3;
+
+  transform: translateY(-3px);
+}
+
+
+/* =========================================
+   COLUMNS
+========================================= */
+
+.footer-column h4 {
+  position: relative;
+
+  margin: 4px 0 26px;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 1.2px;
+}
+
+.footer-column h4::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -10px;
+
+  width: 22px;
+  height: 1px;
+
+  background: #ff9b36;
+}
+
+.footer-column nav {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 14px;
+}
+
+.footer-column nav a {
+  position: relative;
+
+  color: #789bab;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  text-decoration: none;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.footer-column nav a::before {
+  content: "→";
+
+  position: absolute;
+
+  left: -15px;
+
+  color: #25c8c3;
+
+  opacity: 0;
+
+  transition: opacity 0.25s ease;
+}
+
+.footer-column nav a:hover {
+  color: #ffffff;
+
+  transform: translateX(15px);
+}
+
+.footer-column nav a:hover::before {
+  opacity: 1;
+}
+
+
+/* =========================================
+   CONTACT
+========================================= */
+
+.footer-contact {
+  min-width: 190px;
+}
+
+.footer-contact-item {
+  margin-bottom: 19px;
+}
+
+.footer-contact-item > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #587c8d;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.6px;
+
+  text-transform: uppercase;
+}
+
+.footer-contact-item a,
+.footer-contact-item p {
+  margin: 0;
+
+  color: #9bb5c1;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  line-height: 1.5;
+
+  text-decoration: none;
+
+  transition: color 0.25s ease;
+}
+
+.footer-contact-item a:hover {
+  color: #25c8c3;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.footer-status {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 5px;
+
+  color: #6d91a2;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.2px;
+
+  text-transform: uppercase;
+}
+
+.footer-status > span {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #25c8c3;
+
+  box-shadow:
+    0 0 9px rgba(37, 200, 195, 0.65);
+}
+
+
+/* =========================================
+   DIVIDER
+========================================= */
+
+.footer-divider {
+  width: 100%;
+  height: 1px;
+
+  background: rgba(255, 255, 255, 0.07);
+}
+
+
+/* =========================================
+   BOTTOM
+========================================= */
+
+.footer-bottom {
+  position: relative;
+  z-index: 4;
+
+  min-height: 82px;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+
+  gap: 30px;
+
+  align-items: center;
+}
+
+.footer-bottom > p {
+  margin: 0;
+
+  color: #547788;
+
+  font-size: 10px;
+}
+
+
+/* BOTTOM LINKS */
+
+.footer-bottom-links {
+  display: flex;
+
+  gap: 25px;
+}
+
+.footer-bottom-links a {
+  color: #638596;
+
+  font-size: 10px;
+
+  text-decoration: none;
+
+  transition: color 0.25s ease;
+}
+
+.footer-bottom-links a:hover {
+  color: #ffffff;
+}
+
+
+/* BACK TO TOP */
+
+.footer-back-top {
+  justify-self: end;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 9px;
+
+  color: #8ba7b4;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition: color 0.25s ease;
+}
+
+.footer-back-top > span {
+  width: 27px;
+  height: 27px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(37, 200, 195, 0.2);
+  border-radius: 50%;
+
+  color: #25c8c3;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.footer-back-top:hover {
+  color: #ffffff;
+}
+
+.footer-back-top:hover > span {
+  color: #031f2e;
+
+  background: #25c8c3;
+
+  transform: translateY(-3px);
+}
+
+
+/* =========================================
+   LARGE WATERMARK
+========================================= */
+
+.footer-watermark {
+  position: absolute;
+
+  left: 50%;
+  bottom: -45px;
+
+  transform: translateX(-50%);
+
+  color: rgba(255, 255, 255, 0.018);
+
+  font-size: clamp(110px, 17vw, 250px);
+  font-weight: 900;
+
+  line-height: 1;
+
+  letter-spacing: -10px;
+
+  white-space: nowrap;
+
+  user-select: none;
+  pointer-events: none;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .footer-main {
+    grid-template-columns: 1.4fr 1fr 1fr;
+
+    gap: 50px;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+
+    max-width: 550px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+  .footer {
+    padding-bottom: 25px;
+  }
+
+  .footer-container {
+    width: min(100% - 30px, 1180px);
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 45px 30px;
+
+    padding: 65px 0 50px;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  .footer-contact {
+    grid-column: 1 / -1;
+  }
+
+  .footer-bottom {
+    min-height: auto;
+
+    grid-template-columns: 1fr;
+
+    gap: 17px;
+
+    padding: 28px 0 10px;
+  }
+
+  .footer-bottom-links {
+    flex-wrap: wrap;
+
+    gap: 15px 22px;
+  }
+
+  .footer-back-top {
+    justify-self: start;
+  }
+
+  .footer-watermark {
+    bottom: 5px;
+
+    font-size: 90px;
+
+    letter-spacing: -5px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 430px) {
+
+  .footer-main {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-brand,
+  .footer-contact {
+    grid-column: auto;
+  }
+}

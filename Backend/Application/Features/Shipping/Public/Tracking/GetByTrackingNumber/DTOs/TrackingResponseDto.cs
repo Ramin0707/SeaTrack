@@ -23,5 +23,6 @@ public class TrackingResponseDto
     public DateTime? UnloadedAtUtc { get; set; }
 
     public DateTime? DeliveredAtUtc { get; set; }
+
     public List<TrackingPortCallDto> PortCalls { get; set; } = new();
 }
