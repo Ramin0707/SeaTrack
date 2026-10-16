@@ -46,6 +46,8 @@ using Application.Features.Shipping.Customer.Cancel.Interfaces;
 using Application.Features.Shipping.Customer.Create.Interfaces;
 using Application.Features.Shipping.Customer.GetById.Interfaces;
 using Application.Features.Shipping.Customer.GetMy.Interfaces;
+using Application.Features.Shipping.Customer.Invoice.GetByOrderId.Interfaces;
+using Application.Features.Shipping.Customer.Payment.GetMy.Interfaces;
 using Application.Features.Shipping.Customer.Payment.Pay.Interfaces;
 using Application.Features.Shipping.Customer.Quote.Accept.Interfaces;
 using Application.Features.Shipping.Customer.Quote.GetByShippingOrderId.Interfaces;
@@ -110,6 +112,8 @@ using Infrastructur.Features.ShippingOrders.Customer.Cancel;
 using Infrastructur.Features.ShippingOrders.Customer.Create;
 using Infrastructur.Features.ShippingOrders.Customer.GetById;
 using Infrastructur.Features.ShippingOrders.Customer.GetMy;
+using Infrastructur.Features.ShippingOrders.Customer.Invoice.GetByOrderId;
+using Infrastructur.Features.ShippingOrders.Customer.Payment.GetMy;
 using Infrastructur.Features.ShippingOrders.Customer.Payment.Pay;
 using Infrastructur.Features.ShippingOrders.Customer.Quote.Accept;
 using Infrastructur.Features.ShippingOrders.Customer.Quote.GetByShippingOrderId;
@@ -545,6 +549,12 @@ public static class ServiceRegistration
             IGetAllShipmentsHandler,
             GetAllShipmentsHandler>();
 
+        services.AddScoped<
+            IGetInvoiceByOrderIdHandler,
+            GetInvoiceByOrderIdHandler>();
+        services.AddScoped<
+            IGetMyPaymentsHandler,
+            GetMyPaymentsHandler>();
 
         services.AddScoped<IGetCustomersHandler, GetCustomersHandler>();
         return services;

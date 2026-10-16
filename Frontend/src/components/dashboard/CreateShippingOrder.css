@@ -1,0 +1,496 @@
+.create-order {
+  width: 100%;
+}
+
+
+/* =====================================
+   HEADER
+===================================== */
+
+.create-order-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 40px;
+
+  margin-bottom: 34px;
+}
+
+
+.create-order-back {
+  display: block;
+
+  margin-bottom: 27px;
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #789aaa;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.create-order-back:hover {
+  color: #21c8c5;
+}
+
+
+.create-order-label {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 11px;
+
+  margin-bottom: 12px;
+
+  color: #21c8c5;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+
+.create-order-label::before {
+  content: "";
+
+  width: 24px;
+  height: 1px;
+
+  background: #21c8c5;
+}
+
+
+.create-order-header h2 {
+  margin: 0 0 10px;
+
+  color: #ffffff;
+
+  font-size: 38px;
+
+  letter-spacing: -1.5px;
+}
+
+
+.create-order-header p {
+  max-width: 620px;
+
+  margin: 0;
+
+  color: #789aaa;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+
+.create-order-status {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 10px 15px;
+
+  border:
+    1px solid rgba(33, 200, 197, 0.2);
+
+  border-radius: 30px;
+
+  color: #21c8c5;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+
+.create-order-status i {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #21c8c5;
+
+  box-shadow:
+    0 0 10px rgba(33, 200, 197, 0.6);
+}
+
+
+/* =====================================
+   FORM
+===================================== */
+
+.create-order-form {
+  overflow: hidden;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.07);
+
+  border-radius: 10px;
+
+  background: #062b3b;
+}
+
+
+/* =====================================
+   SECTION
+===================================== */
+
+.create-order-section {
+  display: grid;
+
+  grid-template-columns: 250px 1fr;
+
+  gap: 45px;
+
+  padding: 34px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.07);
+}
+
+
+.create-order-section-title {
+  display: flex;
+
+  gap: 16px;
+}
+
+
+.create-order-section-title > span {
+  padding-top: 2px;
+
+  color: #ff9b36;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+
+.create-order-section-title small {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #21c8c5;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+
+.create-order-section-title h3 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  line-height: 1.4;
+}
+
+
+/* =====================================
+   FIELDS
+===================================== */
+
+.create-order-fields {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 22px;
+}
+
+
+.create-order-field {
+  min-width: 0;
+}
+
+
+.create-order-field-wide {
+  grid-column: span 2;
+}
+
+
+.create-order-field label {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: #b5c8d1;
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+
+.create-order-field input {
+  width: 100%;
+  height: 52px;
+
+  box-sizing: border-box;
+
+  padding: 0 15px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.09);
+
+  border-radius: 5px;
+
+  outline: none;
+
+  background: #052635;
+
+  color: #ffffff;
+
+  font-size: 12px;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.create-order-field input:focus {
+  border-color: #21c8c5;
+
+  background: #052c3c;
+}
+
+
+.create-order-field input::placeholder {
+  color: #587d8e;
+}
+
+
+.create-order-field input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+
+  opacity: 0.55;
+
+  cursor: pointer;
+}
+
+
+.create-order-hint {
+  display: block;
+
+  margin-top: 7px;
+
+  color: #597e90;
+
+  font-size: 8px;
+}
+
+
+/* =====================================
+   ROUTE
+===================================== */
+
+.create-order-route-fields {
+  grid-template-columns: 1fr 50px 1fr;
+
+  align-items: end;
+}
+
+
+.create-order-route-arrow {
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ff9b36;
+
+  font-size: 18px;
+}
+
+
+/* =====================================
+   MESSAGE
+===================================== */
+
+.create-order-message {
+  margin: 25px 34px 0;
+
+  padding: 13px 15px;
+
+  border-radius: 5px;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+
+.create-order-message.error {
+  border:
+    1px solid rgba(255, 110, 110, 0.2);
+
+  background:
+    rgba(255, 80, 80, 0.07);
+
+  color: #ffaaaa;
+}
+
+
+.create-order-message.success {
+  border:
+    1px solid rgba(33, 200, 197, 0.2);
+
+  background:
+    rgba(33, 200, 197, 0.07);
+
+  color: #72dedb;
+}
+
+
+/* =====================================
+   ACTIONS
+===================================== */
+
+.create-order-actions {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  padding: 28px 34px;
+}
+
+
+.create-order-cancel {
+  min-width: 115px;
+  height: 48px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 4px;
+
+  background: transparent;
+
+  color: #8aa5b3;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.create-order-submit {
+  min-width: 220px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 13px;
+
+  border: 0;
+
+  border-radius: 4px;
+
+  background: #ff9b36;
+
+  color: #031f2e;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+
+.create-order-submit:disabled,
+.create-order-cancel:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 950px) {
+
+  .create-order-section {
+    grid-template-columns: 1fr;
+
+    gap: 26px;
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .create-order-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .create-order-section {
+    padding: 25px 20px;
+  }
+
+
+  .create-order-fields {
+    grid-template-columns: 1fr;
+  }
+
+
+  .create-order-field-wide {
+    grid-column: span 1;
+  }
+
+
+  .create-order-route-fields {
+    grid-template-columns: 1fr;
+  }
+
+
+  .create-order-route-arrow {
+    height: 25px;
+
+    transform: rotate(90deg);
+  }
+
+
+  .create-order-actions {
+    padding: 25px 20px;
+
+    flex-direction: column-reverse;
+  }
+
+
+  .create-order-cancel,
+  .create-order-submit {
+    width: 100%;
+  }
+
+}
