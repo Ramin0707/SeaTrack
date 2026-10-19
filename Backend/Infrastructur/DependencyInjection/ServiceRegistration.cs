@@ -148,7 +148,12 @@ using LogisticsAdminGetShippingOrderByIdHandler =
     Infrastructur.Features.ShippingOrders.LogisticsAdmin.GetById.GetShippingOrderByIdHandler;
 using LogisticsAdminGetShippingOrderByIdHandlerInterface =
     Application.Features.Shipping.LogisticsAdmin.GetById.Interfaces.IGetShippingOrderByIdHandler;
-
+using Application.Features.Shipping.LogisticsAdmin.Payment.GetAll.Interfaces;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Payment.GetAll;
+using Application.Features.Shipping.LogisticsAdmin.Quote.GetAll.Interfaces;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Quote.GetAll;
+using Application.Features.Shipping.LogisticsAdmin.Invoice.GetAll.Interfaces;
+using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Invoice.GetAll;
 namespace Infrastructur.DependencyInjection;
 
 public static class ServiceRegistration
@@ -557,6 +562,9 @@ public static class ServiceRegistration
             GetMyPaymentsHandler>();
 
         services.AddScoped<IGetCustomersHandler, GetCustomersHandler>();
+        services.AddScoped<IGetAllQuotesHandler, GetAllQuotesHandler>();
+        services.AddScoped<IGetAllInvoicesHandler, GetAllInvoicesHandler>();
+        services.AddScoped<IGetAllPaymentsHandler, GetAllPaymentsHandler>();
         return services;
     }
 
