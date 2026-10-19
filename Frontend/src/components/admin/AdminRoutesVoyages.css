@@ -1,0 +1,684 @@
+.admin-routes-voyages {
+  width: 100%;
+  min-width: 0;
+}
+
+.admin-routes-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.admin-routes-heading > div:first-child {
+  min-width: 0;
+}
+
+.admin-routes-eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  color: #21c8c5;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.admin-routes-heading h2 {
+  margin: 0 0 8px;
+  color: #ffffff;
+  font-size: 32px;
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+.admin-routes-heading p {
+  margin: 0;
+  color: #78a7bb;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.admin-routes-refresh {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 7px;
+  background: #ff9b36;
+  color: #031f2e;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.admin-routes-refresh:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+.admin-routes-refresh span {
+  font-size: 17px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.admin-routes-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.admin-routes-stats article {
+  min-width: 0;
+  min-height: 108px;
+  padding: 20px;
+  border: 1px solid rgba(74, 157, 181, 0.28);
+  border-radius: 8px;
+  background: #0b3c4d;
+}
+
+.admin-routes-stats article > span {
+  display: block;
+  margin-bottom: 7px;
+  color: #76a9bd;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+}
+
+.admin-routes-stats article > strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #ffffff;
+  font-size: 25px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.admin-routes-stats article > small {
+  color: #69a0b5;
+  font-size: 11px;
+}
+
+/* =========================
+   FILTERS
+========================= */
+
+.admin-routes-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 210px;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.admin-routes-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  height: 48px;
+  padding: 0 16px;
+  border: 1px solid rgba(74, 157, 181, 0.28);
+  border-radius: 7px;
+  background: #0b3c4d;
+}
+
+.admin-routes-search span {
+  flex-shrink: 0;
+  color: #21c8c5;
+  font-size: 21px;
+}
+
+.admin-routes-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: 13px;
+}
+
+.admin-routes-search input::placeholder {
+  color: #6493a7;
+}
+
+.admin-routes-filters select {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(74, 157, 181, 0.28);
+  border-radius: 7px;
+  outline: 0;
+  background: #0b3c4d;
+  color: #ffffff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* =========================
+   MAIN PANEL
+========================= */
+
+.admin-routes-panel {
+  overflow: hidden;
+  border: 1px solid rgba(74, 157, 181, 0.28);
+  border-radius: 9px;
+  background: #083648;
+}
+
+.admin-routes-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 74px;
+  padding: 17px 20px;
+  border-bottom: 1px solid rgba(74, 157, 181, 0.25);
+}
+
+.admin-routes-panel-heading > div > span {
+  display: block;
+  margin-bottom: 4px;
+  color: #21c8c5;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.admin-routes-panel-heading h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.admin-routes-panel-heading > small {
+  flex-shrink: 0;
+  color: #72a4b7;
+  font-size: 10px;
+}
+
+/* =========================
+   ROUTE LIST
+========================= */
+
+.admin-routes-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 16px;
+}
+
+.admin-route-card {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid rgba(74, 157, 181, 0.3);
+  border-radius: 9px;
+  background: #0a4254;
+}
+
+.admin-route-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 15px;
+}
+
+.admin-route-card-top > div {
+  min-width: 0;
+}
+
+.admin-route-card-top > div > span {
+  display: block;
+  margin-bottom: 5px;
+  color: #73a7ba;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.admin-route-card-top h3 {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #ffffff;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.admin-route-status,
+.admin-voyage-status {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 27px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.admin-route-status.active,
+.admin-voyage-status.active {
+  border: 1px solid rgba(40, 209, 157, 0.45);
+  background: rgba(40, 209, 157, 0.1);
+  color: #47e0af;
+}
+
+.admin-route-status.inactive,
+.admin-voyage-status.inactive {
+  border: 1px solid rgba(255, 111, 111, 0.4);
+  background: rgba(255, 111, 111, 0.08);
+  color: #ff8b8b;
+}
+
+/* =========================
+   ROUTE CODE
+========================= */
+
+.admin-route-code {
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  border-left: 2px solid #21c8c5;
+  background: rgba(15, 83, 103, 0.62);
+}
+
+.admin-route-code span {
+  display: block;
+  margin-bottom: 4px;
+  color: #6da3b7;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.admin-route-code strong {
+  color: #ffffff;
+  font-size: 13px;
+}
+
+/* =========================
+   ORIGIN / DESTINATION
+========================= */
+
+.admin-route-direction {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    35px
+    minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 13px 14px;
+  border-radius: 5px;
+  background: rgba(3, 31, 46, 0.34);
+}
+
+.admin-route-direction > div:not(
+  .admin-route-arrow
+) {
+  min-width: 0;
+}
+
+.admin-route-direction > div:last-child {
+  text-align: right;
+}
+
+.admin-route-direction span {
+  display: block;
+  margin-bottom: 5px;
+  color: #6599ad;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.admin-route-direction strong {
+  display: block;
+  overflow-wrap: anywhere;
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.admin-route-direction small {
+  display: block;
+  margin-top: 4px;
+  color: #21c8c5;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.admin-route-arrow {
+  color: #21c8c5;
+  font-size: 19px;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* =========================
+   ROUTE DETAILS
+========================= */
+
+.admin-route-details {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin-bottom: 17px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(91, 161, 182, 0.2);
+}
+
+.admin-route-details > div {
+  min-width: 0;
+  padding: 0 10px;
+  border-right: 1px solid rgba(91, 161, 182, 0.2);
+}
+
+.admin-route-details > div:first-child {
+  padding-left: 0;
+}
+
+.admin-route-details > div:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.admin-route-details span {
+  display: block;
+  margin-bottom: 5px;
+  color: #689caf;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.admin-route-details strong {
+  display: block;
+  overflow-wrap: anywhere;
+  color: #ffffff;
+  font-size: 11px;
+}
+
+/* =========================
+   VOYAGES
+========================= */
+
+.admin-route-voyages {
+  min-width: 0;
+}
+
+.admin-route-voyages-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 11px;
+}
+
+.admin-route-voyages-heading > span {
+  color: #75a8ba;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+}
+
+.admin-route-voyages-heading > strong {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 7px;
+  border-radius: 50px;
+  background: #0d5668;
+  color: #21c8c5;
+  font-size: 10px;
+}
+
+.admin-route-no-voyages {
+  padding: 14px;
+  border: 1px dashed rgba(82, 151, 172, 0.25);
+  border-radius: 5px;
+  color: #6699ac;
+  font-size: 11px;
+}
+
+.admin-voyage-list {
+  display: grid;
+  gap: 9px;
+}
+
+.admin-voyage-card {
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid rgba(76, 152, 174, 0.25);
+  border-radius: 6px;
+  background: rgba(3, 31, 46, 0.28);
+}
+
+.admin-voyage-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.admin-voyage-top > div {
+  min-width: 0;
+}
+
+.admin-voyage-top > div > span {
+  display: block;
+  margin-bottom: 3px;
+  color: #699daf;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.admin-voyage-top > div > strong {
+  display: block;
+  overflow-wrap: anywhere;
+  color: #ffffff;
+  font-size: 13px;
+}
+
+.admin-voyage-info {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.admin-voyage-info > div {
+  min-width: 0;
+}
+
+.admin-voyage-info span {
+  display: block;
+  margin-bottom: 4px;
+  color: #6598aa;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.admin-voyage-info strong {
+  display: block;
+  overflow-wrap: anywhere;
+  color: #ffffff;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+/* =========================
+   EMPTY / ERROR / LOADING
+========================= */
+
+.admin-routes-empty {
+  display: flex;
+  min-height: 220px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 7px;
+  padding: 30px;
+  text-align: center;
+}
+
+.admin-routes-empty strong {
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.admin-routes-empty span {
+  color: #6d9eb1;
+  font-size: 11px;
+}
+
+.admin-routes-loading {
+  display: flex;
+  min-height: 300px;
+  align-items: center;
+  justify-content: center;
+  color: #80adbd;
+  font-size: 14px;
+}
+
+.admin-routes-error {
+  display: flex;
+  min-height: 280px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  padding: 30px;
+  border: 1px solid rgba(255, 111, 111, 0.25);
+  border-radius: 8px;
+  background: #083648;
+  text-align: center;
+}
+
+.admin-routes-error strong {
+  color: #ffffff;
+  font-size: 17px;
+}
+
+.admin-routes-error span {
+  color: #ff9c9c;
+  font-size: 12px;
+}
+
+.admin-routes-error button {
+  margin-top: 6px;
+  padding: 11px 18px;
+  border: 0;
+  border-radius: 5px;
+  background: #ff9b36;
+  color: #031f2e;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1250px) {
+  .admin-routes-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1000px) {
+  .admin-routes-stats {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-route-details {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .admin-route-details > div {
+    padding: 0;
+    border-right: 0;
+  }
+
+  .admin-voyage-info {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .admin-routes-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-routes-refresh {
+    width: 100%;
+  }
+
+  .admin-routes-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-routes-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-route-direction {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-route-direction > div:last-child {
+    text-align: left;
+  }
+
+  .admin-route-arrow {
+    transform: rotate(90deg);
+  }
+
+  .admin-route-details,
+  .admin-voyage-info {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-routes-list {
+    padding: 10px;
+  }
+
+  .admin-route-card {
+    padding: 15px;
+  }
+}

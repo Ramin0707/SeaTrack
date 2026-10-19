@@ -1,0 +1,569 @@
+.admin-ports {
+  width: 100%;
+}
+
+.admin-ports-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.admin-ports-heading > div:first-child {
+  min-width: 0;
+}
+
+.admin-ports-eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  color: #21c8c5;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.admin-ports-heading h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+.admin-ports-heading p {
+  margin: 9px 0 0;
+  color: #79a8bb;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.admin-ports-refresh {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 7px;
+  background: #ff9b36;
+  color: #031f2e;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.admin-ports-refresh:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+.admin-ports-refresh span {
+  font-size: 17px;
+}
+
+/* =========================
+   STATISTICS
+   ========================= */
+
+.admin-ports-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.admin-ports-stats article {
+  min-width: 0;
+  padding: 21px 22px;
+  border: 1px solid rgba(74, 177, 193, 0.22);
+  border-radius: 8px;
+  background: #0a3b4c;
+}
+
+.admin-ports-stats article > span {
+  display: block;
+  margin-bottom: 7px;
+  color: #75a9bc;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.admin-ports-stats article strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #ffffff;
+  font-size: 25px;
+  line-height: 1;
+}
+
+.admin-ports-stats article small {
+  color: #6e9bae;
+  font-size: 11px;
+}
+
+/* =========================
+   FILTERS
+   ========================= */
+
+.admin-ports-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.admin-ports-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 15px;
+  border: 1px solid rgba(74, 177, 193, 0.22);
+  border-radius: 7px;
+  background: #0a3b4c;
+}
+
+.admin-ports-search span {
+  flex-shrink: 0;
+  color: #21c8c5;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.admin-ports-search input {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: 13px;
+}
+
+.admin-ports-search input::placeholder {
+  color: #6694a7;
+}
+
+.admin-ports-filters select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(74, 177, 193, 0.22);
+  border-radius: 7px;
+  outline: none;
+  background: #0a3b4c;
+  color: #ffffff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* =========================
+   MAIN PANEL
+   ========================= */
+
+.admin-ports-panel {
+  overflow: hidden;
+  border: 1px solid rgba(74, 177, 193, 0.22);
+  border-radius: 9px;
+  background: #083547;
+}
+
+.admin-ports-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(74, 177, 193, 0.22);
+}
+
+.admin-ports-panel-heading > div span {
+  display: block;
+  margin-bottom: 4px;
+  color: #21c8c5;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.admin-ports-panel-heading h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.admin-ports-panel-heading small {
+  color: #73a2b5;
+  font-size: 10px;
+}
+
+/* =========================
+   PORT LIST
+   ========================= */
+
+.admin-ports-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 16px;
+}
+
+.admin-port-card {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid rgba(74, 177, 193, 0.24);
+  border-radius: 9px;
+  background: #0a4052;
+}
+
+.admin-port-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 15px;
+}
+
+.admin-port-card-top > div {
+  min-width: 0;
+}
+
+.admin-port-card-top > div > span {
+  display: block;
+  margin-bottom: 5px;
+  color: #73a7ba;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.admin-port-card-top h3 {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #ffffff;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.admin-port-state {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.admin-port-state-active {
+  border: 1px solid rgba(41, 210, 157, 0.4);
+  background: rgba(41, 210, 157, 0.1);
+  color: #46e1ad;
+}
+
+.admin-port-state-inactive {
+  border: 1px solid rgba(255, 105, 105, 0.4);
+  background: rgba(255, 105, 105, 0.1);
+  color: #ff8080;
+}
+
+/* =========================
+   LOCATION
+   ========================= */
+
+.admin-port-location {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  border-left: 2px solid #21c8c5;
+  background: rgba(25, 121, 143, 0.18);
+}
+
+.admin-port-location > div {
+  min-width: 0;
+  padding: 12px 13px;
+}
+
+.admin-port-location span,
+.admin-port-resource-counts span {
+  display: block;
+  margin-bottom: 5px;
+  color: #6d9db0;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.admin-port-location strong {
+  display: block;
+  overflow-wrap: anywhere;
+  color: #ffffff;
+  font-size: 12px;
+}
+
+/* =========================
+   RESOURCE COUNTS
+   ========================= */
+
+.admin-port-resource-counts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px 0 15px;
+  border-bottom: 1px solid rgba(74, 177, 193, 0.18);
+}
+
+.admin-port-resource-counts > div {
+  min-width: 0;
+}
+
+.admin-port-resource-counts strong {
+  color: #ffffff;
+  font-size: 13px;
+}
+
+/* =========================
+   TERMINALS / BERTHS
+   ========================= */
+
+.admin-port-subsection {
+  margin-top: 16px;
+}
+
+.admin-port-subsection-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 9px;
+}
+
+.admin-port-subsection-title > span {
+  color: #7caabd;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.admin-port-subsection-title > strong {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: rgba(33, 200, 197, 0.12);
+  color: #21c8c5;
+  font-size: 10px;
+}
+
+.admin-port-terminals,
+.admin-port-berths {
+  display: grid;
+  gap: 8px;
+}
+
+.admin-port-terminal {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.7fr)
+    minmax(80px, 0.8fr)
+    auto;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border: 1px solid rgba(74, 177, 193, 0.17);
+  border-radius: 6px;
+  background: rgba(2, 36, 50, 0.35);
+}
+
+.admin-port-terminal > div,
+.admin-port-berth > div {
+  min-width: 0;
+}
+
+.admin-port-terminal div span,
+.admin-port-berth div span {
+  display: block;
+  margin-bottom: 4px;
+  color: #6796a9;
+  font-size: 8px;
+  text-transform: uppercase;
+}
+
+.admin-port-terminal div strong,
+.admin-port-berth div strong {
+  display: block;
+  overflow-wrap: anywhere;
+  color: #ffffff;
+  font-size: 11px;
+}
+
+.admin-port-mini-state {
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.admin-port-mini-state.active {
+  border: 1px solid rgba(41, 210, 157, 0.32);
+  background: rgba(41, 210, 157, 0.08);
+  color: #46e1ad;
+}
+
+.admin-port-mini-state.inactive {
+  border: 1px solid rgba(255, 105, 105, 0.32);
+  background: rgba(255, 105, 105, 0.08);
+  color: #ff8080;
+}
+
+.admin-port-berth {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.5fr)
+    minmax(70px, 0.7fr)
+    minmax(80px, 0.8fr)
+    minmax(90px, 0.9fr);
+  gap: 12px;
+  padding: 11px 12px;
+  border: 1px solid rgba(74, 177, 193, 0.17);
+  border-radius: 6px;
+  background: rgba(2, 36, 50, 0.35);
+}
+
+.admin-port-no-resources {
+  padding: 11px 12px;
+  border: 1px dashed rgba(74, 177, 193, 0.2);
+  border-radius: 6px;
+  color: #688fa0;
+  font-size: 11px;
+}
+
+/* =========================
+   EMPTY / LOADING / ERROR
+   ========================= */
+
+.admin-ports-empty {
+  display: flex;
+  min-height: 180px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  text-align: center;
+}
+
+.admin-ports-empty strong {
+  margin-bottom: 7px;
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.admin-ports-empty span {
+  color: #739daf;
+  font-size: 12px;
+}
+
+.admin-ports-loading {
+  display: flex;
+  min-height: 320px;
+  align-items: center;
+  justify-content: center;
+  color: #83adbd;
+  font-size: 14px;
+}
+
+.admin-ports-error {
+  display: flex;
+  min-height: 320px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 30px;
+  text-align: center;
+}
+
+.admin-ports-error strong {
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.admin-ports-error span {
+  max-width: 520px;
+  color: #83a9b8;
+  font-size: 13px;
+}
+
+.admin-ports-error button {
+  margin-top: 8px;
+  padding: 11px 18px;
+  border: 0;
+  border-radius: 6px;
+  background: #ff9b36;
+  color: #031f2e;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 1200px) {
+  .admin-ports-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-ports-stats {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-ports-filters {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .admin-ports-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-ports-refresh {
+    width: 100%;
+  }
+
+  .admin-ports-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-port-location,
+  .admin-port-resource-counts {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-port-terminal,
+  .admin-port-berth {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-port-mini-state {
+    justify-self: start;
+  }
+}

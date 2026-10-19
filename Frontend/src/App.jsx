@@ -1,4 +1,5 @@
 import './App.css'
+
 import {
   BrowserRouter,
   Routes,
@@ -15,56 +16,114 @@ import Tracking from './pages/Tracking'
 import About from './pages/About'
 import Blog from './pages/Blog'
 import Login from './pages/Login'
-import CustomerDashboard from './pages/CustomerDashboard'
+
+import CustomerDashboard
+  from './pages/CustomerDashboard'
+
+import LogisticsAdminDashboard
+  from './pages/LogisticsAdminDashboard'
 
 
 function AppContent() {
   const location = useLocation()
 
-  const isDashboard =
-    location.pathname.startsWith('/dashboard')
+  const isCustomerDashboard =
+    location.pathname.startsWith(
+      '/dashboard'
+    )
+
+  const isAdminDashboard =
+    location.pathname.startsWith(
+      '/admin'
+    )
+
+  const isInternalDashboard =
+    isCustomerDashboard ||
+    isAdminDashboard
+
 
   return (
     <>
-      {!isDashboard && <Header />}
+      {!isInternalDashboard && (
+        <Header />
+      )}
+
 
       <main>
+
         <Routes>
-          <Route path="/" element={<Home />} />
+
+          {/* ==============================
+              PUBLIC WEBSITE
+          ============================== */}
+
+          <Route
+            path="/"
+            element={<Home />}
+          />
+
 
           <Route
             path="/services"
             element={<Services />}
           />
 
+
           <Route
             path="/tracking"
             element={<Tracking />}
           />
+
 
           <Route
             path="/about"
             element={<About />}
           />
 
+
           <Route
             path="/blog"
             element={<Blog />}
           />
+
 
           <Route
             path="/login"
             element={<Login />}
           />
 
+
+          {/* ==============================
+              CUSTOMER DASHBOARD
+          ============================== */}
+
           <Route
             path="/dashboard/*"
-            element={<CustomerDashboard />}
+            element={
+              <CustomerDashboard />
+            }
           />
+
+
+          {/* ==============================
+              LOGISTICS ADMIN
+          ============================== */}
+
+          <Route
+            path="/admin/*"
+            element={
+              <LogisticsAdminDashboard />
+            }
+          />
+
         </Routes>
+
       </main>
 
-      {!isDashboard && <Footer />}
+
+      {!isInternalDashboard && (
+        <Footer />
+      )}
     </>
   )
 }
@@ -77,5 +136,6 @@ function App() {
     </BrowserRouter>
   )
 }
+
 
 export default App
