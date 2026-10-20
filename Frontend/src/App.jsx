@@ -23,6 +23,9 @@ import CustomerDashboard
 import LogisticsAdminDashboard
   from './pages/LogisticsAdminDashboard'
 
+import WebsiteAdminDashboard
+  from './pages/WebsiteAdminDashboard'
+
 
 function AppContent() {
   const location = useLocation()
@@ -32,14 +35,20 @@ function AppContent() {
       '/dashboard'
     )
 
-  const isAdminDashboard =
+  const isLogisticsAdminDashboard =
     location.pathname.startsWith(
       '/admin'
     )
 
+  const isWebsiteAdminDashboard =
+    location.pathname.startsWith(
+      '/cms'
+    )
+
   const isInternalDashboard =
     isCustomerDashboard ||
-    isAdminDashboard
+    isLogisticsAdminDashboard ||
+    isWebsiteAdminDashboard
 
 
   return (
@@ -113,6 +122,18 @@ function AppContent() {
             path="/admin/*"
             element={
               <LogisticsAdminDashboard />
+            }
+          />
+
+
+          {/* ==============================
+              WEBSITE / CMS ADMIN
+          ============================== */}
+
+          <Route
+            path="/cms/*"
+            element={
+              <WebsiteAdminDashboard />
             }
           />
 

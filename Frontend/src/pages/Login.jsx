@@ -159,7 +159,28 @@ function Login() {
         roles.includes('Customer')
 
 
-      if (isAdmin || isOperator) {
+      /* ---------------------------------
+         WEBSITE / CMS ADMIN
+      ---------------------------------- */
+
+      if (isAdmin) {
+
+        navigate(
+          '/cms',
+          {
+            replace: true
+          }
+        )
+
+        return
+      }
+
+
+      /* ---------------------------------
+         LOGISTICS OPERATOR
+      ---------------------------------- */
+
+      if (isOperator) {
 
         navigate(
           '/admin',
@@ -171,6 +192,10 @@ function Login() {
         return
       }
 
+
+      /* ---------------------------------
+         CUSTOMER
+      ---------------------------------- */
 
       if (isCustomer) {
 

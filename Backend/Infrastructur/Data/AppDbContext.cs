@@ -42,6 +42,9 @@ namespace Infrastructur.Data
         public DbSet<Berth> Berths => Set<Berth>();
 
         public DbSet<Container> Containers => Set<Container>();
+
+        //WEB front Side
+        public DbSet<BlogPost> BlogPosts => Set<BlogPost>();
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
