@@ -1,14 +1,169 @@
 import './Blog.css'
 
+import { useEffect, useState } from 'react'
+
 import featuredImage from '../assets/images/blog-featured-maritime.jpg'
 import globalTradeImage from '../assets/images/blog-hero-ship.png'
 import containerShippingImage from '../assets/images/blog-container-shipping.png'
 import portsTechnologyImage from '../assets/images/blog-ports-technology.png'
+
 import CallToAction from '../components/CallToAction'
 
+
+const API_URL = 'http://localhost:5080'
+
+
+const fallbackImages = [
+  globalTradeImage,
+  containerShippingImage,
+  portsTechnologyImage
+]
+
+
+function formatDate(value) {
+  if (!value) {
+    return ''
+  }
+
+  const date = new Date(value)
+
+  return date
+    .toLocaleDateString(
+      'en-US',
+      {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      }
+    )
+    .toUpperCase()
+}
+
+
+function getFeaturedDate(value) {
+  if (!value) {
+    return {
+      day: '--',
+      month: '---',
+      year: '----'
+    }
+  }
+
+  const date = new Date(value)
+
+  return {
+    day: date
+      .getDate()
+      .toString()
+      .padStart(2, '0'),
+
+    month: date
+      .toLocaleString(
+        'en-US',
+        {
+          month: 'short'
+        }
+      )
+      .toUpperCase(),
+
+    year: date
+      .getFullYear()
+      .toString()
+  }
+}
+
+
 function Blog() {
+  const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+
+  /* =====================================
+     LOAD PUBLISHED BLOG POSTS
+  ====================================== */
+
+  useEffect(() => {
+
+    async function loadPosts() {
+
+      try {
+
+        setLoading(true)
+        setError('')
+
+
+        const response = await fetch(
+          `${API_URL}/api/blog`
+        )
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            `Unable to load blog posts (${response.status}).`
+          )
+
+        }
+
+
+        const data =
+          await response.json()
+
+
+        setPosts(
+          Array.isArray(data)
+            ? data
+            : []
+        )
+
+      } catch (error) {
+
+        console.error(error)
+
+        setError(
+          'Unable to load SeaTrack Journal at the moment.'
+        )
+
+      } finally {
+
+        setLoading(false)
+
+      }
+
+    }
+
+
+    loadPosts()
+
+  }, [])
+
+
+  /* =====================================
+     BLOG DATA
+  ====================================== */
+
+  const featuredPost =
+    posts.length > 0
+      ? posts[0]
+      : null
+
+
+  const latestPosts =
+    posts.length > 1
+      ? posts.slice(1)
+      : []
+
+
+  const featuredDate =
+    getFeaturedDate(
+      featuredPost?.publishedAtUtc
+    )
+
+
   return (
     <div className="blog-page">
+
 
       {/* =====================================
           BLOG HERO
@@ -21,11 +176,13 @@ function Blog() {
         <span className="blog-circle blog-circle-one"></span>
         <span className="blog-circle blog-circle-two"></span>
 
+
         <div className="blog-hero-container">
 
           <span className="blog-label">
             SEATRACK JOURNAL
           </span>
+
 
           <div className="blog-hero-heading">
 
@@ -34,10 +191,11 @@ function Blog() {
               <span> maritime world.</span>
             </h1>
 
+
             <p>
-              Explore maritime logistics, global trade, shipping
-              technology and the ideas shaping the future of
-              cargo transportation.
+              Explore maritime logistics, global trade,
+              shipping technology and the ideas shaping
+              the future of cargo transportation.
             </p>
 
           </div>
@@ -45,268 +203,409 @@ function Blog() {
         </div>
 
       </section>
+
+
+      {/* =====================================
+          LOADING
+      ====================================== */}
+
+      {loading && (
+
+        <section className="blog-featured">
+
+          <div className="blog-featured-container">
+
+            <div className="blog-featured-content">
+
+              <div className="blog-article-meta">
+
+                <span>
+                  SEATRACK JOURNAL
+                </span>
+
+              </div>
+
+
+              <h2>
+                Loading maritime
+                <span> insights...</span>
+              </h2>
+
+
+              <p>
+                Please wait while the latest SeaTrack
+                articles are being loaded.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      )}
+
+
+      {/* =====================================
+          ERROR
+      ====================================== */}
+
+      {!loading && error && (
+
+        <section className="blog-featured">
+
+          <div className="blog-featured-container">
+
+            <div className="blog-featured-content">
+
+              <div className="blog-article-meta">
+
+                <span>
+                  SEATRACK JOURNAL
+                </span>
+
+              </div>
+
+
+              <h2>
+                Journal temporarily
+                <span> unavailable.</span>
+              </h2>
+
+
+              <p>
+                {error}
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      )}
+
+
+      {/* =====================================
+          EMPTY BLOG
+      ====================================== */}
+
+      {
+        !loading &&
+        !error &&
+        posts.length === 0 &&
+        (
+
+          <section className="blog-featured">
+
+            <div className="blog-featured-container">
+
+              <div className="blog-featured-content">
+
+                <div className="blog-article-meta">
+
+                  <span>
+                    SEATRACK JOURNAL
+                  </span>
+
+                </div>
+
+
+                <h2>
+                  New maritime insights
+                  <span> are coming soon.</span>
+                </h2>
+
+
+                <p>
+                  The SeaTrack team is preparing new
+                  articles about maritime logistics,
+                  shipping operations and global trade.
+                </p>
+
+              </div>
+
+            </div>
+
+          </section>
+
+        )
+      }
 
 
       {/* =====================================
           FEATURED ARTICLE
       ====================================== */}
 
-      <section className="blog-featured">
+      {
+        !loading &&
+        !error &&
+        featuredPost &&
+        (
 
-        <div className="blog-featured-container">
+          <section className="blog-featured">
 
-          <div className="blog-featured-image">
-
-            <img
-              src={featuredImage}
-              alt="Modern maritime logistics and container terminal"
-            />
-
-            <div className="blog-featured-badge">
-              FEATURED
-            </div>
-
-          </div>
+            <div className="blog-featured-container">
 
 
-          <div className="blog-featured-content">
+              <div className="blog-featured-image">
 
-            <div className="blog-article-meta">
-              <span>MARITIME INSIGHTS</span>
-              <i></i>
-              <span>8 MIN READ</span>
-            </div>
+                <img
+                  src={
+                    featuredPost.imageUrl ||
+                    featuredImage
+                  }
+                  alt={featuredPost.title}
+                />
 
-            <h2>
-              How digital platforms
-              are changing
-              <span> maritime logistics.</span>
-            </h2>
 
-            <p>
-              Modern maritime logistics is becoming more connected.
-              Digital platforms bring customers, cargo, vessels,
-              ports and shipment information together, creating
-              clearer and more efficient logistics operations.
-            </p>
-
-            <div className="blog-featured-footer">
-
-              <div className="blog-featured-date">
-                <span>15</span>
-
-                <div>
-                  <strong>OCT</strong>
-                  <small>2026</small>
+                <div className="blog-featured-badge">
+                  FEATURED
                 </div>
+
               </div>
 
-              <a href="#" className="blog-read-more">
-                Read Article
-                <span>→</span>
-              </a>
+
+              <div className="blog-featured-content">
+
+                <div className="blog-article-meta">
+
+                  <span>
+                    MARITIME INSIGHTS
+                  </span>
+
+                  <i></i>
+
+                  <span>
+                    SEATRACK JOURNAL
+                  </span>
+
+                </div>
+
+
+                <h2>
+                  {featuredPost.title}
+                </h2>
+
+
+                <p>
+                  {featuredPost.summary}
+                </p>
+
+
+                <div className="blog-featured-footer">
+
+
+                  <div className="blog-featured-date">
+
+                    <span>
+                      {featuredDate.day}
+                    </span>
+
+
+                    <div>
+
+                      <strong>
+                        {featuredDate.month}
+                      </strong>
+
+                      <small>
+                        {featuredDate.year}
+                      </small>
+
+                    </div>
+
+                  </div>
+
+
+                  <div className="blog-read-more">
+
+                    {
+                      featuredPost.authorName ||
+                      'SeaTrack Team'
+                    }
+
+                  </div>
+
+                </div>
+
+              </div>
 
             </div>
 
-          </div>
+          </section>
 
-        </div>
-
-      </section>
+        )
+      }
 
 
       {/* =====================================
           LATEST INSIGHTS
       ====================================== */}
 
-      <section className="blog-latest">
+      {
+        !loading &&
+        !error &&
+        latestPosts.length > 0 &&
+        (
 
-        <div className="blog-latest-container">
+          <section className="blog-latest">
 
-          <div className="blog-latest-heading">
+            <div className="blog-latest-container">
 
-            <div>
-              <span className="blog-section-label">
-                LATEST INSIGHTS
-              </span>
 
-              <h2>
-                Stories shaping
-                <span> global maritime trade.</span>
-              </h2>
+              <div className="blog-latest-heading">
+
+                <div>
+
+                  <span className="blog-section-label">
+                    LATEST INSIGHTS
+                  </span>
+
+
+                  <h2>
+                    Stories shaping
+                    <span>
+                      {' '}global maritime trade.
+                    </span>
+                  </h2>
+
+                </div>
+
+
+                <p>
+                  Explore insights about shipping routes,
+                  container operations, port technology
+                  and the systems that keep global cargo
+                  moving.
+                </p>
+
+              </div>
+
+
+              <div className="blog-articles-grid">
+
+                {
+                  latestPosts.map(
+                    (post, index) => {
+
+                      const fallbackImage =
+                        fallbackImages[
+                          index %
+                          fallbackImages.length
+                        ]
+
+
+                      return (
+
+                        <article
+                          key={post.id}
+                          className="blog-card"
+                        >
+
+
+                          <div className="blog-card-image">
+
+                            <img
+                              src={
+                                post.imageUrl ||
+                                fallbackImage
+                              }
+                              alt={post.title}
+                            />
+
+
+                            <span className="blog-card-number">
+
+                              {
+                                String(
+                                  index + 1
+                                ).padStart(
+                                  2,
+                                  '0'
+                                )
+                              }
+
+                            </span>
+
+                          </div>
+
+
+                          <div className="blog-card-content">
+
+
+                            <div className="blog-card-meta">
+
+                              <span>
+                                MARITIME INSIGHTS
+                              </span>
+
+                              <i></i>
+
+                              <span>
+                                SEATRACK
+                              </span>
+
+                            </div>
+
+
+                            <h3>
+                              {post.title}
+                            </h3>
+
+
+                            <p>
+                              {post.summary}
+                            </p>
+
+
+                            <div className="blog-card-footer">
+
+                              <span>
+                                {
+                                  formatDate(
+                                    post.publishedAtUtc
+                                  )
+                                }
+                              </span>
+
+
+                              <span>
+
+                                {
+                                  post.authorName ||
+                                  'SeaTrack Team'
+                                }
+
+                              </span>
+
+                            </div>
+
+                          </div>
+
+                        </article>
+
+                      )
+
+                    }
+                  )
+                }
+
+              </div>
+
             </div>
 
-            <p>
-              Explore insights about shipping routes, container
-              operations, port technology and the systems that
-              keep global cargo moving.
-            </p>
+          </section>
 
-          </div>
+        )
+      }
 
 
-          <div className="blog-articles-grid">
+      <CallToAction />
 
-            {/* ARTICLE 01 */}
-
-            <article className="blog-card">
-
-              <div className="blog-card-image">
-
-                <img
-                  src={globalTradeImage}
-                  alt="Container ship transporting global cargo"
-                />
-
-                <span className="blog-card-number">
-                  01
-                </span>
-
-              </div>
-
-              <div className="blog-card-content">
-
-                <div className="blog-card-meta">
-                  <span>GLOBAL TRADE</span>
-                  <i></i>
-                  <span>6 MIN READ</span>
-                </div>
-
-                <h3>
-                  The routes connecting tomorrow&apos;s global trade
-                </h3>
-
-                <p>
-                  Maritime routes remain the backbone of international
-                  commerce, connecting ports, markets and economies
-                  across the world.
-                </p>
-
-                <div className="blog-card-footer">
-
-                  <span>12 OCT 2026</span>
-
-                  <a href="#">
-                    Read Article
-                    <span>→</span>
-                  </a>
-
-                </div>
-
-              </div>
-
-            </article>
-
-
-            {/* ARTICLE 02 */}
-
-            <article className="blog-card">
-
-              <div className="blog-card-image">
-
-                <img
-                  src={containerShippingImage}
-                  alt="Modern container shipping terminal operations"
-                />
-
-                <span className="blog-card-number">
-                  02
-                </span>
-
-              </div>
-
-              <div className="blog-card-content">
-
-                <div className="blog-card-meta">
-                  <span>CONTAINER SHIPPING</span>
-                  <i></i>
-                  <span>7 MIN READ</span>
-                </div>
-
-                <h3>
-                  Inside modern container shipping operations
-                </h3>
-
-                <p>
-                  From container assignment to terminal handling,
-                  modern shipping depends on carefully coordinated
-                  equipment and operations.
-                </p>
-
-                <div className="blog-card-footer">
-
-                  <span>09 OCT 2026</span>
-
-                  <a href="#">
-                    Read Article
-                    <span>→</span>
-                  </a>
-
-                </div>
-
-              </div>
-
-            </article>
-
-
-            {/* ARTICLE 03 */}
-
-            <article className="blog-card">
-
-              <div className="blog-card-image">
-
-                <img
-                  src={portsTechnologyImage}
-                  alt="Smart port technology and digital logistics"
-                />
-
-                <span className="blog-card-number">
-                  03
-                </span>
-
-              </div>
-
-              <div className="blog-card-content">
-
-                <div className="blog-card-meta">
-                  <span>PORTS &amp; TECHNOLOGY</span>
-                  <i></i>
-                  <span>5 MIN READ</span>
-                </div>
-
-                <h3>
-                  How smart ports are transforming cargo movement
-                </h3>
-
-                <p>
-                  Digital tools are helping ports coordinate vessels,
-                  terminals and cargo operations with greater
-                  visibility and efficiency.
-                </p>
-
-                <div className="blog-card-footer">
-
-                  <span>04 OCT 2026</span>
-
-                  <a href="#">
-                    Read Article
-                    <span>→</span>
-                  </a>
-
-                </div>
-
-              </div>
-
-            </article>
-
-          </div>
-
-        </div>
-
-      </section>
-                <CallToAction />
     </div>
   )
 }
+
 
 export default Blog

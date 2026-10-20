@@ -109,6 +109,67 @@ namespace Infrastructur.Identity.Seeding
                         $"Failed to assign Operator role: {errors}");
                 }
             }
+
+            // =========================
+            // Website Administrator
+            // =========================
+
+            var adminEmail = "admin@seatrack.com";
+            var adminPassword = "SeaTrack123!";
+
+            var adminUser =
+                await _userManager.FindByEmailAsync(adminEmail);
+
+            if (adminUser is null)
+            {
+                adminUser = new ApplicationUser
+                {
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    FullName = "SeaTrack Administrator",
+                    EmailConfirmed = true
+                };
+
+                var createResult = await _userManager.CreateAsync(
+                    adminUser,
+                    adminPassword);
+
+                if (!createResult.Succeeded)
+                {
+                    var errors = string.Join(
+                        "; ",
+                        createResult.Errors.Select(
+                            error => error.Description));
+
+                    throw new InvalidOperationException(
+                        $"Failed to create Admin: {errors}");
+                }
+            }
+
+            // =========================
+            // Assign Admin Role
+            // =========================
+
+            if (!await _userManager.IsInRoleAsync(
+                    adminUser,
+                    "Admin"))
+            {
+                var roleResult =
+                    await _userManager.AddToRoleAsync(
+                        adminUser,
+                        "Admin");
+
+                if (!roleResult.Succeeded)
+                {
+                    var errors = string.Join(
+                        "; ",
+                        roleResult.Errors.Select(
+                            error => error.Description));
+
+                    throw new InvalidOperationException(
+                        $"Failed to assign Admin role: {errors}");
+                }
+            }
         }
     }
 }
