@@ -43,6 +43,7 @@ using Application.Features.Logistics.Voyages.GetAll.Interfaces;
 using Application.Features.Logistics.Voyages.GetById.Interfaces;
 using Application.Features.Logistics.Voyages.Update.Interfaces;
 using Application.Features.PublicWebsite.Blog.GetPublished.Interfaces;
+using Application.Features.PublicWebsite.Home.Get.Interfaces;
 using Application.Features.Shipping.Customer.Cancel.Interfaces;
 using Application.Features.Shipping.Customer.Create.Interfaces;
 using Application.Features.Shipping.Customer.GetById.Interfaces;
@@ -76,6 +77,12 @@ using Application.Features.WebSiteAdmin.Blog.Create.Interfaces;
 using Application.Features.WebSiteAdmin.Blog.Delete.Interfaces;
 using Application.Features.WebSiteAdmin.Blog.GetAll.Interfaces;
 using Application.Features.WebSiteAdmin.Blog.Update.Interfaces;
+using Application.Features.WebSiteAdmin.Home.Create.Interfaces;
+using Application.Features.WebSiteAdmin.Home.Delete.Interfaces;
+using Application.Features.WebSiteAdmin.Home.Get.Interfaces;
+using Application.Features.WebSiteAdmin.Home.Reorder.Interfaces;
+using Application.Features.WebSiteAdmin.Home.Update.Interfaces;
+using Application.Features.WebSiteAdmin.Home.Visibility.Interfaces;
 using Infrastructur.Features.Logistics.Berths.Create;
 using Infrastructur.Features.Logistics.Berths.Delete;
 using Infrastructur.Features.Logistics.Berths.GetAll;
@@ -117,6 +124,8 @@ using Infrastructur.Features.Logistics.Voyages.GetAll;
 using Infrastructur.Features.Logistics.Voyages.GetById;
 using Infrastructur.Features.Logistics.Voyages.Update;
 using Infrastructur.Features.PublicWebsite.Blog.GetPublished;
+using Infrastructur.Features.PublicWebsite.Home.Get;
+using Infrastructur.Features.PublicWebsite.Home.Get;
 using Infrastructur.Features.ShippingOrders.Customer.Cancel;
 using Infrastructur.Features.ShippingOrders.Customer.Create;
 using Infrastructur.Features.ShippingOrders.Customer.GetById;
@@ -150,13 +159,18 @@ using Infrastructur.Features.WebSiteAdmin.Blog.Create;
 using Infrastructur.Features.WebSiteAdmin.Blog.Delete;
 using Infrastructur.Features.WebSiteAdmin.Blog.GetAll;
 using Infrastructur.Features.WebSiteAdmin.Blog.Update;
+using Infrastructur.Features.WebSiteAdmin.Home.Create;
+using Infrastructur.Features.WebSiteAdmin.Home.Delete;
+using Infrastructur.Features.WebSiteAdmin.Home.Get;
+using Infrastructur.Features.WebSiteAdmin.Home.Reorder;
+using Infrastructur.Features.WebSiteAdmin.Home.Update;
+using Infrastructur.Features.WebSiteAdmin.Home.Visibility;
 using Infrastructur.Identity.GetMe;
 using Infrastructur.Identity.Login;
 using Infrastructur.Identity.Register;
 using Infrastructur.Identity.Seeding;
 using Infrastructur.Identity.Services;
 using Microsoft.Extensions.DependencyInjection;
-
 using LogisticsAdminGetShipmentHandler =
     Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.GetByShippingOrderId.GetShipmentHandler;
 using LogisticsAdminGetShipmentHandlerInterface =
@@ -583,7 +597,72 @@ public static class ServiceRegistration
         services.AddScoped<IUpdateBlogPostHandler, UpdateBlogPostHandler>();
         services.AddScoped<IDeleteBlogPostHandler, DeleteBlogPostHandler>();
         services.AddScoped<IGetPublishedBlogPostsHandler, GetPublishedBlogPostsHandler>();
+        
+
+
+        // =========================================================
+        // Website Admin - Blog CMS
+        // =========================================================
+
+        services.AddScoped<
+            ICreateBlogPostHandler,
+            CreateBlogPostHandler>();
+
+        services.AddScoped<
+            IGetAllBlogPostsHandler,
+            GetAllBlogPostsHandler>();
+
+        services.AddScoped<
+            IUpdateBlogPostHandler,
+            UpdateBlogPostHandler>();
+
+        services.AddScoped<
+            IDeleteBlogPostHandler,
+            DeleteBlogPostHandler>();
+
+        services.AddScoped<
+            IGetPublishedBlogPostsHandler,
+            GetPublishedBlogPostsHandler>();
+
+
+        // =========================================================
+        // Website Admin - Home Page CMS
+        // =========================================================
+
+        services.AddScoped<
+            IGetHomePageHandler,
+            GetHomePageHandler>();
+
+        services.AddScoped<
+            ICreateHomePageSectionHandler,
+            CreateHomePageSectionHandler>();
+
+        services.AddScoped<
+            IUpdateHomePageSectionHandler,
+            UpdateHomePageSectionHandler>();
+
+        services.AddScoped<
+            IDeleteHomePageSectionHandler,
+            DeleteHomePageSectionHandler>();
+
+        services.AddScoped<
+            IUpdateHomePageSectionVisibilityHandler,
+            UpdateHomePageSectionVisibilityHandler>();
+
+        services.AddScoped<
+            IReorderHomePageSectionsHandler,
+            ReorderHomePageSectionsHandler>();
+
+        // =========================================================
+        // Public Website - Home Page
+        // =========================================================
+
+        services.AddScoped<
+            IGetPublicHomePageHandler,
+            GetPublicHomePageHandler>();
+
         return services;
     }
-
 }
+    
+

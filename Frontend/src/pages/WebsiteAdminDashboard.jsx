@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import CmsBlogManager from "../components/cms/CmsBlogManager";
+import CmsHomeManager from "../components/cms/CmsHomeManager";
+
 import "./WebsiteAdminDashboard.css";
 
 const API_URL = "http://localhost:5080";
@@ -234,7 +237,9 @@ export default function WebsiteAdminDashboard() {
         <p>{description}</p>
 
         <div className="website-admin__placeholder-box">
-          <strong>CMS module is being connected.</strong>
+          <strong>
+            CMS module is being connected.
+          </strong>
 
           <p>
             This section will be connected to the SeaTrack
@@ -251,10 +256,7 @@ export default function WebsiteAdminDashboard() {
         return <CmsBlogManager />;
 
       case "home":
-        return renderComingSoon(
-          "Home Page",
-          "Manage the content displayed on the SeaTrack home page."
-        );
+        return <CmsHomeManager />;
 
       case "services":
         return renderComingSoon(
@@ -359,7 +361,9 @@ export default function WebsiteAdminDashboard() {
         <header className="website-admin__topbar">
           <div>
             <span>SeaTrack</span>
-            <strong>Website / CMS Administration</strong>
+            <strong>
+              Website / CMS Administration
+            </strong>
           </div>
 
           <div className="website-admin__topbar-right">
@@ -368,7 +372,8 @@ export default function WebsiteAdminDashboard() {
             </span>
 
             <span>
-              {user?.email || "admin@seatrack.com"}
+              {user?.email ||
+                "admin@seatrack.com"}
             </span>
           </div>
         </header>
