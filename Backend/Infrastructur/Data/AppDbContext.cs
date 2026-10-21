@@ -26,11 +26,16 @@ namespace Infrastructur.Data
         public DbSet<Payment> Payments => Set<Payment>();
 
         public DbSet<Shipment> Shipments => Set<Shipment>();
+
         public DbSet<Vessel> Vessels => Set<Vessel>();
+
         public DbSet<Route> Routes => Set<Route>();
+
         public DbSet<Voyage> Voyages => Set<Voyage>();
+
         public DbSet<PortCall> PortCalls => Set<PortCall>();
-        
+
+
         // =========================================================
         // Ports
         // =========================================================
@@ -43,8 +48,20 @@ namespace Infrastructur.Data
 
         public DbSet<Container> Containers => Set<Container>();
 
-        //WEB front Side
+
+        // =========================================================
+        // Website / CMS
+        // =========================================================
+
         public DbSet<BlogPost> BlogPosts => Set<BlogPost>();
+
+        public DbSet<HomePageContent> HomePageContents =>
+            Set<HomePageContent>();
+
+        public DbSet<HomePageSection> HomePageSections =>
+            Set<HomePageSection>();
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -58,8 +75,9 @@ namespace Infrastructur.Data
 
             builder.ApplyConfiguration(
                 new Configurations.PaymentConfiguration());
+
             builder.ApplyConfiguration(
-                 new Configurations.PortConfiguration());
+                new Configurations.PortConfiguration());
 
             builder.ApplyConfiguration(
                 new Configurations.TerminalConfiguration());
@@ -67,12 +85,25 @@ namespace Infrastructur.Data
             builder.ApplyConfiguration(
                 new Configurations.BerthConfiguration());
 
-            builder.ApplyConfiguration(new VesselConfiguration());
-            builder.ApplyConfiguration(new ContainerConfiguration());
-            builder.ApplyConfiguration(new RouteConfiguration());
-            builder.ApplyConfiguration(new VoyageConfiguration());
-            builder.ApplyConfiguration(new PortCallConfiguration());
-            builder.ApplyConfiguration(new ShippingOrderConfiguration());
+            builder.ApplyConfiguration(
+                new VesselConfiguration());
+
+            builder.ApplyConfiguration(
+                new ContainerConfiguration());
+
+            builder.ApplyConfiguration(
+                new RouteConfiguration());
+
+            builder.ApplyConfiguration(
+                new VoyageConfiguration());
+
+            builder.ApplyConfiguration(
+                new PortCallConfiguration());
+
+            builder.ApplyConfiguration(
+                new ShippingOrderConfiguration());
+
+
             // =====================================================
             // Default Schema
             // =====================================================
@@ -131,6 +162,51 @@ namespace Infrastructur.Data
                     .HasForeignKey<Quote>(
                         quote => quote.ShippingOrderId)
                     .OnDelete(DeleteBehavior.Cascade);
+            });
+
+
+            // =====================================================
+            // Home Page CMS
+            // =====================================================
+
+            builder.Entity<HomePageContent>(entity =>
+            {
+                entity.Property(content => content.Name)
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                entity.HasMany(content => content.Sections)
+                    .WithOne(section => section.HomePageContent)
+                    .HasForeignKey(section => section.HomePageContentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+
+            // =====================================================
+            // Home Page Sections
+            // =====================================================
+
+            builder.Entity<HomePageSection>(entity =>
+            {
+                entity.Property(section => section.SectionType)
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                entity.Property(section => section.Name)
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                entity.Property(section => section.ContentJson)
+                    .IsRequired();
+
+                entity.Property(section => section.ImageUrl)
+                    .HasMaxLength(1000);
+
+                entity.HasIndex(section => new
+                {
+                    section.HomePageContentId,
+                    section.SortOrder
+                });
             });
         }
     }
