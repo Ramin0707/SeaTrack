@@ -1,8 +1,32 @@
 import './TrackingSection.css'
 import trackingShip from '../assets/images/tracking-ship.jpg'
 
-function TrackingSection() {
-  const stages = [
+
+const API_URL = 'https://localhost:44328'
+
+
+function resolveImageUrl(imageUrl) {
+  if (!imageUrl) {
+    return trackingShip
+  }
+
+  if (
+    imageUrl.startsWith('http://') ||
+    imageUrl.startsWith('https://')
+  ) {
+    return imageUrl
+  }
+
+  return `${API_URL}${imageUrl}`
+}
+
+
+function TrackingSection({
+  content = null,
+  imageUrl = null,
+}) {
+
+  const defaultStages = [
     {
       number: '01',
       title: 'Loaded',
@@ -41,151 +65,205 @@ function TrackingSection() {
     },
   ]
 
+
+  const defaultStats = [
+    {
+      value: '24/7',
+      label: 'Live visibility',
+    },
+    {
+      value: '6',
+      label: 'Tracking stages',
+    },
+    {
+      value: '100%',
+      label: 'Transparent',
+    },
+  ]
+
+
+  const label =
+    content?.label ||
+    'TRACK YOUR SHIPMENT'
+
+
+  const title =
+    content?.title ||
+    'Real-Time'
+
+
+  const secondTitle =
+    content?.secondTitle ||
+    content?.titleSecondLine ||
+    'Tracking.'
+
+
+  const highlightedTitle =
+    content?.highlightedTitle ||
+    'Total Transparency.'
+
+
+  const description =
+    content?.description ||
+    'Track your cargo at every stage of the voyage. Enter your SeaTrack tracking number to see the latest shipment status, route and delivery progress.'
+
+
+  const inputPlaceholder =
+    content?.inputPlaceholder ||
+    content?.placeholder ||
+    'Enter tracking number'
+
+
+  const buttonText =
+    content?.buttonText ||
+    'Track Shipment'
+
+
+  const stats =
+    Array.isArray(content?.stats) &&
+    content.stats.length > 0
+      ? content.stats
+      : defaultStats
+
+
+  const stages =
+    Array.isArray(content?.stages) &&
+    content.stages.length > 0
+      ? content.stages
+      : defaultStages
+
+
+  const demoShipment =
+    content?.demoShipment || {}
+
+
+  const voyageLabel =
+    demoShipment?.label ||
+    content?.voyageLabel ||
+    'LIVE VOYAGE'
+
+
+  const trackingNumber =
+    demoShipment?.trackingNumber ||
+    content?.trackingNumber ||
+    'ST-2026-001'
+
+
+  const route =
+    demoShipment?.route ||
+    content?.route ||
+    'Baku → Aktau'
+
+
+  const shipmentStatus =
+    demoShipment?.status ||
+    content?.status ||
+    'In Transit'
+
+
+  const panelLabel =
+    content?.panelLabel ||
+    'SHIPMENT STATUS'
+
+
+  const trackingNumberLabel =
+    content?.trackingNumberLabel ||
+    'Tracking number'
+
+
+  const shipImage =
+    resolveImageUrl(
+      imageUrl ||
+      content?.imageUrl
+    )
+
+
   const handleSubmit = (event) => {
     event.preventDefault()
   }
 
+
   return (
-    <section className="tracking-section" id="tracking">
+    <section
+      className="tracking-section"
+      id="tracking"
+    >
+
       <div className="tracking-container">
 
+
         {/* LEFT SIDE */}
+
         <div className="tracking-content">
 
           <div className="tracking-label">
             <span></span>
-            TRACK YOUR SHIPMENT
+
+            {label}
           </div>
 
+
           <h2>
-            Real-Time
+            {title}
+
             <br />
-            Tracking.
+
+            {secondTitle}
+
             <br />
-            <strong>Total Transparency.</strong>
+
+            <strong>
+              {highlightedTitle}
+            </strong>
           </h2>
 
+
           <p className="tracking-description">
-            Track your cargo at every stage of the voyage.
-            Enter your SeaTrack tracking number to see the latest
-            shipment status, route and delivery progress.
+            {description}
           </p>
+
 
           <form
             className="tracking-form"
             onSubmit={handleSubmit}
           >
+
             <input
               type="text"
-              placeholder="Enter tracking number"
+              placeholder={inputPlaceholder}
               aria-label="Tracking number"
             />
 
+
             <button type="submit">
-              Track Shipment
-              <span>→</span>
+              {buttonText}
+
+              <span>
+                →
+              </span>
             </button>
+
           </form>
+
 
           <div className="tracking-stats">
 
-            <div>
-              <strong>24/7</strong>
-              <span>Live visibility</span>
-            </div>
-
-            <div>
-              <strong>6</strong>
-              <span>Tracking stages</span>
-            </div>
-
-            <div>
-              <strong>100%</strong>
-              <span>Transparent</span>
-            </div>
-
-          </div>
-
-        </div>
-
-
-        {/* RIGHT SIDE */}
-        <div className="tracking-panel">
-
-          {/* IMAGE */}
-          <div className="tracking-image">
-            <img
-              src={trackingShip}
-              alt="SeaTrack container ship"
-            />
-
-            <div className="tracking-image-overlay"></div>
-
-            <div className="tracking-image-badge">
-              <span>LIVE VOYAGE</span>
-              <strong>ST-2026-001</strong>
-            </div>
-          </div>
-
-
-          {/* SHIPMENT HEADER */}
-          <div className="tracking-panel-header">
-
-            <div>
-              <span className="tracking-panel-label">
-                SHIPMENT STATUS
-              </span>
-
-              <h3>Baku → Aktau</h3>
-            </div>
-
-            <span className="tracking-status">
-              In Transit
-            </span>
-
-          </div>
-
-
-          {/* TRACKING NUMBER */}
-          <div className="tracking-number">
-
-            <span>Tracking number</span>
-
-            <strong>
-              ST-2026-001
-            </strong>
-
-          </div>
-
-
-          {/* TIMELINE */}
-          <div className="tracking-timeline">
-
-            {stages.map((stage) => (
+            {stats.map((stat, index) => (
               <div
-                className={`tracking-stage ${stage.state}`}
-                key={stage.number}
+                key={`${stat?.label || 'stat'}-${index}`}
               >
 
-                <div className="tracking-stage-marker">
-                  <span></span>
-                </div>
+                <strong>
+                  {stat?.value ||
+                    defaultStats[index]?.value ||
+                    ''}
+                </strong>
 
-                <span className="tracking-stage-number">
-                  {stage.number}
+                <span>
+                  {stat?.label ||
+                    defaultStats[index]?.label ||
+                    ''}
                 </span>
-
-                <div className="tracking-stage-content">
-
-                  <h4>
-                    {stage.title}
-                  </h4>
-
-                  <p>
-                    {stage.description}
-                  </p>
-
-                </div>
 
               </div>
             ))}
@@ -194,9 +272,158 @@ function TrackingSection() {
 
         </div>
 
+
+        {/* RIGHT SIDE */}
+
+        <div className="tracking-panel">
+
+
+          {/* IMAGE */}
+
+          <div className="tracking-image">
+
+            <img
+              src={shipImage}
+              alt={
+                content?.imageAlt ||
+                'SeaTrack container ship'
+              }
+            />
+
+
+            <div className="tracking-image-overlay"></div>
+
+
+            <div className="tracking-image-badge">
+
+              <span>
+                {voyageLabel}
+              </span>
+
+              <strong>
+                {trackingNumber}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          {/* SHIPMENT HEADER */}
+
+          <div className="tracking-panel-header">
+
+            <div>
+
+              <span className="tracking-panel-label">
+                {panelLabel}
+              </span>
+
+              <h3>
+                {route}
+              </h3>
+
+            </div>
+
+
+            <span className="tracking-status">
+              {shipmentStatus}
+            </span>
+
+          </div>
+
+
+          {/* TRACKING NUMBER */}
+
+          <div className="tracking-number">
+
+            <span>
+              {trackingNumberLabel}
+            </span>
+
+            <strong>
+              {trackingNumber}
+            </strong>
+
+          </div>
+
+
+          {/* TIMELINE */}
+
+          <div className="tracking-timeline">
+
+            {stages.map((stage, index) => {
+
+              const fallback =
+                defaultStages[index] || {}
+
+
+              const stageNumber =
+                stage?.number ||
+                fallback.number ||
+                String(index + 1).padStart(2, '0')
+
+
+              const stageTitle =
+                stage?.title ||
+                fallback.title ||
+                ''
+
+
+              const stageDescription =
+                stage?.description ||
+                stage?.text ||
+                fallback.description ||
+                ''
+
+
+              const stageState =
+                stage?.state ||
+                fallback.state ||
+                'pending'
+
+
+              return (
+                <div
+                  className={`tracking-stage ${stageState}`}
+                  key={`${stageNumber}-${index}`}
+                >
+
+                  <div className="tracking-stage-marker">
+                    <span></span>
+                  </div>
+
+
+                  <span className="tracking-stage-number">
+                    {stageNumber}
+                  </span>
+
+
+                  <div className="tracking-stage-content">
+
+                    <h4>
+                      {stageTitle}
+                    </h4>
+
+                    <p>
+                      {stageDescription}
+                    </p>
+
+                  </div>
+
+                </div>
+              )
+            })}
+
+          </div>
+
+        </div>
+
       </div>
+
     </section>
   )
 }
+
 
 export default TrackingSection

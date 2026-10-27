@@ -1,35 +1,203 @@
 import './GlobalNetwork.css'
 import networkMap from '../assets/images/global-network-map.png'
 
-function GlobalNetwork() {
+
+const API_URL = 'https://localhost:44328'
+
+
+function resolveImageUrl(imageUrl) {
+  if (!imageUrl) {
+    return networkMap
+  }
+
+  if (
+    imageUrl.startsWith('http://') ||
+    imageUrl.startsWith('https://')
+  ) {
+    return imageUrl
+  }
+
+  return `${API_URL}${imageUrl}`
+}
+
+
+function GlobalNetwork({
+  content = null,
+  imageUrl = null,
+}) {
+
+  const defaultStats = [
+    {
+      value: '120+',
+      label: 'Global Ports',
+    },
+    {
+      value: '35+',
+      label: 'Shipping Routes',
+    },
+    {
+      value: '24/7',
+      label: 'Global Tracking',
+    },
+  ]
+
+
+  const defaultLocations = [
+    {
+      name: 'Baku',
+      country: 'Azerbaijan',
+      className: 'location-baku',
+      orange: false,
+    },
+    {
+      name: 'Istanbul',
+      country: 'Türkiye',
+      className: 'location-istanbul',
+      orange: false,
+    },
+    {
+      name: 'Dubai',
+      country: 'UAE',
+      className: 'location-dubai',
+      orange: true,
+    },
+    {
+      name: 'Singapore',
+      country: 'Asia',
+      className: 'location-singapore',
+      orange: true,
+    },
+  ]
+
+
+  const label =
+    content?.label ||
+    'OUR GLOBAL NETWORK'
+
+
+  const title =
+    content?.title ||
+    'Connecting ports'
+
+
+  const highlightedTitle =
+    content?.highlightedTitle ||
+    content?.subtitle ||
+    'across the world.'
+
+
+  const description =
+    content?.description ||
+    'SeaTrack connects major maritime routes, ports and logistics operations through one powerful platform built for modern global trade.'
+
+
+  const linkText =
+    content?.linkText ||
+    content?.buttonText ||
+    'Explore our network'
+
+
+  const linkUrl =
+    content?.linkUrl ||
+    content?.buttonUrl ||
+    '#routes'
+
+
+  const stats =
+    Array.isArray(content?.stats) &&
+    content.stats.length > 0
+      ? content.stats
+      : defaultStats
+
+
+  const locations =
+    Array.isArray(content?.locations) &&
+    content.locations.length > 0
+      ? content.locations
+      : defaultLocations
+
+
+  const bottomLabel =
+    content?.bottomLabel ||
+    'GLOBAL MARITIME NETWORK'
+
+
+  const bottomTitle =
+    content?.bottomTitle ||
+    'Any Port. Any Route.'
+
+
+  const mapImage =
+    resolveImageUrl(imageUrl || content?.imageUrl)
+
+
+  function getLocationClass(location, index) {
+    if (location?.className) {
+      return location.className
+    }
+
+    const fallbackLocation = defaultLocations[index]
+
+    if (fallbackLocation) {
+      return fallbackLocation.className
+    }
+
+    return ''
+  }
+
+
+  function isOrangeLocation(location, index) {
+    if (typeof location?.orange === 'boolean') {
+      return location.orange
+    }
+
+    const fallbackLocation = defaultLocations[index]
+
+    return fallbackLocation?.orange || false
+  }
+
+
   return (
-    <section className="global-network" id="network">
+    <section
+      className="global-network"
+      id="network"
+    >
 
       <div className="global-network-container">
+
 
         {/* LEFT SIDE */}
 
         <div className="global-network-content">
 
           <span className="global-network-label">
-            OUR GLOBAL NETWORK
+            {label}
           </span>
 
+
           <h2>
-            Connecting ports
+            {title}
+
             <br />
-            across the world.
+
+            {highlightedTitle}
           </h2>
 
+
           <p>
-            SeaTrack connects major maritime routes, ports and logistics
-            operations through one powerful platform built for modern
-            global trade.
+            {description}
           </p>
 
-          <a href="#routes" className="global-network-link">
-            Explore our network
-            <span>→</span>
+
+          <a
+            href={linkUrl}
+            className="global-network-link"
+          >
+            {linkText}
+
+            <span>
+              →
+            </span>
           </a>
 
         </div>
@@ -39,24 +207,28 @@ function GlobalNetwork() {
 
         <div className="global-network-visual">
 
+
           {/* STATS */}
 
           <div className="network-stats">
 
-            <div>
-              <strong>120+</strong>
-              <span>Global Ports</span>
-            </div>
+            {stats.map((stat, index) => (
+              <div key={`${stat?.label || 'stat'}-${index}`}>
 
-            <div>
-              <strong>35+</strong>
-              <span>Shipping Routes</span>
-            </div>
+                <strong>
+                  {stat?.value ||
+                    defaultStats[index]?.value ||
+                    ''}
+                </strong>
 
-            <div>
-              <strong>24/7</strong>
-              <span>Global Tracking</span>
-            </div>
+                <span>
+                  {stat?.label ||
+                    defaultStats[index]?.label ||
+                    ''}
+                </span>
+
+              </div>
+            ))}
 
           </div>
 
@@ -66,68 +238,75 @@ function GlobalNetwork() {
           <div className="network-map">
 
             <img
-              src={networkMap}
-              alt="SeaTrack global maritime network"
+              src={mapImage}
+              alt={
+                content?.imageAlt ||
+                'SeaTrack global maritime network'
+              }
               className="network-map-image"
             />
+
 
             <div className="network-map-overlay"></div>
 
 
-            {/* BAKU */}
+            {locations.map((location, index) => {
 
-            <div className="network-location location-baku">
+              const fallback =
+                defaultLocations[index] || {}
 
-              <span className="network-dot"></span>
-
-              <div className="network-location-info">
-                <strong>Baku</strong>
-                <small>Azerbaijan</small>
-              </div>
-
-            </div>
+              const locationName =
+                location?.name ||
+                location?.city ||
+                fallback.name ||
+                ''
 
 
-            {/* ISTANBUL */}
-
-            <div className="network-location location-istanbul">
-
-              <span className="network-dot"></span>
-
-              <div className="network-location-info">
-                <strong>Istanbul</strong>
-                <small>Türkiye</small>
-              </div>
-
-            </div>
+              const locationCountry =
+                location?.country ||
+                location?.region ||
+                fallback.country ||
+                ''
 
 
-            {/* DUBAI */}
-
-            <div className="network-location location-dubai">
-
-              <span className="network-dot orange"></span>
-
-              <div className="network-location-info">
-                <strong>Dubai</strong>
-                <small>UAE</small>
-              </div>
-
-            </div>
+              const locationClass =
+                getLocationClass(location, index)
 
 
-            {/* SINGAPORE */}
+              const orange =
+                isOrangeLocation(location, index)
 
-            <div className="network-location location-singapore">
 
-              <span className="network-dot orange"></span>
+              return (
+                <div
+                  className={`network-location ${locationClass}`}
+                  key={`${locationName}-${index}`}
+                >
 
-              <div className="network-location-info">
-                <strong>Singapore</strong>
-                <small>Asia</small>
-              </div>
+                  <span
+                    className={
+                      orange
+                        ? 'network-dot orange'
+                        : 'network-dot'
+                    }
+                  ></span>
 
-            </div>
+
+                  <div className="network-location-info">
+
+                    <strong>
+                      {locationName}
+                    </strong>
+
+                    <small>
+                      {locationCountry}
+                    </small>
+
+                  </div>
+
+                </div>
+              )
+            })}
 
           </div>
 
@@ -136,10 +315,12 @@ function GlobalNetwork() {
 
           <div className="network-bottom">
 
-            <span>GLOBAL MARITIME NETWORK</span>
+            <span>
+              {bottomLabel}
+            </span>
 
             <strong>
-              Any Port. Any Route.
+              {bottomTitle}
             </strong>
 
           </div>
@@ -151,5 +332,6 @@ function GlobalNetwork() {
     </section>
   )
 }
+
 
 export default GlobalNetwork

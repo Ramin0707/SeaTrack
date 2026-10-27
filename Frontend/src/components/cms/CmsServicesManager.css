@@ -1,0 +1,1746 @@
+/* =========================================================
+   SEATRACK CMS — SERVICES MANAGER
+   CmsServicesManager.css
+   ========================================================= */
+
+
+/* =========================================================
+   1. ROOT
+   ========================================================= */
+
+.cms-services {
+  width: 100%;
+  max-width: 100%;
+  color: #ffffff;
+}
+
+.cms-services,
+.cms-services *,
+.cms-services *::before,
+.cms-services *::after {
+  box-sizing: border-box;
+}
+
+.cms-services button,
+.cms-services input,
+.cms-services textarea,
+.cms-services select {
+  font: inherit;
+}
+
+
+/* =========================================================
+   2. PAGE HEADER
+   ========================================================= */
+
+.cms-services__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+
+  margin-bottom: 32px;
+}
+
+.cms-services__header > div {
+  min-width: 0;
+}
+
+.cms-services__eyebrow,
+.cms-services__header-label {
+  display: block;
+
+  margin: 0 0 10px;
+
+  color: #28d7dc;
+
+  font-size: 10px;
+  line-height: 1.4;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.cms-services__header h1 {
+  margin: 0 0 12px;
+
+  color: #ffffff;
+
+  font-size: 34px;
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+.cms-services__header p {
+  max-width: 760px;
+
+  margin: 0;
+
+  color: #8bb5bf;
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   3. GLOBAL BUTTONS
+   ========================================================= */
+
+.cms-services button {
+  appearance: none;
+
+  min-height: 40px;
+
+  padding: 0 16px;
+
+  border: 1px solid rgba(61, 184, 198, 0.28);
+  border-radius: 6px;
+
+  background: #082f3d;
+  color: #d9f1f4;
+
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease,
+    opacity 0.18s ease;
+}
+
+.cms-services button:hover:not(:disabled) {
+  border-color: #28d7dc;
+  background: #0b3d4c;
+  color: #ffffff;
+}
+
+.cms-services button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.cms-services button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   4. ADD SERVICE BUTTON
+   ========================================================= */
+
+.cms-services__add-button {
+  flex: 0 0 auto;
+
+  min-width: 145px;
+  height: 44px;
+
+  border-color: #28d7dc !important;
+
+  background: #28d7dc !important;
+  color: #022631 !important;
+
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+.cms-services__add-button:hover {
+  border-color: #4ae2e6 !important;
+  background: #4ae2e6 !important;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   5. MESSAGES
+   ========================================================= */
+
+.cms-services__message,
+.cms-services__success,
+.cms-services__error {
+  margin: 0 0 24px;
+
+  padding: 14px 17px;
+
+  border-radius: 7px;
+
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.cms-services__success {
+  border: 1px solid rgba(52, 215, 162, 0.28);
+
+  background: rgba(52, 215, 162, 0.07);
+  color: #74e8c0;
+}
+
+.cms-services__error {
+  border: 1px solid rgba(255, 100, 100, 0.3);
+
+  background: rgba(255, 100, 100, 0.07);
+  color: #ff9292;
+}
+
+
+/* =========================================================
+   6. LOADING
+   ========================================================= */
+
+.cms-services__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 220px;
+
+  padding: 30px;
+
+  border: 1px solid rgba(72, 177, 192, 0.15);
+  border-radius: 10px;
+
+  background: #06303e;
+  color: #8eb7c1;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   7. PAGE CONTENT CARD
+   ========================================================= */
+
+.cms-services__page-card {
+  margin: 0 0 34px;
+
+  border: 1px solid rgba(70, 190, 203, 0.2);
+  border-radius: 9px;
+
+  background: #073443;
+
+  overflow: hidden;
+}
+
+.cms-services__page-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  padding: 24px 26px;
+
+  border-bottom: 1px solid rgba(70, 190, 203, 0.15);
+
+  background: #0a3a49;
+}
+
+.cms-services__page-card-header span {
+  display: block;
+
+  margin: 0 0 8px;
+
+  color: #28d7dc;
+
+  font-size: 10px;
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.cms-services__page-card-header h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+.cms-services__page-card-header button {
+  flex-shrink: 0;
+
+  min-width: 90px;
+  height: 40px;
+}
+
+.cms-services__page-card-body {
+  padding: 26px;
+}
+
+.cms-services__page-card-body > span {
+  display: block;
+
+  margin: 0 0 8px;
+
+  color: #d9f4f7;
+
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.cms-services__page-card-body h2,
+.cms-services__page-card-body h3 {
+  margin: 0 0 14px;
+
+  color: #ffffff;
+
+  font-size: 24px;
+  line-height: 1.3;
+  font-weight: 800;
+}
+
+.cms-services__page-card-body p {
+  max-width: 980px;
+
+  margin: 0;
+
+  color: #8cb9c3;
+
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   8. PAGE STATS
+   ========================================================= */
+
+.cms-services__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+
+  margin-top: 28px;
+}
+
+.cms-services__stat {
+  padding-top: 16px;
+
+  border-top: 1px solid rgba(39, 212, 217, 0.16);
+}
+
+.cms-services__stat strong {
+  display: block;
+
+  margin: 0 0 5px;
+
+  color: #ffffff;
+
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 800;
+}
+
+.cms-services__stat span {
+  color: #8ab3bd;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   9. SERVICES LIST HEADER
+   ========================================================= */
+
+.cms-services__section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+
+  margin: 0 0 20px;
+}
+
+.cms-services__section-header span {
+  display: block;
+
+  margin: 0 0 7px;
+
+  color: #28d7dc;
+
+  font-size: 10px;
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.cms-services__section-header h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 24px;
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+.cms-services__count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 36px;
+  height: 36px;
+
+  padding: 0 11px;
+
+  border-radius: 18px;
+
+  background: rgba(39, 212, 217, 0.1);
+  color: #28d7dc;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   10. SERVICES LIST
+   ========================================================= */
+
+.cms-services__list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+
+/* =========================================================
+   11. SERVICE CARD
+   ========================================================= */
+
+.cms-services__service-card {
+  display: grid;
+
+  grid-template-columns:
+    70px
+    178px
+    minmax(300px, 1fr)
+    auto;
+
+  align-items: center;
+
+  gap: 22px;
+
+  min-height: 145px;
+
+  padding: 18px 20px;
+
+  border: 1px solid rgba(61, 183, 198, 0.2);
+  border-radius: 8px;
+
+  background: #0a3c4c;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.cms-services__service-card:hover {
+  border-color: rgba(39, 212, 217, 0.35);
+
+  background: #0b4050;
+}
+
+
+/* =========================================================
+   12. SERVICE NUMBER
+   ========================================================= */
+
+.cms-services__service-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 58px;
+
+  border: 1px solid rgba(39, 212, 217, 0.35);
+  border-radius: 6px;
+
+  background: rgba(39, 212, 217, 0.04);
+  color: #28d7dc;
+
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   13. SERVICE IMAGE
+   ========================================================= */
+
+.cms-services__service-image {
+  width: 178px;
+  height: 110px;
+
+  border-radius: 6px;
+
+  background: #052936;
+
+  overflow: hidden;
+}
+
+.cms-services__service-image img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+/* =========================================================
+   14. SERVICE INFO
+   ========================================================= */
+
+.cms-services__service-info {
+  min-width: 0;
+}
+
+.cms-services__service-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin: 0 0 9px;
+}
+
+.cms-services__service-label {
+  color: #ffffff;
+
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 600;
+
+  text-transform: uppercase;
+}
+
+.cms-services__visibility {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 22px;
+
+  padding: 0 9px;
+
+  border: 1px solid rgba(45, 214, 166, 0.35);
+  border-radius: 3px;
+
+  background: rgba(45, 214, 166, 0.08);
+  color: #43e0b0;
+
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+
+  text-transform: uppercase;
+}
+
+.cms-services__visibility--hidden {
+  border-color: rgba(255, 178, 79, 0.35);
+
+  background: rgba(255, 178, 79, 0.08);
+  color: #ffc06a;
+}
+
+.cms-services__service-info h3 {
+  margin: 0 0 8px;
+
+  color: #ffffff;
+
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 800;
+}
+
+.cms-services__service-info p {
+  max-width: 760px;
+
+  margin: 0;
+
+  color: #83b4bf;
+
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   15. SERVICE ACTIONS
+   ========================================================= */
+
+.cms-services__service-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  white-space: nowrap;
+}
+
+.cms-services__service-actions button {
+  min-width: 58px;
+  height: 38px;
+
+  padding: 0 13px;
+
+  border: 1px solid rgba(78, 180, 194, 0.25);
+  border-radius: 5px;
+
+  background: #082f3d;
+  color: #d7edf1;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.cms-services__service-actions button:hover:not(:disabled) {
+  border-color: #28d7dc;
+
+  background: #0c4556;
+}
+
+.cms-services__service-actions button:last-child {
+  border-color: rgba(255, 90, 90, 0.32);
+
+  color: #ff7474;
+}
+
+.cms-services__service-actions button:last-child:hover:not(:disabled) {
+  border-color: #ff6767;
+
+  background: rgba(255, 85, 85, 0.08);
+}
+
+
+/* =========================================================
+   16. MOVE BUTTONS
+   ========================================================= */
+
+.cms-services__move-button {
+  min-width: 38px !important;
+  width: 38px;
+  height: 38px;
+
+  padding: 0 !important;
+
+  font-size: 16px !important;
+}
+
+
+/* =========================================================
+   17. EMPTY STATE
+   ========================================================= */
+
+.cms-services__empty {
+  padding: 50px 25px;
+
+  border: 1px dashed rgba(71, 188, 202, 0.25);
+  border-radius: 8px;
+
+  background: rgba(6, 48, 62, 0.6);
+
+  text-align: center;
+}
+
+.cms-services__empty h3 {
+  margin: 0 0 10px;
+
+  color: #ffffff;
+}
+
+.cms-services__empty p {
+  margin: 0;
+
+  color: #82aeb8;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   18. SERVICE EDITOR
+   ========================================================= */
+
+.cms-services__editor {
+  width: 100%;
+
+  margin: 0 0 36px;
+
+  border: 1px solid rgba(66, 190, 203, 0.22);
+  border-radius: 10px;
+
+  background: #073744;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   19. EDITOR HEADER
+   ========================================================= */
+
+.cms-services__editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 28px;
+
+  padding: 26px 28px;
+
+  border-bottom: 1px solid rgba(70, 190, 203, 0.16);
+
+  background: #0a3b4a;
+}
+
+.cms-services__editor-header > div {
+  min-width: 0;
+}
+
+.cms-services__editor-header span {
+  display: block;
+
+  margin: 0 0 8px;
+
+  color: #28d7dc;
+
+  font-size: 10px;
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+
+  text-transform: uppercase;
+}
+
+.cms-services__editor-header h2 {
+  margin: 0 0 6px;
+
+  color: #ffffff;
+
+  font-size: 25px;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.cms-services__editor-header p {
+  margin: 0;
+
+  color: #8cb6bf;
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.cms-services__editor-header > button {
+  flex-shrink: 0;
+
+  min-width: 88px;
+  height: 40px;
+}
+
+
+/* =========================================================
+   20. MAIN FORM GRID
+   ========================================================= */
+
+.cms-services__form-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  column-gap: 24px;
+  row-gap: 22px;
+
+  padding: 30px 28px 34px;
+}
+
+.cms-services__form-grid > label {
+  display: flex;
+  flex-direction: column;
+
+  gap: 9px;
+
+  min-width: 0;
+
+  margin: 0;
+}
+
+.cms-services__form-grid > label > span {
+  display: block;
+
+  margin: 0;
+
+  color: #b9d7dd;
+
+  font-size: 11px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.cms-services__full {
+  grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   21. INPUTS
+   ========================================================= */
+
+.cms-services__editor input:not([type="file"]),
+.cms-services__editor textarea,
+.cms-services__editor select {
+  display: block;
+
+  width: 100%;
+
+  margin: 0;
+
+  padding: 11px 13px;
+
+  border: 1px solid rgba(81, 177, 191, 0.27);
+  border-radius: 6px;
+
+  outline: none;
+
+  background: #032b38;
+  color: #ffffff;
+
+  font-size: 12px;
+  line-height: 1.55;
+
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.cms-services__editor input:not([type="file"]) {
+  height: 45px;
+}
+
+.cms-services__editor textarea {
+  min-height: 118px;
+
+  resize: vertical;
+}
+
+.cms-services__editor input:not([type="file"]):focus,
+.cms-services__editor textarea:focus,
+.cms-services__editor select:focus {
+  border-color: #28d7dc;
+
+  background: #052f3d;
+
+  box-shadow:
+    0 0 0 3px rgba(39, 212, 217, 0.07);
+}
+
+.cms-services__editor input::placeholder,
+.cms-services__editor textarea::placeholder {
+  color: #668f99;
+}
+
+
+/* =========================================================
+   22. EDITOR SECTION
+   01 BASIC INFORMATION
+   02 SERVICE IMAGE
+   ETC.
+   ========================================================= */
+
+.cms-services__form-section {
+  grid-column: 1 / -1;
+
+  width: 100%;
+
+  margin: 12px 0 0;
+
+  padding: 32px 0 6px;
+
+  border-top: 1px solid rgba(70, 190, 203, 0.16);
+}
+
+.cms-services__form-section:first-child {
+  margin-top: 0;
+
+  padding-top: 4px;
+
+  border-top: 0;
+}
+
+
+/* =========================================================
+   23. SECTION HEADING
+   ========================================================= */
+
+.cms-services__section-heading {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 16px;
+
+  margin: 0 0 26px;
+}
+
+.cms-services__section-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 44px;
+
+  width: 44px;
+  height: 44px;
+
+  margin-top: 1px;
+
+  border: 1px solid rgba(39, 212, 217, 0.32);
+  border-radius: 6px;
+
+  background: rgba(39, 212, 217, 0.05);
+  color: #28d7dc;
+
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.cms-services__section-heading > div {
+  min-width: 0;
+
+  padding-top: 1px;
+}
+
+.cms-services__section-heading h3 {
+  margin: 0 0 7px;
+
+  color: #ffffff;
+
+  font-size: 19px;
+  line-height: 1.3;
+  font-weight: 800;
+}
+
+.cms-services__section-heading p {
+  max-width: 700px;
+
+  margin: 0;
+
+  color: #7faab4;
+
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   24. FORM SECTION FIELDS
+   ========================================================= */
+
+.cms-services__section-fields {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  column-gap: 24px;
+  row-gap: 22px;
+
+  width: 100%;
+}
+
+.cms-services__section-fields > label {
+  display: flex;
+  flex-direction: column;
+
+  gap: 9px;
+
+  min-width: 0;
+}
+
+.cms-services__section-fields > label > span {
+  color: #b9d7dd;
+
+  font-size: 11px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   25. IMAGE SECTION
+   ========================================================= */
+
+.cms-services__image-fields {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  column-gap: 24px;
+  row-gap: 22px;
+
+  grid-column: 1 / -1;
+
+  width: 100%;
+}
+
+.cms-services__image-fields > label {
+  display: flex;
+  flex-direction: column;
+
+  gap: 9px;
+
+  min-width: 0;
+
+  margin: 0;
+}
+
+.cms-services__image-fields > label > span {
+  color: #b9d7dd;
+
+  font-size: 11px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   26. FILE UPLOAD
+   ========================================================= */
+
+.cms-services__editor input[type="file"] {
+  display: block;
+
+  width: 100%;
+  min-height: 58px;
+
+  margin: 0;
+  padding: 9px;
+
+  border: 1px dashed rgba(39, 212, 217, 0.32);
+  border-radius: 7px;
+
+  background: #032a38;
+  color: #8eb6bf;
+
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+.cms-services__editor input[type="file"]::file-selector-button {
+  min-width: 92px;
+  height: 38px;
+
+  margin-right: 14px;
+  padding: 0 15px;
+
+  border: 1px solid rgba(39, 212, 217, 0.32);
+  border-radius: 5px;
+
+  background: #0a4050;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.cms-services__editor input[type="file"]::file-selector-button:hover {
+  border-color: #28d7dc;
+
+  background: #0d4b5c;
+}
+
+.cms-services__editor small {
+  display: block;
+
+  margin: 6px 0 0;
+
+  color: #729da7;
+
+  font-size: 9px;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+}
+
+
+/* =========================================================
+   27. IMAGE PREVIEW
+   ========================================================= */
+
+.cms-services__image-preview {
+  grid-column: 1 / -1;
+
+  width: 100%;
+  max-width: 720px;
+
+  margin: 4px 0 0;
+  padding: 10px;
+
+  border: 1px solid rgba(64, 187, 201, 0.22);
+  border-radius: 8px;
+
+  background: #032936;
+
+  overflow: hidden;
+}
+
+.cms-services__image-preview::before {
+  content: "IMAGE PREVIEW";
+
+  display: block;
+
+  margin: 1px 0 10px 2px;
+
+  color: #28d7dc;
+
+  font-size: 9px;
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+}
+
+.cms-services__image-preview img {
+  display: block;
+
+  width: 100%;
+  height: 280px;
+
+  border-radius: 6px;
+
+  object-fit: cover;
+}
+
+
+/* =========================================================
+   28. BENEFITS SECTION
+   ========================================================= */
+
+.cms-services__benefits {
+  margin: 0 28px;
+
+  padding: 32px 0;
+
+  border-top: 1px solid rgba(70, 190, 203, 0.16);
+}
+
+.cms-services__subheading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin: 0 0 22px;
+}
+
+.cms-services__subheading > div {
+  min-width: 0;
+}
+
+.cms-services__subheading span {
+  display: block;
+
+  margin: 0 0 7px;
+
+  color: #28d7dc;
+
+  font-size: 9px;
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+
+  text-transform: uppercase;
+}
+
+.cms-services__subheading h3 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 19px;
+  line-height: 1.3;
+  font-weight: 800;
+}
+
+.cms-services__subheading > button {
+  flex-shrink: 0;
+
+  min-width: 120px;
+  height: 40px;
+
+  border-color: rgba(39, 212, 217, 0.35);
+
+  color: #28d7dc;
+}
+
+
+/* =========================================================
+   29. BENEFIT ROW
+   ========================================================= */
+
+.cms-services__benefit {
+  display: grid;
+
+  grid-template-columns:
+    minmax(180px, 0.8fr)
+    minmax(300px, 2fr)
+    92px;
+
+  align-items: start;
+
+  gap: 14px;
+
+  margin: 0 0 14px;
+  padding: 16px;
+
+  border: 1px solid rgba(68, 181, 195, 0.16);
+  border-radius: 7px;
+
+  background: #052c39;
+}
+
+.cms-services__benefit:last-child {
+  margin-bottom: 0;
+}
+
+.cms-services__benefit input,
+.cms-services__benefit textarea {
+  width: 100% !important;
+}
+
+.cms-services__benefit textarea {
+  min-height: 78px !important;
+}
+
+.cms-services__benefit > button {
+  height: 42px;
+
+  border-color: rgba(255, 94, 94, 0.3);
+
+  background: transparent;
+  color: #ff7a7a;
+}
+
+.cms-services__benefit > button:hover:not(:disabled) {
+  border-color: #ff6969;
+
+  background: rgba(255, 80, 80, 0.08);
+}
+
+
+/* =========================================================
+   30. EDITOR ACTIONS
+   ========================================================= */
+
+.cms-services__editor-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  padding: 22px 28px;
+
+  border-top: 1px solid rgba(70, 190, 203, 0.16);
+
+  background: #052b38;
+}
+
+.cms-services__editor-actions button {
+  min-width: 125px;
+  height: 44px;
+
+  padding: 0 18px;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.cms-services__editor-actions button:first-child {
+  background: transparent;
+
+  color: #a9c9d0;
+}
+
+.cms-services__editor-actions button:last-child {
+  border-color: #28d7dc;
+
+  background: #28d7dc;
+  color: #022731;
+}
+
+.cms-services__editor-actions button:last-child:hover:not(:disabled) {
+  border-color: #47e2e6;
+
+  background: #47e2e6;
+  color: #022731;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   31. PAGE EDITOR
+   ========================================================= */
+
+.cms-services__page-editor {
+  margin: 0 0 32px;
+
+  border: 1px solid rgba(67, 187, 201, 0.2);
+  border-radius: 9px;
+
+  background: #06313f;
+
+  overflow: hidden;
+}
+
+.cms-services__page-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  padding: 24px 26px;
+
+  border-bottom: 1px solid rgba(70, 190, 203, 0.15);
+
+  background: #0a3a49;
+}
+
+.cms-services__page-editor-header span {
+  display: block;
+
+  margin: 0 0 7px;
+
+  color: #28d7dc;
+
+  font-size: 9px;
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+}
+
+.cms-services__page-editor-header h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.cms-services__page-editor-header button {
+  flex-shrink: 0;
+
+  min-width: 85px;
+  height: 40px;
+}
+
+
+/* =========================================================
+   32. PAGE FORM
+   ========================================================= */
+
+.cms-services__page-form {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  column-gap: 24px;
+  row-gap: 22px;
+
+  padding: 28px;
+}
+
+.cms-services__page-form label {
+  display: flex;
+  flex-direction: column;
+
+  gap: 9px;
+
+  min-width: 0;
+}
+
+.cms-services__page-form label > span {
+  color: #b8d6dc;
+
+  font-size: 11px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.cms-services__page-form input,
+.cms-services__page-form textarea {
+  display: block;
+
+  width: 100%;
+
+  margin: 0;
+  padding: 11px 13px;
+
+  border: 1px solid rgba(81, 177, 191, 0.25);
+  border-radius: 6px;
+
+  outline: none;
+
+  background: #032a38;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.cms-services__page-form input {
+  height: 45px;
+}
+
+.cms-services__page-form textarea {
+  min-height: 115px;
+
+  resize: vertical;
+}
+
+.cms-services__page-form input:focus,
+.cms-services__page-form textarea:focus {
+  border-color: #28d7dc;
+
+  box-shadow:
+    0 0 0 3px rgba(39, 212, 217, 0.07);
+}
+
+
+/* =========================================================
+   33. PAGE STATS EDITOR
+   ========================================================= */
+
+.cms-services__stats-editor {
+  grid-column: 1 / -1;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 16px;
+
+  margin-top: 4px;
+}
+
+.cms-services__stat-editor {
+  padding: 16px;
+
+  border: 1px solid rgba(69, 183, 197, 0.15);
+  border-radius: 7px;
+
+  background: #052c39;
+}
+
+.cms-services__stat-editor label + label {
+  margin-top: 12px;
+}
+
+
+/* =========================================================
+   34. PAGE ACTIONS
+   ========================================================= */
+
+.cms-services__page-actions {
+  grid-column: 1 / -1;
+
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  padding-top: 12px;
+}
+
+.cms-services__page-actions button {
+  min-width: 125px;
+  height: 44px;
+}
+
+.cms-services__page-actions button:last-child {
+  border-color: #28d7dc;
+
+  background: #28d7dc;
+  color: #022731;
+}
+
+
+/* =========================================================
+   35. FALLBACK SPACING
+   FOR SECTION HEADINGS USED DIRECTLY INSIDE EDITOR
+   ========================================================= */
+
+.cms-services__editor section {
+  position: relative;
+}
+
+.cms-services__editor section + section {
+  margin-top: 10px;
+}
+
+.cms-services__editor h3 + p,
+.cms-services__editor h2 + p {
+  margin-top: 7px;
+}
+
+
+/* =========================================================
+   36. SCROLLBAR
+   ========================================================= */
+
+.cms-services ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.cms-services ::-webkit-scrollbar-track {
+  background: #032733;
+}
+
+.cms-services ::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+
+  background: #155263;
+}
+
+.cms-services ::-webkit-scrollbar-thumb:hover {
+  background: #1b6679;
+}
+
+
+/* =========================================================
+   37. RESPONSIVE — 1200px
+   ========================================================= */
+
+@media (max-width: 1200px) {
+  .cms-services__service-card {
+    grid-template-columns:
+      60px
+      150px
+      minmax(250px, 1fr);
+
+    gap: 17px;
+  }
+
+  .cms-services__service-image {
+    width: 150px;
+    height: 100px;
+  }
+
+  .cms-services__service-actions {
+    grid-column: 2 / -1;
+
+    justify-content: flex-end;
+  }
+}
+
+
+/* =========================================================
+   38. RESPONSIVE — 900px
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .cms-services__header {
+    flex-direction: column;
+  }
+
+  .cms-services__add-button {
+    align-self: flex-start;
+  }
+
+  .cms-services__stats {
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+  }
+
+  .cms-services__service-card {
+    grid-template-columns: 58px 130px 1fr;
+  }
+
+  .cms-services__service-image {
+    width: 130px;
+    height: 95px;
+  }
+
+  .cms-services__form-grid {
+    grid-template-columns: 1fr;
+
+    padding: 24px;
+  }
+
+  .cms-services__full,
+  .cms-services__form-section,
+  .cms-services__image-preview {
+    grid-column: 1;
+  }
+
+  .cms-services__section-fields,
+  .cms-services__image-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .cms-services__benefits {
+    margin-right: 24px;
+    margin-left: 24px;
+  }
+
+  .cms-services__benefit {
+    grid-template-columns: 1fr;
+  }
+
+  .cms-services__benefit > button {
+    width: fit-content;
+  }
+
+  .cms-services__page-form {
+    grid-template-columns: 1fr;
+
+    padding: 24px;
+  }
+
+  .cms-services__stats-editor {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   39. RESPONSIVE — 650px
+   ========================================================= */
+
+@media (max-width: 650px) {
+  .cms-services__header h1 {
+    font-size: 28px;
+  }
+
+  .cms-services__page-card-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .cms-services__page-card-body {
+    padding: 21px;
+  }
+
+  .cms-services__service-card {
+    grid-template-columns: 55px 1fr;
+
+    align-items: start;
+  }
+
+  .cms-services__service-number {
+    width: 52px;
+    height: 52px;
+  }
+
+  .cms-services__service-image {
+    width: 100%;
+    height: 155px;
+  }
+
+  .cms-services__service-info {
+    grid-column: 1 / -1;
+  }
+
+  .cms-services__service-actions {
+    grid-column: 1 / -1;
+
+    justify-content: flex-start;
+
+    flex-wrap: wrap;
+  }
+
+  .cms-services__editor-header {
+    align-items: flex-start;
+
+    padding: 22px;
+
+    flex-direction: column;
+  }
+
+  .cms-services__editor-header > button {
+    align-self: flex-end;
+  }
+
+  .cms-services__form-grid {
+    padding: 22px 20px 28px;
+  }
+
+  .cms-services__section-heading {
+    gap: 13px;
+
+    margin-bottom: 22px;
+  }
+
+  .cms-services__image-preview img {
+    height: 210px;
+  }
+
+  .cms-services__benefits {
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+
+  .cms-services__subheading {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .cms-services__editor-actions {
+    padding: 18px 20px;
+
+    flex-direction: column-reverse;
+  }
+
+  .cms-services__editor-actions button {
+    width: 100%;
+  }
+
+  .cms-services__page-actions {
+    flex-direction: column-reverse;
+  }
+
+  .cms-services__page-actions button {
+    width: 100%;
+  }
+}

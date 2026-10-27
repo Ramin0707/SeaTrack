@@ -13,6 +13,7 @@ namespace Infrastructur.Data
         {
         }
 
+
         // =========================================================
         // Shipping
         // =========================================================
@@ -55,6 +56,11 @@ namespace Infrastructur.Data
 
         public DbSet<BlogPost> BlogPosts => Set<BlogPost>();
 
+
+        // =========================================================
+        // Home Page CMS
+        // =========================================================
+
         public DbSet<HomePageContent> HomePageContents =>
             Set<HomePageContent>();
 
@@ -62,9 +68,32 @@ namespace Infrastructur.Data
             Set<HomePageSection>();
 
 
+        // =========================================================
+        // Services Page CMS
+        // =========================================================
+
+        public DbSet<ServicesPageContent> ServicesPageContents =>
+            Set<ServicesPageContent>();
+
+        public DbSet<ServicesPageItem> ServicesPageItems =>
+            Set<ServicesPageItem>();
+
+
+        // =========================================================
+        // About Page CMS
+        // =========================================================
+
+        public DbSet<AboutPageContent> AboutPageContents =>
+            Set<AboutPageContent>();
+
+        public DbSet<AboutPageSection> AboutPageSections =>
+            Set<AboutPageSection>();
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
 
             // =====================================================
             // Configurations
@@ -205,6 +234,154 @@ namespace Infrastructur.Data
                 entity.HasIndex(section => new
                 {
                     section.HomePageContentId,
+                    section.SortOrder
+                });
+            });
+
+
+            // =====================================================
+            // Services Page CMS
+            // =====================================================
+
+            builder.Entity<ServicesPageContent>(entity =>
+            {
+                entity.Property(content => content.Name)
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                entity.Property(content => content.HeroLabel)
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                entity.Property(content => content.HeroTitle)
+                    .HasMaxLength(500)
+                    .IsRequired();
+
+                entity.Property(content => content.HeroHighlightedTitle)
+                    .HasMaxLength(500)
+                    .IsRequired();
+
+                entity.Property(content => content.HeroDescription)
+                    .HasMaxLength(2000)
+                    .IsRequired();
+
+                entity.Property(content => content.HeroStatsJson)
+                    .IsRequired();
+
+                entity.Property(content => content.CapabilitiesJson)
+                    .IsRequired();
+
+                entity.Property(content => content.CapabilitiesTitle)
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                entity.Property(content => content.ScrollText)
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                entity.HasMany(content => content.Services)
+                    .WithOne(service => service.ServicesPageContent)
+                    .HasForeignKey(service =>
+                        service.ServicesPageContentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+
+            // =====================================================
+            // Services Page Items
+            // =====================================================
+
+            builder.Entity<ServicesPageItem>(entity =>
+            {
+                entity.Property(service => service.Name)
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                entity.Property(service => service.Number)
+                    .HasMaxLength(20)
+                    .IsRequired();
+
+                entity.Property(service => service.Label)
+                    .HasMaxLength(300)
+                    .IsRequired();
+
+                entity.Property(service => service.Title)
+                    .HasMaxLength(500)
+                    .IsRequired();
+
+                entity.Property(service => service.HighlightedTitle)
+                    .HasMaxLength(500)
+                    .IsRequired();
+
+                entity.Property(service => service.Description)
+                    .HasMaxLength(3000)
+                    .IsRequired();
+
+                entity.Property(service => service.ImageBadge)
+                    .HasMaxLength(300)
+                    .IsRequired();
+
+                entity.Property(service => service.ImageUrl)
+                    .HasMaxLength(1000);
+
+                entity.Property(service => service.ImageAlt)
+                    .HasMaxLength(500);
+
+                entity.Property(service => service.BenefitsJson)
+                    .IsRequired();
+
+                entity.Property(service => service.ButtonText)
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                entity.Property(service => service.ButtonUrl)
+                    .HasMaxLength(1000)
+                    .IsRequired();
+
+                entity.HasIndex(service => new
+                {
+                    service.ServicesPageContentId,
+                    service.SortOrder
+                });
+            });
+
+
+            // =====================================================
+            // About Page CMS
+            // =====================================================
+
+            builder.Entity<AboutPageContent>(entity =>
+            {
+                entity.Property(content => content.Name)
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                entity.HasMany(content => content.Sections)
+                    .WithOne(section => section.AboutPageContent)
+                    .HasForeignKey(section => section.AboutPageContentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+
+            // =====================================================
+            // About Page Sections
+            // =====================================================
+
+            builder.Entity<AboutPageSection>(entity =>
+            {
+                entity.Property(section => section.SectionType)
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                entity.Property(section => section.ContentJson)
+                    .IsRequired();
+
+                entity.Property(section => section.ImageUrl)
+                    .HasMaxLength(1000);
+
+                entity.HasIndex(section => new
+                {
+                    section.AboutPageContentId,
                     section.SortOrder
                 });
             });

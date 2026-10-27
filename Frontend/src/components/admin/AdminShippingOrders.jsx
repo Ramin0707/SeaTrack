@@ -151,7 +151,7 @@ function AdminShippingOrders({
 
 
       const response = await fetch(
-        'http://localhost:5080/api/admin/shipping-orders',
+        'https://localhost:44328/api/admin/shipping-orders',
         {
           headers: {
             Authorization:

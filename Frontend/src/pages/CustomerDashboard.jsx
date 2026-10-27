@@ -103,7 +103,7 @@ function CustomerDashboard() {
     }
 
     const response = await fetch(
-      'http://localhost:5080/api/shipping-orders/my',
+      'https://localhost:44328/api/shipping-orders/my',
       {
         headers: {
           Authorization:
@@ -178,7 +178,7 @@ function CustomerDashboard() {
 
                   const response =
                     await fetch(
-                      `http://localhost:5080/api/shipping-orders/${order.id}/shipment`,
+                      `https://localhost:44328/api/shipping-orders/${order.id}/shipment`,
                       {
                         headers: {
                           Authorization:
@@ -282,7 +282,7 @@ function CustomerDashboard() {
 
           const userResponse =
             await fetch(
-              'http://localhost:5080/api/auth/me',
+              'https://localhost:44328/api/auth/me',
               {
                 headers: {
                   Authorization:

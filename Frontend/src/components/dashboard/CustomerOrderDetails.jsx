@@ -33,7 +33,7 @@ function CustomerOrderDetails({
 
       try {
         const response = await fetch(
-          `http://localhost:5080/api/shipping-orders/${orderId}`,
+          `https://localhost:44328/api/shipping-orders/${orderId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -203,7 +203,7 @@ function CustomerOrderDetails({
 
 
           <h2>
-            Order #{order.id}
+            Order #{order.customerOrderNumber}
           </h2>
 
 
@@ -400,11 +400,11 @@ function CustomerOrderDetails({
           <div>
 
             <span>
-              ORDER ID
+              ORDER NUMBER
             </span>
 
             <strong>
-              #{order.id}
+              #{order.customerOrderNumber}
             </strong>
 
           </div>

@@ -10,7 +10,7 @@ import portsTechnologyImage from '../assets/images/blog-ports-technology.png'
 import CallToAction from '../components/CallToAction'
 
 
-const API_URL = 'http://localhost:5080'
+const API_URL = 'https://localhost:44328'
 
 
 const fallbackImages = [
@@ -20,7 +20,39 @@ const fallbackImages = [
 ]
 
 
+/* =====================================
+   RESOLVE CMS IMAGE URL
+====================================== */
+
+function resolveImageUrl(imageUrl) {
+
+  if (!imageUrl) {
+    return null
+  }
+
+  if (
+    imageUrl.startsWith('http://') ||
+    imageUrl.startsWith('https://') ||
+    imageUrl.startsWith('blob:') ||
+    imageUrl.startsWith('data:')
+  ) {
+    return imageUrl
+  }
+
+  if (imageUrl.startsWith('/')) {
+    return `${API_URL}${imageUrl}`
+  }
+
+  return `${API_URL}/${imageUrl}`
+}
+
+
+/* =====================================
+   FORMAT DATE
+====================================== */
+
 function formatDate(value) {
+
   if (!value) {
     return ''
   }
@@ -40,8 +72,14 @@ function formatDate(value) {
 }
 
 
+/* =====================================
+   FEATURED DATE
+====================================== */
+
 function getFeaturedDate(value) {
+
   if (!value) {
+
     return {
       day: '--',
       month: '---',
@@ -52,6 +90,7 @@ function getFeaturedDate(value) {
   const date = new Date(value)
 
   return {
+
     day: date
       .getDate()
       .toString()
@@ -73,7 +112,12 @@ function getFeaturedDate(value) {
 }
 
 
+/* =====================================
+   BLOG
+====================================== */
+
 function Blog() {
+
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -84,6 +128,9 @@ function Blog() {
   ====================================== */
 
   useEffect(() => {
+
+    let cancelled = false
+
 
     async function loadPosts() {
 
@@ -103,7 +150,6 @@ function Blog() {
           throw new Error(
             `Unable to load blog posts (${response.status}).`
           )
-
         }
 
 
@@ -111,30 +157,45 @@ function Blog() {
           await response.json()
 
 
-        setPosts(
-          Array.isArray(data)
-            ? data
-            : []
-        )
+        if (!cancelled) {
+
+          setPosts(
+            Array.isArray(data)
+              ? data
+              : []
+          )
+        }
 
       } catch (error) {
 
-        console.error(error)
-
-        setError(
-          'Unable to load SeaTrack Journal at the moment.'
+        console.error(
+          'Failed to load blog posts:',
+          error
         )
+
+
+        if (!cancelled) {
+
+          setError(
+            'Unable to load SeaTrack Journal at the moment.'
+          )
+        }
 
       } finally {
 
-        setLoading(false)
-
+        if (!cancelled) {
+          setLoading(false)
+        }
       }
-
     }
 
 
     loadPosts()
+
+
+    return () => {
+      cancelled = true
+    }
 
   }, [])
 
@@ -161,7 +222,18 @@ function Blog() {
     )
 
 
+  const featuredPostImage =
+    resolveImageUrl(
+      featuredPost?.imageUrl
+    ) || featuredImage
+
+
+  /* =====================================
+     RENDER
+  ====================================== */
+
   return (
+
     <div className="blog-page">
 
 
@@ -174,6 +246,7 @@ function Blog() {
         <div className="blog-hero-grid"></div>
 
         <span className="blog-circle blog-circle-one"></span>
+
         <span className="blog-circle blog-circle-two"></span>
 
 
@@ -187,15 +260,22 @@ function Blog() {
           <div className="blog-hero-heading">
 
             <h1>
+
               Insights from the
-              <span> maritime world.</span>
+
+              <span>
+                {' '}maritime world.
+              </span>
+
             </h1>
 
 
             <p>
+
               Explore maritime logistics, global trade,
               shipping technology and the ideas shaping
               the future of cargo transportation.
+
             </p>
 
           </div>
@@ -209,81 +289,98 @@ function Blog() {
           LOADING
       ====================================== */}
 
-      {loading && (
+      {
+        loading &&
+        (
 
-        <section className="blog-featured">
+          <section className="blog-featured">
 
-          <div className="blog-featured-container">
+            <div className="blog-featured-container">
 
-            <div className="blog-featured-content">
+              <div className="blog-featured-content">
 
-              <div className="blog-article-meta">
+                <div className="blog-article-meta">
 
-                <span>
-                  SEATRACK JOURNAL
-                </span>
+                  <span>
+                    SEATRACK JOURNAL
+                  </span>
+
+                </div>
+
+
+                <h2>
+
+                  Loading maritime
+
+                  <span>
+                    {' '}insights...
+                  </span>
+
+                </h2>
+
+
+                <p>
+
+                  Please wait while the latest SeaTrack
+                  articles are being loaded.
+
+                </p>
 
               </div>
 
-
-              <h2>
-                Loading maritime
-                <span> insights...</span>
-              </h2>
-
-
-              <p>
-                Please wait while the latest SeaTrack
-                articles are being loaded.
-              </p>
-
             </div>
 
-          </div>
-
-        </section>
-
-      )}
+          </section>
+        )
+      }
 
 
       {/* =====================================
           ERROR
       ====================================== */}
 
-      {!loading && error && (
+      {
+        !loading &&
+        error &&
+        (
 
-        <section className="blog-featured">
+          <section className="blog-featured">
 
-          <div className="blog-featured-container">
+            <div className="blog-featured-container">
 
-            <div className="blog-featured-content">
+              <div className="blog-featured-content">
 
-              <div className="blog-article-meta">
+                <div className="blog-article-meta">
 
-                <span>
-                  SEATRACK JOURNAL
-                </span>
+                  <span>
+                    SEATRACK JOURNAL
+                  </span>
+
+                </div>
+
+
+                <h2>
+
+                  Journal temporarily
+
+                  <span>
+                    {' '}unavailable.
+                  </span>
+
+                </h2>
+
+
+                <p>
+                  {error}
+                </p>
 
               </div>
 
-
-              <h2>
-                Journal temporarily
-                <span> unavailable.</span>
-              </h2>
-
-
-              <p>
-                {error}
-              </p>
-
             </div>
 
-          </div>
-
-        </section>
-
-      )}
+          </section>
+        )
+      }
 
 
       {/* =====================================
@@ -312,15 +409,22 @@ function Blog() {
 
 
                 <h2>
+
                   New maritime insights
-                  <span> are coming soon.</span>
+
+                  <span>
+                    {' '}are coming soon.
+                  </span>
+
                 </h2>
 
 
                 <p>
+
                   The SeaTrack team is preparing new
                   articles about maritime logistics,
                   shipping operations and global trade.
+
                 </p>
 
               </div>
@@ -328,7 +432,6 @@ function Blog() {
             </div>
 
           </section>
-
         )
       }
 
@@ -348,14 +451,19 @@ function Blog() {
             <div className="blog-featured-container">
 
 
+              {/* IMAGE */}
+
               <div className="blog-featured-image">
 
                 <img
-                  src={
-                    featuredPost.imageUrl ||
-                    featuredImage
-                  }
-                  alt={featuredPost.title}
+                  src={featuredPostImage}
+                  alt={featuredPost.title || 'SeaTrack article'}
+                  onError={(event) => {
+
+                    event.currentTarget.onerror = null
+                    event.currentTarget.src = featuredImage
+
+                  }}
                 />
 
 
@@ -365,6 +473,8 @@ function Blog() {
 
               </div>
 
+
+              {/* CONTENT */}
 
               <div className="blog-featured-content">
 
@@ -434,7 +544,6 @@ function Blog() {
             </div>
 
           </section>
-
         )
       }
 
@@ -454,6 +563,8 @@ function Blog() {
             <div className="blog-latest-container">
 
 
+              {/* HEADER */}
+
               <div className="blog-latest-heading">
 
                 <div>
@@ -464,24 +575,31 @@ function Blog() {
 
 
                   <h2>
+
                     Stories shaping
+
                     <span>
                       {' '}global maritime trade.
                     </span>
+
                   </h2>
 
                 </div>
 
 
                 <p>
+
                   Explore insights about shipping routes,
                   container operations, port technology
                   and the systems that keep global cargo
                   moving.
+
                 </p>
 
               </div>
 
+
+              {/* ARTICLES */}
 
               <div className="blog-articles-grid">
 
@@ -496,6 +614,12 @@ function Blog() {
                         ]
 
 
+                      const postImage =
+                        resolveImageUrl(
+                          post.imageUrl
+                        ) || fallbackImage
+
+
                       return (
 
                         <article
@@ -504,14 +628,24 @@ function Blog() {
                         >
 
 
+                          {/* IMAGE */}
+
                           <div className="blog-card-image">
 
                             <img
-                              src={
-                                post.imageUrl ||
-                                fallbackImage
+                              src={postImage}
+                              alt={
+                                post.title ||
+                                'SeaTrack article'
                               }
-                              alt={post.title}
+                              onError={(event) => {
+
+                                event.currentTarget.onerror = null
+
+                                event.currentTarget.src =
+                                  fallbackImage
+
+                              }}
                             />
 
 
@@ -530,6 +664,8 @@ function Blog() {
 
                           </div>
 
+
+                          {/* CONTENT */}
 
                           <div className="blog-card-content">
 
@@ -562,11 +698,13 @@ function Blog() {
                             <div className="blog-card-footer">
 
                               <span>
+
                                 {
                                   formatDate(
                                     post.publishedAtUtc
                                   )
                                 }
+
                               </span>
 
 
@@ -584,9 +722,7 @@ function Blog() {
                           </div>
 
                         </article>
-
                       )
-
                     }
                   )
                 }
@@ -596,12 +732,16 @@ function Blog() {
             </div>
 
           </section>
-
         )
       }
 
 
+      {/* =====================================
+          CTA
+      ====================================== */}
+
       <CallToAction />
+
 
     </div>
   )

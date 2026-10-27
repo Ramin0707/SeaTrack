@@ -1,7 +1,7 @@
 import "./Hero.css";
 import heroPort from "../assets/images/hero-port.jpg";
 
-const API_URL = "http://localhost:5080";
+const API_URL = "https://localhost:44328";
 
 function resolveImageUrl(imageUrl) {
   if (!imageUrl) {

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./CustomerPayments.css";
 
-const API_BASE_URL = "http://localhost:5080";
+const API_BASE_URL = "https://localhost:44328";
 
 function getAccessToken() {
   return (

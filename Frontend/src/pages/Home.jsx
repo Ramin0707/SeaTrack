@@ -8,7 +8,7 @@ import DestinationsSection from "../components/DestinationsSection";
 import WhySeaTrack from "../components/WhySeaTrack";
 import CallToAction from "../components/CallToAction";
 
-const API_URL = "http://localhost:5080";
+const API_URL = "https://localhost:44328";
 
 function parseContentJson(contentJson) {
   if (!contentJson) {

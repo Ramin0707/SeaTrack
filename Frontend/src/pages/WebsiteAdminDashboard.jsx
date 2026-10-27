@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 import CmsBlogManager from "../components/cms/CmsBlogManager";
 import CmsHomeManager from "../components/cms/CmsHomeManager";
+import CmsServicesManager from "../components/cms/CmsServicesManager";
+import CmsAboutManager from "../components/cms/CmsAboutManager";
 
 import "./WebsiteAdminDashboard.css";
 
-const API_URL = "http://localhost:5080";
+const API_URL = "https://localhost:44328";
 
 function getToken() {
   return (
@@ -57,9 +59,14 @@ export default function WebsiteAdminDashboard() {
   const [activeSection, setActiveSection] =
     useState("overview");
 
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [user, setUser] =
+    useState(null);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [error, setError] =
+    useState("");
 
   useEffect(() => {
     async function loadAdmin() {
@@ -80,11 +87,26 @@ export default function WebsiteAdminDashboard() {
         const response = await fetch(
           `${API_URL}/api/auth/me`,
           {
+            method: "GET",
+
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
+
+        if (
+          response.status === 401 ||
+          response.status === 403
+        ) {
+          clearAuth();
+
+          navigate("/login", {
+            replace: true,
+          });
+
+          return;
+        }
 
         if (!response.ok) {
           throw new Error(
@@ -92,14 +114,34 @@ export default function WebsiteAdminDashboard() {
           );
         }
 
-        const data = await response.json();
+        const data =
+          await response.json();
 
-        const roles = Array.isArray(data.roles)
-          ? data.roles
-          : [];
+        const roles =
+          Array.isArray(data.roles)
+            ? data.roles
+            : [];
 
         if (!roles.includes("Admin")) {
-          navigate("/admin", {
+          if (roles.includes("Operator")) {
+            navigate("/admin", {
+              replace: true,
+            });
+
+            return;
+          }
+
+          if (roles.includes("Customer")) {
+            navigate("/dashboard", {
+              replace: true,
+            });
+
+            return;
+          }
+
+          clearAuth();
+
+          navigate("/login", {
             replace: true,
           });
 
@@ -108,14 +150,15 @@ export default function WebsiteAdminDashboard() {
 
         setUser(data);
       } catch (err) {
-        clearAuth();
-        setError(err.message);
+        console.error(
+          "Website Admin loading error:",
+          err
+        );
 
-        setTimeout(() => {
-          navigate("/login", {
-            replace: true,
-          });
-        }, 1200);
+        setError(
+          err?.message ||
+            "Unable to connect to SeaTrack."
+        );
       } finally {
         setLoading(false);
       }
@@ -136,115 +179,122 @@ export default function WebsiteAdminDashboard() {
     return (
       <div className="website-admin__overview">
         <div className="website-admin__page-heading">
-          <span>WEBSITE ADMINISTRATION</span>
+          <span>
+            WEBSITE ADMINISTRATION
+          </span>
 
-          <h1>Content Management</h1>
+          <h1>
+            Content Management
+          </h1>
 
           <p>
-            Manage the content displayed across the public
-            SeaTrack website.
+            Manage the content displayed across the
+            public SeaTrack website.
           </p>
         </div>
 
         <div className="website-admin__overview-grid">
+
           <button
             type="button"
             className="website-admin__overview-card"
-            onClick={() => setActiveSection("blog")}
+            onClick={() =>
+              setActiveSection("blog")
+            }
           >
             <span className="website-admin__card-number">
               01
             </span>
 
-            <h3>Blog</h3>
+            <h3>
+              Blog
+            </h3>
 
             <p>
-              Create, edit, publish and remove SeaTrack
-              news and articles.
+              Create, edit, publish and remove
+              SeaTrack news and articles.
             </p>
 
-            <strong>Manage Blog →</strong>
+            <strong>
+              Manage Blog →
+            </strong>
           </button>
 
           <button
             type="button"
             className="website-admin__overview-card"
-            onClick={() => setActiveSection("home")}
+            onClick={() =>
+              setActiveSection("home")
+            }
           >
             <span className="website-admin__card-number">
               02
             </span>
 
-            <h3>Home Page</h3>
+            <h3>
+              Home Page
+            </h3>
 
             <p>
-              Manage the main content presented on the
-              SeaTrack landing page.
+              Manage the main content presented
+              on the SeaTrack landing page.
             </p>
 
-            <strong>Manage Home →</strong>
+            <strong>
+              Manage Home →
+            </strong>
           </button>
 
           <button
             type="button"
             className="website-admin__overview-card"
-            onClick={() => setActiveSection("services")}
+            onClick={() =>
+              setActiveSection("services")
+            }
           >
             <span className="website-admin__card-number">
               03
             </span>
 
-            <h3>Services</h3>
+            <h3>
+              Services
+            </h3>
 
             <p>
-              Manage maritime logistics services displayed
-              to website visitors.
+              Manage maritime logistics services
+              displayed to website visitors.
             </p>
 
-            <strong>Manage Services →</strong>
+            <strong>
+              Manage Services →
+            </strong>
           </button>
 
           <button
             type="button"
             className="website-admin__overview-card"
-            onClick={() => setActiveSection("about")}
+            onClick={() =>
+              setActiveSection("about")
+            }
           >
             <span className="website-admin__card-number">
               04
             </span>
 
-            <h3>About SeaTrack</h3>
+            <h3>
+              About SeaTrack
+            </h3>
 
             <p>
-              Manage company information and public
-              About page content.
+              Manage company information and
+              public About page content.
             </p>
 
-            <strong>Manage About →</strong>
+            <strong>
+              Manage About →
+            </strong>
           </button>
-        </div>
-      </div>
-    );
-  }
 
-  function renderComingSoon(title, description) {
-    return (
-      <div className="website-admin__placeholder">
-        <span>CONTENT MANAGEMENT</span>
-
-        <h2>{title}</h2>
-
-        <p>{description}</p>
-
-        <div className="website-admin__placeholder-box">
-          <strong>
-            CMS module is being connected.
-          </strong>
-
-          <p>
-            This section will be connected to the SeaTrack
-            backend and database next.
-          </p>
         </div>
       </div>
     );
@@ -253,21 +303,23 @@ export default function WebsiteAdminDashboard() {
   function renderContent() {
     switch (activeSection) {
       case "blog":
-        return <CmsBlogManager />;
+        return (
+          <CmsBlogManager />
+        );
 
       case "home":
-        return <CmsHomeManager />;
+        return (
+          <CmsHomeManager />
+        );
 
       case "services":
-        return renderComingSoon(
-          "Services",
-          "Manage SeaTrack public maritime logistics services."
+        return (
+          <CmsServicesManager />
         );
 
       case "about":
-        return renderComingSoon(
-          "About Page",
-          "Manage public company information and About page content."
+        return (
+          <CmsAboutManager />
         );
 
       default:
@@ -286,23 +338,49 @@ export default function WebsiteAdminDashboard() {
   if (error) {
     return (
       <div className="website-admin__loading">
-        {error}
+        <div>
+          <strong>
+            Unable to load Website Administration
+          </strong>
+
+          <p>
+            {error}
+          </p>
+
+          <button
+            type="button"
+            onClick={() =>
+              window.location.reload()
+            }
+          >
+            Try Again
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="website-admin">
+
       <aside className="website-admin__sidebar">
+
         <div className="website-admin__brand">
+
           <div className="website-admin__brand-mark">
             ST
           </div>
 
           <div>
-            <strong>SEATRACK</strong>
-            <span>WEBSITE ADMIN</span>
+            <strong>
+              SEATRACK
+            </strong>
+
+            <span>
+              WEBSITE ADMIN
+            </span>
           </div>
+
         </div>
 
         <div className="website-admin__sidebar-label">
@@ -310,6 +388,7 @@ export default function WebsiteAdminDashboard() {
         </div>
 
         <nav className="website-admin__nav">
+
           {sections.map((section) => (
             <button
               key={section.id}
@@ -320,20 +399,30 @@ export default function WebsiteAdminDashboard() {
                   : "website-admin__nav-item"
               }
               onClick={() =>
-                setActiveSection(section.id)
+                setActiveSection(
+                  section.id
+                )
               }
             >
-              <span>{section.number}</span>
+              <span>
+                {section.number}
+              </span>
+
               {section.label}
             </button>
           ))}
+
         </nav>
 
         <div className="website-admin__sidebar-bottom">
+
           <div className="website-admin__admin-card">
+
             <div className="website-admin__avatar">
               {user?.fullName
-                ? user.fullName.charAt(0).toUpperCase()
+                ? user.fullName
+                    .charAt(0)
+                    .toUpperCase()
                 : "A"}
             </div>
 
@@ -343,8 +432,11 @@ export default function WebsiteAdminDashboard() {
                   "SeaTrack Administrator"}
               </strong>
 
-              <span>Administrator</span>
+              <span>
+                Administrator
+              </span>
             </div>
+
           </div>
 
           <button
@@ -354,19 +446,27 @@ export default function WebsiteAdminDashboard() {
           >
             Sign Out
           </button>
+
         </div>
+
       </aside>
 
       <div className="website-admin__main">
+
         <header className="website-admin__topbar">
+
           <div>
-            <span>SeaTrack</span>
+            <span>
+              SeaTrack
+            </span>
+
             <strong>
               Website / CMS Administration
             </strong>
           </div>
 
           <div className="website-admin__topbar-right">
+
             <span className="website-admin__role">
               ADMIN
             </span>
@@ -375,13 +475,17 @@ export default function WebsiteAdminDashboard() {
               {user?.email ||
                 "admin@seatrack.com"}
             </span>
+
           </div>
+
         </header>
 
         <main className="website-admin__content">
           {renderContent()}
         </main>
+
       </div>
+
     </div>
   );
 }

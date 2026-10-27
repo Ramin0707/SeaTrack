@@ -6,7 +6,7 @@ import {
   useState
 } from 'react'
 
-const API_URL = 'http://localhost:5080'
+const API_URL = 'https://localhost:44328'
 
 const orderStatusMap = {
   1: 'Awaiting Quote',
