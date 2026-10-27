@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./CmsHomeManager.css";
 
-const API_URL = "http://localhost:5080";
+const API_URL = "https://localhost:44328";
 
 const SECTION_TYPES = [
   "Hero",

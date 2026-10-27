@@ -131,7 +131,7 @@ function CustomerQuotes({
         orders.map(async (order) => {
           try {
             const response = await fetch(
-              `http://localhost:5080/api/shipping-orders/${order.id}/quote`,
+              `https://localhost:44328/api/shipping-orders/${order.id}/quote`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`
@@ -253,7 +253,7 @@ function CustomerQuotes({
 
     try {
       const response = await fetch(
-        `http://localhost:5080/api/shipping-orders/${quote.orderId}/quote/accept`,
+        `https://localhost:44328/api/shipping-orders/${quote.orderId}/quote/accept`,
         {
           method: 'PATCH',
 
@@ -346,7 +346,7 @@ function CustomerQuotes({
 
     try {
       const response = await fetch(
-        `http://localhost:5080/api/shipping-orders/${quote.orderId}/quote/reject`,
+        `https://localhost:44328/api/shipping-orders/${quote.orderId}/quote/reject`,
         {
           method: 'PATCH',
 

@@ -36,7 +36,7 @@ import AdminInvoices
 import AdminPayments
   from '../components/admin/AdminPayments'
 
-const API_URL = 'http://localhost:5080'
+const API_URL = 'https://localhost:44328'
 
 function getToken() {
   return (

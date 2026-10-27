@@ -39,6 +39,22 @@ function CustomerOrders({
   }
 
 
+  const getContainerType = (type) => {
+    const containerTypes = {
+      1: 'Standard',
+      2: 'High Cube',
+      3: 'Refrigerated',
+      4: 'Open Top',
+      5: 'Flat Rack'
+    }
+
+    return (
+      containerTypes[type] ||
+      `Type ${type}`
+    )
+  }
+
+
   const formatDate = (date) => {
     if (!date) {
       return '—'
@@ -186,7 +202,7 @@ function CustomerOrders({
                     <span>ORDER</span>
 
                     <strong>
-                      #{order.id}
+                      #{order.customerOrderNumber}
                     </strong>
 
                   </div>
@@ -246,25 +262,38 @@ function CustomerOrders({
 
                   <div>
                     <span>CARGO</span>
-                    <strong>{order.cargoType}</strong>
+                    <strong>
+                      {order.cargoType}
+                    </strong>
                   </div>
 
 
                   <div>
                     <span>WEIGHT</span>
-                    <strong>{order.weight} kg</strong>
+                    <strong>
+                      {order.weight} kg
+                    </strong>
                   </div>
 
 
                   <div>
                     <span>VOLUME</span>
-                    <strong>{order.volume} m³</strong>
+                    <strong>
+                      {order.volume} m³
+                    </strong>
                   </div>
 
 
                   <div>
                     <span>CONTAINER</span>
-                    <strong>Type {order.containerType}</strong>
+
+                    <strong>
+                      {
+                        getContainerType(
+                          order.containerType
+                        )
+                      }
+                    </strong>
                   </div>
 
 

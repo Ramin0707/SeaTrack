@@ -42,8 +42,10 @@ using Application.Features.Logistics.Voyages.Delete.Interfaces;
 using Application.Features.Logistics.Voyages.GetAll.Interfaces;
 using Application.Features.Logistics.Voyages.GetById.Interfaces;
 using Application.Features.Logistics.Voyages.Update.Interfaces;
+using Application.Features.PublicWebsite.About.Get.Interfaces;
 using Application.Features.PublicWebsite.Blog.GetPublished.Interfaces;
 using Application.Features.PublicWebsite.Home.Get.Interfaces;
+using Application.Features.PublicWebsite.Services.Get.Interfaces;
 using Application.Features.Shipping.Customer.Cancel.Interfaces;
 using Application.Features.Shipping.Customer.Create.Interfaces;
 using Application.Features.Shipping.Customer.GetById.Interfaces;
@@ -73,6 +75,12 @@ using Application.Features.Shipping.LogisticsAdmin.Shipment.Start.Interfaces;
 using Application.Features.Shipping.LogisticsAdmin.Shipment.Unload.Interfaces;
 using Application.Features.Shipping.Public.Tracking.GetByTrackingNumber.Interfaces;
 using Application.Features.ShippingOrders.LogisticsAdmin.Assignment.Interfaces;
+using Application.Features.WebSiteAdmin.About.Create.Interfaces;
+using Application.Features.WebSiteAdmin.About.Delete.Interfaces;
+using Application.Features.WebSiteAdmin.About.Get.Interfaces;
+using Application.Features.WebSiteAdmin.About.Reorder.Interfaces;
+using Application.Features.WebSiteAdmin.About.Update.Interfaces;
+using Application.Features.WebSiteAdmin.About.Visibility.Interfaces;
 using Application.Features.WebSiteAdmin.Blog.Create.Interfaces;
 using Application.Features.WebSiteAdmin.Blog.Delete.Interfaces;
 using Application.Features.WebSiteAdmin.Blog.GetAll.Interfaces;
@@ -83,6 +91,13 @@ using Application.Features.WebSiteAdmin.Home.Get.Interfaces;
 using Application.Features.WebSiteAdmin.Home.Reorder.Interfaces;
 using Application.Features.WebSiteAdmin.Home.Update.Interfaces;
 using Application.Features.WebSiteAdmin.Home.Visibility.Interfaces;
+using Application.Features.WebSiteAdmin.Services.Get.Interfaces;
+using Application.Features.WebSiteAdmin.Services.Items.Create.Interfaces;
+using Application.Features.WebSiteAdmin.Services.Items.Delete.Interfaces;
+using Application.Features.WebSiteAdmin.Services.Items.Reorder.Interfaces;
+using Application.Features.WebSiteAdmin.Services.Items.Update.Interfaces;
+using Application.Features.WebSiteAdmin.Services.Items.Visibility.Interfaces;
+using Application.Features.WebSiteAdmin.Services.Update.Interfaces;
 using Infrastructur.Features.Logistics.Berths.Create;
 using Infrastructur.Features.Logistics.Berths.Delete;
 using Infrastructur.Features.Logistics.Berths.GetAll;
@@ -123,9 +138,11 @@ using Infrastructur.Features.Logistics.Voyages.Delete;
 using Infrastructur.Features.Logistics.Voyages.GetAll;
 using Infrastructur.Features.Logistics.Voyages.GetById;
 using Infrastructur.Features.Logistics.Voyages.Update;
+using Infrastructur.Features.PublicWebsite.About.Get;
 using Infrastructur.Features.PublicWebsite.Blog.GetPublished;
 using Infrastructur.Features.PublicWebsite.Home.Get;
 using Infrastructur.Features.PublicWebsite.Home.Get;
+using Infrastructur.Features.PublicWebsite.Services.Get;
 using Infrastructur.Features.ShippingOrders.Customer.Cancel;
 using Infrastructur.Features.ShippingOrders.Customer.Create;
 using Infrastructur.Features.ShippingOrders.Customer.GetById;
@@ -155,6 +172,12 @@ using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Load;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Start;
 using Infrastructur.Features.ShippingOrders.LogisticsAdmin.Shipment.Unload;
 using Infrastructur.Features.ShippingOrders.Public.Tracking.GetByTrackingNumber;
+using Infrastructur.Features.WebSiteAdmin.About.Create;
+using Infrastructur.Features.WebSiteAdmin.About.Delete;
+using Infrastructur.Features.WebSiteAdmin.About.Get;
+using Infrastructur.Features.WebSiteAdmin.About.Reorder;
+using Infrastructur.Features.WebSiteAdmin.About.Update;
+using Infrastructur.Features.WebSiteAdmin.About.Visibility;
 using Infrastructur.Features.WebSiteAdmin.Blog.Create;
 using Infrastructur.Features.WebSiteAdmin.Blog.Delete;
 using Infrastructur.Features.WebSiteAdmin.Blog.GetAll;
@@ -165,6 +188,13 @@ using Infrastructur.Features.WebSiteAdmin.Home.Get;
 using Infrastructur.Features.WebSiteAdmin.Home.Reorder;
 using Infrastructur.Features.WebSiteAdmin.Home.Update;
 using Infrastructur.Features.WebSiteAdmin.Home.Visibility;
+using Infrastructur.Features.WebSiteAdmin.Services.Get;
+using Infrastructur.Features.WebSiteAdmin.Services.Items.Create;
+using Infrastructur.Features.WebSiteAdmin.Services.Items.Delete;
+using Infrastructur.Features.WebSiteAdmin.Services.Items.Reorder;
+using Infrastructur.Features.WebSiteAdmin.Services.Items.Update;
+using Infrastructur.Features.WebSiteAdmin.Services.Items.Visibility;
+using Infrastructur.Features.WebSiteAdmin.Services.Update;
 using Infrastructur.Identity.GetMe;
 using Infrastructur.Identity.Login;
 using Infrastructur.Identity.Register;
@@ -660,6 +690,111 @@ public static class ServiceRegistration
         services.AddScoped<
             IGetPublicHomePageHandler,
             GetPublicHomePageHandler>();
+
+
+
+        // =========================================================
+        // Public Website - Home Page
+        // =========================================================
+
+        services.AddScoped<
+            IGetPublicHomePageHandler,
+            GetPublicHomePageHandler>();
+
+
+
+        // =========================================================
+        // Public Website - Services Page
+        // =========================================================
+
+        services.AddScoped<
+            IGetPublicServicesPageHandler,
+            GetPublicServicesPageHandler>();
+
+
+        // =========================================================
+        // Website Admin - Services Page CMS
+        // =========================================================
+
+        services.AddScoped<
+            IGetServicesPageHandler,
+            GetServicesPageHandler>();
+
+
+        services.AddScoped<
+              IUpdateServicesPageHandler,
+              UpdateServicesPageHandler>();
+        services.AddScoped<
+            ICreateServiceItemHandler,
+            CreateServiceItemHandler>();
+        services.AddScoped<
+            IUpdateServiceItemHandler,
+            UpdateServiceItemHandler>();
+        services.AddScoped<
+            IDeleteServiceItemHandler,
+            DeleteServiceItemHandler>();
+        services.AddScoped<
+            IUpdateServiceItemVisibilityHandler,
+            UpdateServiceItemVisibilityHandler>();
+
+        services.AddScoped<
+            IReorderServiceItemsHandler,
+            ReorderServiceItemsHandler>();
+
+
+
+        // =========================================================
+        // Website Admin - About Page CMS
+        // =========================================================
+
+        services.AddScoped<
+            IGetAboutPageHandler,
+            GetAboutPageHandler>();
+
+        services.AddScoped<
+            ICreateAboutPageSectionHandler,
+            CreateAboutPageSectionHandler>();
+
+        services.AddScoped<
+            IUpdateAboutPageSectionHandler,
+            UpdateAboutPageSectionHandler>();
+
+        services.AddScoped<
+            IDeleteAboutPageSectionHandler,
+            DeleteAboutPageSectionHandler>();
+
+        services.AddScoped<
+            IUpdateAboutPageSectionVisibilityHandler,
+            UpdateAboutPageSectionVisibilityHandler>();
+
+        services.AddScoped<
+            IReorderAboutPageSectionsHandler,
+            ReorderAboutPageSectionsHandler>();
+
+
+        // =========================================================
+        // Public Website - About Page
+        // =========================================================
+
+        services.AddScoped<
+            IGetPublicAboutPageHandler,
+            GetPublicAboutPageHandler>();
+
+        return services;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         return services;
     }

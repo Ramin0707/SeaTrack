@@ -2,6 +2,7 @@ using Application.Features.WebSiteAdmin.Media.Interfaces;
 using Infrastructur.Data;
 using Infrastructur.DependencyInjection;
 using Infrastructur.Features.WebSiteAdmin.Home.Seeding;
+using Infrastructur.Features.WebSiteAdmin.Services.Seeding;
 using Infrastructur.Identity;
 using Infrastructur.Identity.Options;
 using Infrastructur.Identity.Seeding;
@@ -197,6 +198,13 @@ builder.Services.AddScoped<HomePageSeeder>();
 
 
 // =========================================================
+// Website Admin - Services Page Seeder
+// =========================================================
+
+builder.Services.AddScoped<ServicesPageSeeder>();
+
+
+// =========================================================
 // CORS
 // =========================================================
 
@@ -229,11 +237,19 @@ await using (var scope =
 
     await identitySeeder.SeedAsync();
 
+
     // Default Home Page CMS sections
     var homePageSeeder = scope.ServiceProvider
         .GetRequiredService<HomePageSeeder>();
 
     await homePageSeeder.SeedAsync();
+
+
+    // Default Services Page CMS content
+    var servicesPageSeeder = scope.ServiceProvider
+        .GetRequiredService<ServicesPageSeeder>();
+
+    await servicesPageSeeder.SeedAsync();
 }
 
 

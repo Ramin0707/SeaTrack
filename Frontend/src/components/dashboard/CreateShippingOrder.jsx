@@ -125,7 +125,7 @@ function CreateShippingOrder({
 
     try {
       const response = await fetch(
-        'http://localhost:5080/api/shipping-orders',
+        'https://localhost:44328/api/shipping-orders',
         {
           method: 'POST',
 

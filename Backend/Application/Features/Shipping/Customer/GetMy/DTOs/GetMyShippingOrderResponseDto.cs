@@ -4,7 +4,11 @@ namespace Application.Features.Shipping.Customer.GetMy.DTOs;
 
 public class GetMyShippingOrderResponseDto
 {
+    // Internal database ID
     public int Id { get; set; }
+
+    // Order number visible to the customer
+    public int CustomerOrderNumber { get; set; }
 
     public string CargoType { get; set; } = string.Empty;
 

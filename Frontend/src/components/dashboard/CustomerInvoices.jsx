@@ -125,7 +125,7 @@ function CustomerInvoices({
         orders.map(async (order) => {
           try {
             const response = await fetch(
-              `http://localhost:5080/api/shipping-orders/${order.id}/invoice`,
+              `https://localhost:44328/api/shipping-orders/${order.id}/invoice`,
               {
                 headers: {
                   Authorization:
@@ -255,7 +255,7 @@ function CustomerInvoices({
 
       try {
         const response = await fetch(
-          `http://localhost:5080/api/shipping-orders/invoices/${invoice.id}/pay`,
+          `https://localhost:44328/api/shipping-orders/invoices/${invoice.id}/pay`,
           {
             method: 'POST',
 

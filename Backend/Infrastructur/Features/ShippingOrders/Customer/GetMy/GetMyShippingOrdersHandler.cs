@@ -24,6 +24,7 @@ public class GetMyShippingOrdersHandler : IGetMyShippingOrdersHandler
             .Select(order => new GetMyShippingOrderResponseDto
             {
                 Id = order.Id,
+                CustomerOrderNumber = order.CustomerOrderNumber,
                 CargoType = order.CargoType,
                 Weight = order.Weight,
                 Volume = order.Volume,

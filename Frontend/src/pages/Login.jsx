@@ -2,6 +2,7 @@ import './Login.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
+const API_URL = 'https://localhost:44328'
 
 function Login() {
   const navigate = useNavigate()
@@ -54,7 +55,7 @@ function Login() {
       ---------------------------------- */
 
       const response = await fetch(
-        'http://localhost:5080/api/auth/login',
+        `${API_URL}/api/auth/login`,
         {
           method: 'POST',
 
@@ -63,21 +64,37 @@ function Login() {
           },
 
           body: JSON.stringify({
-            email,
+            email: email.trim(),
             password
           })
         }
       )
 
 
-      const data = await response.json()
+      let data = null
+
+      try {
+        data = await response.json()
+      } catch {
+        data = null
+      }
 
 
-      if (!response.ok || !data.succeeded) {
-
+      if (!response.ok) {
         setError(
-          data.errors?.[0] ||
+          data?.errors?.[0] ||
+          data?.message ||
           'Invalid email or password.'
+        )
+
+        return
+      }
+
+
+      if (!data?.succeeded || !data?.accessToken) {
+        setError(
+          data?.errors?.[0] ||
+          'Unable to sign in to SeaTrack.'
         )
 
         return
@@ -104,7 +121,7 @@ function Login() {
 
       storage.setItem(
         'seatrack_token_expires_at',
-        data.expiresAtUtc
+        data.expiresAtUtc || ''
       )
 
 
@@ -113,8 +130,10 @@ function Login() {
       ---------------------------------- */
 
       const meResponse = await fetch(
-        'http://localhost:5080/api/auth/me',
+        `${API_URL}/api/auth/me`,
         {
+          method: 'GET',
+
           headers: {
             Authorization:
               `Bearer ${data.accessToken}`
@@ -124,7 +143,6 @@ function Login() {
 
 
       if (!meResponse.ok) {
-
         clearAuth()
 
         setError(
@@ -140,7 +158,7 @@ function Login() {
 
 
       const roles =
-        currentUser.roles || []
+        currentUser?.roles || []
 
 
       /* ---------------------------------
@@ -164,7 +182,6 @@ function Login() {
       ---------------------------------- */
 
       if (isAdmin) {
-
         navigate(
           '/cms',
           {
@@ -181,7 +198,6 @@ function Login() {
       ---------------------------------- */
 
       if (isOperator) {
-
         navigate(
           '/admin',
           {
@@ -198,7 +214,6 @@ function Login() {
       ---------------------------------- */
 
       if (isCustomer) {
-
         navigate(
           '/dashboard',
           {
@@ -222,7 +237,10 @@ function Login() {
 
     } catch (error) {
 
-      console.error(error)
+      console.error(
+        'SeaTrack login error:',
+        error
+      )
 
       clearAuth()
 

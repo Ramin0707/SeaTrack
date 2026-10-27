@@ -1,12 +1,120 @@
-import './Services.css'
+import { useEffect, useState } from "react";
 
-import seaFreightImage from '../assets/images/services-sea-freight.jpg'
-import containerShippingImage from '../assets/images/services-container-shipping.jpg'
-import routeVoyageImage from '../assets/images/services-route-voyage.jpg'
-import realTimeTrackingImage from '../assets/images/services-real-time-tracking.jpg'
-import CallToAction from '../components/CallToAction'
+import "./Services.css";
+
+import seaFreightImage from "../assets/images/services-sea-freight.jpg";
+import containerShippingImage from "../assets/images/services-container-shipping.jpg";
+import routeVoyageImage from "../assets/images/services-route-voyage.jpg";
+import realTimeTrackingImage from "../assets/images/services-real-time-tracking.jpg";
+
+import CallToAction from "../components/CallToAction";
+
+const API_URL = "https://localhost:44328";
+
+const fallbackImages = {
+  1: seaFreightImage,
+  2: containerShippingImage,
+  3: routeVoyageImage,
+  4: realTimeTrackingImage,
+};
+
+function getImageUrl(service) {
+  if (service.imageUrl) {
+    if (
+      service.imageUrl.startsWith("http://") ||
+      service.imageUrl.startsWith("https://")
+    ) {
+      return service.imageUrl;
+    }
+
+    return `${API_URL}${service.imageUrl}`;
+  }
+
+  return fallbackImages[service.id] || null;
+}
 
 function Services() {
+  const [page, setPage] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [loadFailed, setLoadFailed] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadServicesPage() {
+      try {
+        setLoading(true);
+        setLoadFailed(false);
+
+        const response = await fetch(
+          `${API_URL}/api/services`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Unable to load Services Page (${response.status}).`
+          );
+        }
+
+        const data = await response.json();
+
+        if (cancelled) {
+          return;
+        }
+
+        setPage(data);
+      } catch (error) {
+        console.error(
+          "Unable to load SeaTrack Services Page:",
+          error
+        );
+
+        if (!cancelled) {
+          setLoadFailed(true);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadServicesPage();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (loading) {
+    return null;
+  }
+
+  if (loadFailed || !page) {
+    return (
+      <div className="services-page">
+        <CallToAction />
+      </div>
+    );
+  }
+
+  const heroStats = Array.isArray(page.heroStats)
+    ? page.heroStats
+    : [];
+
+  const capabilities = Array.isArray(
+    page.capabilities
+  )
+    ? page.capabilities
+    : [];
+
+  const services = Array.isArray(page.services)
+    ? [...page.services].sort(
+        (first, second) =>
+          first.sortOrder - second.sortOrder
+      )
+    : [];
+
   return (
     <div className="services-page">
 
@@ -22,540 +130,207 @@ function Services() {
           <span className="services-hero-circle circle-three"></span>
         </div>
 
-
         <div className="services-hero-container">
 
           <div className="services-hero-content">
 
             <span className="services-page-label">
-              OUR SERVICES
+              {page.heroLabel}
             </span>
 
             <h1>
-              Maritime logistics
+              {page.heroTitle}
               <br />
-              <span>built for global trade.</span>
+              <span>
+                {page.heroHighlightedTitle}
+              </span>
             </h1>
 
             <p className="services-hero-description">
-              From sea freight and container shipping to route planning
-              and real-time tracking, SeaTrack connects every stage of
-              your cargo journey through one digital logistics platform.
+              {page.heroDescription}
             </p>
 
-
             <div className="services-hero-stats">
-
-              <div className="services-hero-stat">
-                <strong>120+</strong>
-                <span>Global Ports</span>
-              </div>
-
-              <div className="services-hero-stat">
-                <strong>35+</strong>
-                <span>Shipping Routes</span>
-              </div>
-
-              <div className="services-hero-stat">
-                <strong>24/7</strong>
-                <span>Cargo Visibility</span>
-              </div>
-
+              {heroStats.map((stat, index) => (
+                <div
+                  className="services-hero-stat"
+                  key={`${stat.label}-${index}`}
+                >
+                  <strong>{stat.value}</strong>
+                  <span>{stat.label}</span>
+                </div>
+              ))}
             </div>
 
           </div>
-
 
           <div className="services-hero-index">
 
             <span className="services-index-title">
-              OUR CAPABILITIES
+              {page.capabilitiesTitle}
             </span>
 
+            {capabilities.map(
+              (capability, index) => (
+                <div
+                  className="services-index-item"
+                  key={`${capability.title}-${index}`}
+                >
+                  <span>
+                    {capability.number}
+                  </span>
 
-            <div className="services-index-item">
-              <span>01</span>
-              <p>Sea Freight</p>
-            </div>
-
-
-            <div className="services-index-item">
-              <span>02</span>
-              <p>Container Shipping</p>
-            </div>
-
-
-            <div className="services-index-item">
-              <span>03</span>
-              <p>Route &amp; Voyage Planning</p>
-            </div>
-
-
-            <div className="services-index-item">
-              <span>04</span>
-              <p>Real-Time Tracking</p>
-            </div>
+                  <p>
+                    {capability.title}
+                  </p>
+                </div>
+              )
+            )}
 
           </div>
 
         </div>
-
 
         <div className="services-scroll-indicator">
           <span></span>
-          Explore Services
+          {page.scrollText}
         </div>
 
       </section>
 
-
       {/* =====================================
-          01 — SEA FREIGHT
+          DYNAMIC SERVICES
       ====================================== */}
 
-      <section className="service-detail service-detail-sea">
+      {services.map((service, index) => {
+        const imageUrl = getImageUrl(service);
 
-        <div className="service-detail-container">
-
+        const imageBlock = (
           <div className="service-detail-image">
 
-            <img
-              src={seaFreightImage}
-              alt="Sea freight container ship"
-            />
+            {imageUrl && (
+              <img
+                src={imageUrl}
+                alt={
+                  service.imageAlt ||
+                  service.name
+                }
+              />
+            )}
 
             <div className="service-image-number">
-              01
+              {service.number}
             </div>
 
             <div className="service-image-badge">
               <span></span>
-              GLOBAL SEA FREIGHT
+              {service.imageBadge}
             </div>
 
           </div>
+        );
 
-
+        const contentBlock = (
           <div className="service-detail-content">
 
             <span className="service-detail-label">
-              01 / SEA FREIGHT
+              {service.label}
             </span>
 
             <h2>
-              Reliable cargo transport
-              <span> across global waters.</span>
+              {service.title}
+              <span>
+                {" "}
+                {service.highlightedTitle}
+              </span>
             </h2>
 
             <p className="service-detail-description">
-              SeaTrack connects your cargo with reliable maritime
-              routes, vessels and ports while keeping every stage
-              of the shipping process transparent and organized.
+              {service.description}
             </p>
-
 
             <div className="service-benefits">
 
-              <div className="service-benefit">
+              {Array.isArray(service.benefits) &&
+                service.benefits.map(
+                  (benefit, benefitIndex) => (
+                    <div
+                      className="service-benefit"
+                      key={`${service.id}-${benefitIndex}`}
+                    >
+                      <span>
+                        {benefit.number ||
+                          String(
+                            benefitIndex + 1
+                          ).padStart(2, "0")}
+                      </span>
 
-                <span>01</span>
+                      <div>
+                        <h3>
+                          {benefit.title}
+                        </h3>
 
-                <div>
-                  <h3>Port-to-Port Shipping</h3>
-
-                  <p>
-                    Reliable maritime transportation between
-                    international ports and major trade hubs.
-                  </p>
-                </div>
-
-              </div>
-
-
-              <div className="service-benefit">
-
-                <span>02</span>
-
-                <div>
-                  <h3>Flexible Cargo Solutions</h3>
-
-                  <p>
-                    Shipping solutions adapted to cargo type,
-                    weight, volume and required container.
-                  </p>
-                </div>
-
-              </div>
-
-
-              <div className="service-benefit">
-
-                <span>03</span>
-
-                <div>
-                  <h3>Transparent Operations</h3>
-
-                  <p>
-                    Follow quotations, shipment status and logistics
-                    progress through one connected platform.
-                  </p>
-                </div>
-
-              </div>
+                        <p>
+                          {
+                            benefit.description
+                          }
+                        </p>
+                      </div>
+                    </div>
+                  )
+                )}
 
             </div>
 
+            {service.buttonText &&
+              service.buttonUrl && (
+                <a
+                  href={service.buttonUrl}
+                  className="service-detail-button"
+                >
+                  {service.buttonText}
+                  <span>→</span>
+                </a>
+              )}
 
-            <a
-              href="/register"
-              className="service-detail-button"
+          </div>
+        );
+
+        const isReverse =
+          index % 2 === 1;
+
+        return (
+          <section
+            className="service-detail"
+            key={service.id}
+          >
+            <div
+              className={
+                isReverse
+                  ? "service-detail-container service-detail-reverse"
+                  : "service-detail-container"
+              }
             >
-              Request a Quote
-              <span>→</span>
-            </a>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      {/* =====================================
-          02 — CONTAINER SHIPPING
-      ====================================== */}
-
-      <section className="service-detail service-detail-container-shipping">
-
-        <div className="service-detail-container service-detail-reverse">
-
-          <div className="service-detail-content">
-
-            <span className="service-detail-label">
-              02 / CONTAINER SHIPPING
-            </span>
-
-            <h2>
-              The right container
-              <span> for every cargo.</span>
-            </h2>
-
-            <p className="service-detail-description">
-              SeaTrack simplifies container planning and assignment,
-              helping your cargo move efficiently from port to port
-              with the right equipment for every shipment.
-            </p>
-
-
-            <div className="service-benefits">
-
-              <div className="service-benefit">
-
-                <span>01</span>
-
-                <div>
-                  <h3>Container Selection</h3>
-
-                  <p>
-                    Choose the appropriate container type based on
-                    cargo weight, volume and transportation requirements.
-                  </p>
-                </div>
-
-              </div>
-
-
-              <div className="service-benefit">
-
-                <span>02</span>
-
-                <div>
-                  <h3>Smart Assignment</h3>
-
-                  <p>
-                    Containers are assigned to confirmed shipping
-                    orders and connected with the appropriate voyage.
-                  </p>
-                </div>
-
-              </div>
-
-
-              <div className="service-benefit">
-
-                <span>03</span>
-
-                <div>
-                  <h3>Capacity Management</h3>
-
-                  <p>
-                    Keep container availability, status and cargo
-                    capacity organized throughout maritime operations.
-                  </p>
-                </div>
-
-              </div>
-
+              {isReverse ? (
+                <>
+                  {contentBlock}
+                  {imageBlock}
+                </>
+              ) : (
+                <>
+                  {imageBlock}
+                  {contentBlock}
+                </>
+              )}
             </div>
+          </section>
+        );
+      })}
 
-
-            <a
-              href="/register"
-              className="service-detail-button"
-            >
-              Start Shipping
-              <span>→</span>
-            </a>
-
-          </div>
-
-
-          <div className="service-detail-image">
-
-            <img
-              src={containerShippingImage}
-              alt="Container shipping terminal"
-            />
-
-            <div className="service-image-number">
-              02
-            </div>
-
-            <div className="service-image-badge">
-              <span></span>
-              CONTAINER OPERATIONS
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-          {
-          /* =====================================
-           03 — ROUTE & VOYAGE PLANNING
-              ====================================== */}
-
-<section className="service-detail service-detail-route">
-
-  <div className="service-detail-container">
-
-    <div className="service-detail-image">
-
-      <img
-        src={routeVoyageImage}
-        alt="Maritime route and voyage planning"
-      />
-
-      <div className="service-image-number">
-        03
-      </div>
-
-      <div className="service-image-badge">
-        <span></span>
-        ROUTE &amp; VOYAGE PLANNING
-      </div>
+      <CallToAction />
 
     </div>
-
-
-    <div className="service-detail-content">
-
-      <span className="service-detail-label">
-        03 / ROUTE &amp; VOYAGE PLANNING
-      </span>
-
-      <h2>
-        Smarter routes for
-        <span> every voyage.</span>
-      </h2>
-
-      <p className="service-detail-description">
-        SeaTrack connects ports, vessels and shipping routes
-        to help organize every voyage from departure to arrival
-        through one coordinated maritime logistics platform.
-      </p>
-
-
-      <div className="service-benefits">
-
-        <div className="service-benefit">
-
-          <span>01</span>
-
-          <div>
-            <h3>Optimized Shipping Routes</h3>
-
-            <p>
-              Plan maritime routes between origin and destination
-              ports using organized voyage information.
-            </p>
-          </div>
-
-        </div>
-
-
-        <div className="service-benefit">
-
-          <span>02</span>
-
-          <div>
-            <h3>Vessel &amp; Voyage Coordination</h3>
-
-            <p>
-              Connect vessels, routes and voyage schedules with
-              confirmed cargo shipments.
-            </p>
-          </div>
-
-        </div>
-
-
-        <div className="service-benefit">
-
-          <span>03</span>
-
-          <div>
-            <h3>Port Call Planning</h3>
-
-            <p>
-              Coordinate terminals, berths, arrival times and
-              departure schedules throughout the voyage.
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <a
-        href="/register"
-        className="service-detail-button"
-      >
-        Plan Your Shipment
-        <span>→</span>
-      </a>
-
-    </div>
-
-  </div>
-
-</section>
-{/* =====================================
-    04 — REAL-TIME TRACKING
-====================================== */}
-
-<section className="service-detail service-detail-tracking">
-
-  <div className="service-detail-container service-detail-reverse">
-
-    <div className="service-detail-content">
-
-      <span className="service-detail-label">
-        04 / REAL-TIME TRACKING
-      </span>
-
-      <h2>
-        Your shipment.
-        <span> Always in sight.</span>
-      </h2>
-
-      <p className="service-detail-description">
-        SeaTrack gives customers clear visibility into every stage
-        of the maritime journey, from cargo preparation and departure
-        to arrival and final delivery.
-      </p>
-
-
-      <div className="service-benefits">
-
-        <div className="service-benefit">
-
-          <span>01</span>
-
-          <div>
-            <h3>Live Shipment Status</h3>
-
-            <p>
-              Check the current status of your shipment using
-              a unique SeaTrack tracking number.
-            </p>
-          </div>
-
-        </div>
-
-
-        <div className="service-benefit">
-
-          <span>02</span>
-
-          <div>
-            <h3>Complete Cargo Timeline</h3>
-
-            <p>
-              Follow every logistics stage including loaded,
-              departed, in transit, arrived, unloaded and delivered.
-            </p>
-          </div>
-
-        </div>
-
-
-        <div className="service-benefit">
-
-          <span>03</span>
-
-          <div>
-            <h3>Transparent Journey</h3>
-
-            <p>
-              View shipment progress, origin and destination
-              information through one connected tracking platform.
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <a
-        href="/tracking"
-        className="service-detail-button"
-      >
-        Track Shipment
-        <span>→</span>
-      </a>
-
-    </div>
-
-
-    <div className="service-detail-image">
-
-      <img
-        src={realTimeTrackingImage}
-        alt="Real-time maritime shipment tracking"
-      />
-
-      <div className="service-image-number">
-        04
-      </div>
-
-      <div className="service-image-badge">
-        <span></span>
-        REAL-TIME TRACKING
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<CallToAction />
-    </div>
-  )
+  );
 }
 
-export default Services
+export default Services;
