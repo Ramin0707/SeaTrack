@@ -1,4 +1,5 @@
-﻿using Application.Features.Shipping.Public.Tracking.GetByTrackingNumber.DTOs;
+﻿
+using Application.Features.Shipping.Public.Tracking.GetByTrackingNumber.DTOs;
 using Application.Features.Shipping.Public.Tracking.GetByTrackingNumber.Interfaces;
 using Infrastructur.Data;
 using Microsoft.EntityFrameworkCore;
@@ -36,14 +37,25 @@ public class GetTrackingByTrackingNumberHandler
         {
             return null;
         }
+
+        string? voyageNumber = null;
+
         var portCalls = new List<TrackingPortCallDto>();
 
-        if (shipment.ShippingOrder.VoyageId is not null)
+        var voyageId = shipment.ShippingOrder.VoyageId;
+
+        if (voyageId.HasValue)
         {
+            voyageNumber = await _dbContext.Voyages
+                .AsNoTracking()
+                .Where(x => x.Id == voyageId.Value)
+                .Select(x => x.VoyageNumber)
+                .FirstOrDefaultAsync();
+
             portCalls = await _dbContext.PortCalls
                 .AsNoTracking()
                 .Where(x =>
-                    x.VoyageId == shipment.ShippingOrder.VoyageId.Value &&
+                    x.VoyageId == voyageId.Value &&
                     x.IsActive)
                 .OrderBy(x => x.EstimatedArrivalUtc)
                 .Select(x => new TrackingPortCallDto
@@ -59,20 +71,31 @@ public class GetTrackingByTrackingNumberHandler
                 })
                 .ToListAsync();
         }
+
         return new TrackingResponseDto
         {
             TrackingNumber = shipment.TrackingNumber,
+
             Status = shipment.Status,
 
             OriginPort = shipment.ShippingOrder.OriginPort,
+
             DestinationPort = shipment.ShippingOrder.DestinationPort,
 
+            VoyageNumber = voyageNumber,
+
             CreatedAtUtc = shipment.CreatedAtUtc,
+
             LoadedAtUtc = shipment.LoadedAtUtc,
+
             ShippedAtUtc = shipment.ShippedAtUtc,
+
             ArrivedAtUtc = shipment.ArrivedAtUtc,
+
             UnloadedAtUtc = shipment.UnloadedAtUtc,
+
             DeliveredAtUtc = shipment.DeliveredAtUtc,
+
             PortCalls = portCalls
         };
     }

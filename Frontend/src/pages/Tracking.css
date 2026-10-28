@@ -1,7 +1,16 @@
+
+/* =========================================
+   SEATRACK — TRACKING PAGE
+========================================= */
+
 .tracking-page {
   background: #031f2e;
   color: #ffffff;
 }
+
+/* =========================================
+   HERO
+========================================= */
 
 .tracking-hero {
   position: relative;
@@ -23,8 +32,15 @@
   inset: 0;
   opacity: 0.13;
   background-image:
-    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    linear-gradient(
+      rgba(255, 255, 255, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.08) 1px,
+      transparent 1px
+    );
   background-size: 65px 65px;
   pointer-events: none;
 }
@@ -99,12 +115,14 @@
   line-height: 1.8;
 }
 
+/* SEARCH */
+
 .tracking-search {
   display: flex;
   margin-top: 38px;
   max-width: 650px;
   padding: 7px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(5, 39, 54, 0.9);
   border-radius: 8px;
 }
@@ -115,6 +133,7 @@
   align-items: center;
   gap: 12px;
   padding: 0 18px;
+  min-width: 0;
 }
 
 .tracking-input-icon {
@@ -130,6 +149,7 @@
   background: transparent;
   color: #ffffff;
   font-size: 15px;
+  min-width: 0;
 }
 
 .tracking-input-wrapper input::placeholder {
@@ -145,6 +165,19 @@
   color: #031f2e;
   font-weight: 800;
   cursor: pointer;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.tracking-search button:hover:not(:disabled) {
+  background: #ffb25d;
+  transform: translateY(-1px);
+}
+
+.tracking-search button:disabled {
+  opacity: 0.7;
+  cursor: wait;
 }
 
 .tracking-search button span {
@@ -185,13 +218,14 @@
   letter-spacing: 1px;
 }
 
-
-/* RIGHT TRACKING CARD */
+/* =========================================
+   TRACKING PREVIEW
+========================================= */
 
 .tracking-preview {
   position: relative;
   padding: 32px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
   background:
     linear-gradient(
@@ -199,7 +233,8 @@
       rgba(12, 70, 91, 0.92),
       rgba(5, 40, 55, 0.95)
     );
-  box-shadow: 0 35px 90px rgba(0,0,0,0.24);
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.24);
+  min-width: 0;
 }
 
 .tracking-preview::before {
@@ -218,6 +253,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
 
 .tracking-preview-top > div:first-child,
@@ -225,6 +261,7 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  min-width: 0;
 }
 
 .tracking-preview-top span,
@@ -237,6 +274,7 @@
 
 .tracking-preview-top strong {
   font-size: 16px;
+  overflow-wrap: anywhere;
 }
 
 .tracking-live-status {
@@ -250,6 +288,7 @@
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 1px;
+  flex-shrink: 0;
 }
 
 .tracking-live-status i {
@@ -273,6 +312,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 
 .tracking-port-right {
@@ -287,6 +327,7 @@
 
 .tracking-port strong {
   font-size: 28px;
+  overflow-wrap: anywhere;
 }
 
 .tracking-port small {
@@ -296,7 +337,7 @@
 .tracking-route-line {
   position: relative;
   height: 1px;
-  background: rgba(255,255,255,0.16);
+  background: rgba(255, 255, 255, 0.16);
 }
 
 .tracking-route-line span {
@@ -317,21 +358,23 @@
   font-size: 19px;
 }
 
+/* PROGRESS */
+
 .tracking-progress {
   position: relative;
   z-index: 2;
   padding: 28px 0 35px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .tracking-progress-line {
   position: absolute;
   top: 38px;
-  left: 7%;
-  right: 7%;
+  left: 8.333333%;
+  right: 8.333333%;
   height: 2px;
-  background: rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .tracking-progress-line span {
@@ -339,6 +382,7 @@
   width: 50%;
   height: 100%;
   background: #21c8c5;
+  transition: width 0.65s ease;
 }
 
 .tracking-progress-items {
@@ -393,68 +437,9 @@
   font-size: 14px;
 }
 
-
-/* RESPONSIVE */
-
-@media (max-width: 1000px) {
-
-  .tracking-hero-container {
-    grid-template-columns: 1fr;
-    gap: 65px;
-  }
-
-  .tracking-hero-content {
-    max-width: 760px;
-  }
-
-}
-
-@media (max-width: 650px) {
-
-  .tracking-hero-container {
-    width: min(100% - 30px, 1180px);
-    padding: 75px 0;
-  }
-
-  .tracking-hero-content h1 {
-    font-size: 46px;
-    letter-spacing: -2px;
-  }
-
-  .tracking-search {
-    flex-direction: column;
-  }
-
-  .tracking-search button {
-    width: 100%;
-  }
-
-  .tracking-features {
-    gap: 22px;
-    justify-content: space-between;
-  }
-
-  .tracking-preview {
-    padding: 22px 16px;
-  }
-
-  .tracking-route {
-    grid-template-columns: 1fr 70px 1fr;
-  }
-
-  .tracking-port strong {
-    font-size: 21px;
-  }
-
-  .tracking-step span {
-    font-size: 7px;
-  }
-
-}
-
-/* =====================================
-   HOW TRACKING WORKS
-===================================== */
+/* =========================================
+   SHIPMENT JOURNEY
+========================================= */
 
 .tracking-process {
   position: relative;
@@ -473,6 +458,7 @@
   bottom: -330px;
   border: 1px solid rgba(33, 200, 197, 0.08);
   border-radius: 50%;
+  pointer-events: none;
 }
 
 .tracking-process-container {
@@ -527,9 +513,6 @@
   line-height: 1.8;
 }
 
-
-/* TIMELINE */
-
 .tracking-timeline {
   position: relative;
   display: grid;
@@ -538,16 +521,7 @@
 }
 
 .tracking-timeline-line {
-  position: absolute;
-  top: 29px;
-  left: 8%;
-  right: 8%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    #21c8c5,
-    rgba(33, 200, 197, 0.2)
-  );
+  display: none;
 }
 
 .tracking-timeline-item {
@@ -556,6 +530,8 @@
 }
 
 .tracking-timeline-marker {
+  position: relative;
+  z-index: 1;
   width: 58px;
   height: 58px;
   display: flex;
@@ -566,6 +542,9 @@
   border-radius: 50%;
   background: #062c3d;
   box-shadow: 0 0 0 8px #021a27;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .tracking-timeline-marker span {
@@ -588,10 +567,427 @@
   line-height: 1.7;
 }
 
+/* DYNAMIC TIMELINE */
 
-/* RESPONSIVE */
+.tracking-timeline-item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 28px;
+  left: 29px;
+  right: -55px;
+  height: 2px;
+  background: rgba(33, 200, 197, 0.17);
+  transition: background 0.35s ease;
+}
+
+.tracking-timeline-item.tracking-timeline-connected::before {
+  background: #21c8c5;
+}
+
+.tracking-timeline-completed .tracking-timeline-marker {
+  border-color: #21c8c5;
+  background: #21c8c5;
+}
+
+.tracking-timeline-completed .tracking-timeline-marker span {
+  color: #031f2e;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.tracking-timeline-active .tracking-timeline-marker {
+  border: 2px solid #21c8c5;
+  background: #0b4354;
+  animation: tracking-current-pulse 2.4s ease-in-out infinite;
+}
+
+.tracking-timeline-active .tracking-timeline-marker span {
+  color: #ffffff;
+}
+
+.tracking-timeline-pending .tracking-timeline-marker {
+  border-color: rgba(120, 154, 170, 0.3);
+  background: #062333;
+}
+
+.tracking-timeline-pending .tracking-timeline-marker span {
+  color: #789aaa;
+}
+
+.tracking-timeline-pending h3 {
+  color: #a4bbc6;
+}
+
+.tracking-timeline-item .tracking-timeline-date {
+  margin-top: 10px;
+  color: #20c9c6;
+  font-size: 13px;
+}
+
+.tracking-timeline-item .tracking-timeline-reached {
+  font-size: 12px;
+}
+
+@keyframes tracking-current-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 8px #021a27,
+      0 0 0 11px rgba(33, 200, 197, 0.08);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 8px #021a27,
+      0 0 0 16px rgba(33, 200, 197, 0.22);
+  }
+}
+
+/* =========================================
+   DYNAMIC TRACKING STATES
+========================================= */
+
+.tracking-error {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 151, 87, 0.35);
+  border-radius: 8px;
+  background: rgba(255, 151, 87, 0.08);
+  color: #ffb88a;
+  font-size: 14px;
+}
+
+.tracking-live-status.is-delivered {
+  color: #65f0b5;
+  border-color: rgba(101, 240, 181, 0.35);
+  background: rgba(101, 240, 181, 0.08);
+}
+
+.tracking-delivered-text {
+  color: #65f0b5;
+}
+
+/* =========================================
+   NEW — PORT CALLS SECTION
+========================================= */
+
+.tracking-portcalls-section {
+  position: relative;
+  overflow: hidden;
+  padding: 115px 0 125px;
+  background:
+    radial-gradient(
+      circle at 88% 18%,
+      rgba(33, 200, 197, 0.08),
+      transparent 38%
+    ),
+    linear-gradient(
+      180deg,
+      #042434 0%,
+      #031c2b 100%
+    );
+  border-top: 1px solid rgba(33, 200, 197, 0.12);
+}
+
+.tracking-portcalls-section::before {
+  content: "";
+  position: absolute;
+  width: 580px;
+  height: 580px;
+  right: -330px;
+  top: -290px;
+  border: 1px solid rgba(33, 200, 197, 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.tracking-portcalls-section::after {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  right: -250px;
+  top: -210px;
+  border: 1px solid rgba(33, 200, 197, 0.07);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.tracking-portcalls-section .tracking-process-heading {
+  margin-bottom: 48px;
+}
+
+/* PORT CALL GRID */
+
+.tracking-portcalls-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(min(100%, 460px), 1fr));
+  gap: 26px;
+  align-items: stretch;
+}
+
+/* PORT CALL CARD */
+
+.tracking-portcalls-card {
+  position: relative;
+  min-width: 0;
+  padding: 30px;
+  border: 1px solid rgba(33, 200, 197, 0.17);
+  border-radius: 16px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(13, 64, 82, 0.93),
+      rgba(5, 37, 53, 0.98)
+    );
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.15);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+  animation: tracking-portcall-appear 0.5s ease both;
+}
+
+.tracking-portcalls-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 30px;
+  right: 30px;
+  height: 2px;
+  background:
+    linear-gradient(
+      90deg,
+      #21c8c5,
+      rgba(33, 200, 197, 0)
+    );
+}
+
+.tracking-portcalls-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(33, 200, 197, 0.4);
+  box-shadow: 0 28px 65px rgba(0, 0, 0, 0.23);
+}
+
+/* CARD HEADER */
+
+.tracking-portcalls-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.tracking-portcalls-title-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  min-width: 0;
+  flex: 1;
+}
+
+.tracking-portcalls-title-group > div {
+  min-width: 0;
+}
+
+.tracking-portcalls-number {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(33, 200, 197, 0.3);
+  border-radius: 12px;
+  background: rgba(33, 200, 197, 0.09);
+  color: #21c8c5;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.tracking-portcalls-eyebrow {
+  display: block;
+  margin-bottom: 7px;
+  color: #7fa6b6;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.tracking-portcalls-title-group h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(18px, 2vw, 23px);
+  line-height: 1.35;
+  letter-spacing: -0.4px;
+  overflow-wrap: anywhere;
+}
+
+/* PORT CALL STATUS */
+
+.tracking-portcalls-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid rgba(255, 155, 54, 0.3);
+  border-radius: 30px;
+  background: rgba(255, 155, 54, 0.08);
+  color: #ffb15f;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.tracking-portcalls-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.tracking-portcalls-status.arrived {
+  color: #21c8c5;
+  border-color: rgba(33, 200, 197, 0.3);
+  background: rgba(33, 200, 197, 0.08);
+}
+
+.tracking-portcalls-status.departed {
+  color: #65f0b5;
+  border-color: rgba(101, 240, 181, 0.3);
+  background: rgba(101, 240, 181, 0.08);
+}
+
+/* TERMINAL AND BERTH */
+
+.tracking-portcalls-location {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  padding: 22px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tracking-portcalls-location > div {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.tracking-portcalls-location span {
+  color: #789aaa;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.tracking-portcalls-location strong {
+  color: #e8f5f8;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* ARRIVAL AND DEPARTURE DATES */
+
+.tracking-portcalls-times {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 24px;
+  row-gap: 26px;
+  padding-top: 27px;
+}
+
+.tracking-portcalls-times > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.tracking-portcalls-times span {
+  color: #789aaa;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.tracking-portcalls-times strong {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.tracking-portcalls-times strong.is-reported {
+  color: #65f0b5;
+}
+
+.tracking-portcalls-times strong.is-unreported {
+  color: #90aebb;
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* EXPLANATORY NOTE */
+
+.tracking-portcalls-note {
+  margin: 28px 0 0;
+  color: #87a9b9;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.tracking-portcalls-note::before {
+  content: "ⓘ";
+  display: inline-block;
+  margin-right: 9px;
+  color: #21c8c5;
+  font-size: 16px;
+  vertical-align: middle;
+}
+
+/* CARD ENTRANCE */
+
+@keyframes tracking-portcall-appear {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   RESPONSIVE — TABLET
+========================================= */
 
 @media (max-width: 1000px) {
+  .tracking-hero-container {
+    grid-template-columns: 1fr;
+    gap: 65px;
+  }
+
+  .tracking-hero-content {
+    max-width: 760px;
+  }
 
   .tracking-process-heading {
     grid-template-columns: 1fr;
@@ -607,13 +1003,58 @@
     row-gap: 55px;
   }
 
-  .tracking-timeline-line {
+  .tracking-timeline-item:not(:last-child)::before {
     display: none;
   }
 
+  .tracking-portcalls-section {
+    padding: 95px 0 105px;
+  }
 }
 
+/* =========================================
+   RESPONSIVE — MOBILE
+========================================= */
+
 @media (max-width: 650px) {
+  .tracking-hero-container {
+    width: min(100% - 30px, 1180px);
+    padding: 75px 0;
+  }
+
+  .tracking-hero-content h1 {
+    font-size: 46px;
+    letter-spacing: -2px;
+  }
+
+  .tracking-search {
+    flex-direction: column;
+  }
+
+  .tracking-search button {
+    width: 100%;
+  }
+
+  .tracking-features {
+    gap: 22px;
+    justify-content: space-between;
+  }
+
+  .tracking-preview {
+    padding: 22px 16px;
+  }
+
+  .tracking-route {
+    grid-template-columns: 1fr 70px 1fr;
+  }
+
+  .tracking-port strong {
+    font-size: 21px;
+  }
+
+  .tracking-step span {
+    font-size: 7px;
+  }
 
   .tracking-process {
     padding: 85px 0;
@@ -648,4 +1089,120 @@
     margin: 0;
   }
 
+  .tracking-timeline-item:not(:last-child)::before {
+    display: block;
+    top: 29px;
+    bottom: -64px;
+    left: 28px;
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+
+  /* PORT CALLS */
+
+  .tracking-portcalls-section {
+    padding: 80px 0 90px;
+  }
+
+  .tracking-portcalls-section .tracking-process-heading {
+    margin-bottom: 36px;
+  }
+
+  .tracking-portcalls-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .tracking-portcalls-card {
+    padding: 23px 19px;
+    border-radius: 12px;
+  }
+
+  .tracking-portcalls-card::before {
+    left: 19px;
+    right: 19px;
+  }
+
+  .tracking-portcalls-card-header {
+    gap: 15px;
+  }
+
+  .tracking-portcalls-number {
+    width: 40px;
+    height: 40px;
+  }
+
+  .tracking-portcalls-title-group {
+    gap: 12px;
+  }
+
+  .tracking-portcalls-title-group h3 {
+    font-size: 19px;
+  }
+
+  .tracking-portcalls-location {
+    gap: 16px;
+  }
+
+  .tracking-portcalls-times {
+    gap: 22px 14px;
+  }
+
+  .tracking-portcalls-times strong {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 390px) {
+  .tracking-preview-top {
+    flex-wrap: wrap;
+  }
+
+  .tracking-features {
+    gap: 12px;
+  }
+
+  .tracking-features strong {
+    font-size: 21px;
+  }
+
+  .tracking-features span {
+    font-size: 10px;
+  }
+
+  .tracking-portcalls-location {
+    grid-template-columns: 1fr;
+  }
+
+  .tracking-portcalls-times {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .tracking-timeline-active .tracking-timeline-marker {
+    animation: none;
+  }
+
+  .tracking-progress-line span {
+    transition: none;
+  }
+
+  .tracking-portcalls-card {
+    animation: none;
+    transition: none;
+  }
+
+  .tracking-portcalls-card:hover {
+    transform: none;
+  }
+
+  .tracking-search button {
+    transition: none;
+  }
 }
