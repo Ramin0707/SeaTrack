@@ -1,33 +1,22 @@
-import './CustomerQuotes.css'
 
+import './CustomerQuotes.css'
 import { useEffect, useState } from 'react'
 
+const API_URL = 'https://localhost:44328'
 
-function CustomerQuotes({
-  orders = [],
-  onOrdersChanged
-}) {
+function CustomerQuotes({ orders = [], onOrdersChanged }) {
   const [quotes, setQuotes] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [actionQuoteId, setActionQuoteId] = useState(null)
   const [error, setError] = useState('')
 
+  const getToken = () =>
+    localStorage.getItem('seatrack_access_token') ||
+    sessionStorage.getItem('seatrack_access_token')
 
-  /* =====================================
-     TOKEN
-  ====================================== */
-
-  const getToken = () => {
-    return (
-      localStorage.getItem('seatrack_access_token') ||
-      sessionStorage.getItem('seatrack_access_token')
-    )
-  }
-
-
-  /* =====================================
-     STATUS
-  ====================================== */
+  // ==========================================
+  // QUOTE STATUS
+  // ==========================================
 
   const getQuoteStatus = (orderStatus) => {
     const statuses = {
@@ -42,72 +31,48 @@ function CustomerQuotes({
     return statuses[orderStatus] || 'Quote'
   }
 
-
   const getStatusClass = (orderStatus) => {
-    if (orderStatus === 2) {
-      return 'pending'
-    }
+    if (orderStatus === 2) return 'pending'
 
-    if (
-      orderStatus === 3 ||
-      orderStatus === 5 ||
-      orderStatus === 6 ||
-      orderStatus === 7
-    ) {
+    if ([3, 5, 6, 7].includes(orderStatus)) {
       return 'accepted'
     }
 
-    if (orderStatus === 4) {
-      return 'rejected'
-    }
+    if (orderStatus === 4) return 'rejected'
 
     return ''
   }
 
-
-  /* =====================================
-     FORMAT
-  ====================================== */
+  // ==========================================
+  // FORMATTING
+  // ==========================================
 
   const formatDate = (date) => {
-    if (!date) {
-      return '—'
-    }
+    if (!date) return '—'
 
-    return new Date(date).toLocaleDateString(
-      'en-GB',
-      {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric'
-      }
-    )
+    return new Date(date).toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    })
   }
 
-
-  const formatPrice = (
-    price,
-    currency
-  ) => {
+  const formatPrice = (price, currency) => {
     const amount = Number(price)
 
     if (Number.isNaN(amount)) {
       return `${price} ${currency || ''}`
     }
 
-    return `${amount.toLocaleString(
-      'en-US',
-      {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }
-    )} ${currency || ''}`
+    return `${amount.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })} ${currency || ''}`
   }
 
-
-  /* =====================================
-     LOAD QUOTES
-  ====================================== */
+  // ==========================================
+  // LOAD QUOTES
+  // ==========================================
 
   const loadQuotes = async () => {
     const token = getToken()
@@ -116,33 +81,26 @@ function CustomerQuotes({
       setError(
         'Your session has expired. Please sign in again.'
       )
-
       setIsLoading(false)
       return
     }
 
-
     setIsLoading(true)
     setError('')
-
 
     try {
       const results = await Promise.all(
         orders.map(async (order) => {
           try {
+            // Internal ID is used for backend requests.
             const response = await fetch(
-              `https://localhost:44328/api/shipping-orders/${order.id}/quote`,
+              `${API_URL}/api/shipping-orders/${order.id}/quote`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`
                 }
               }
             )
-
-
-            /*
-              No quote for this order.
-            */
 
             if (
               response.status === 404 ||
@@ -151,38 +109,33 @@ function CustomerQuotes({
               return null
             }
 
-
             if (response.status === 401) {
-              throw new Error(
-                'SESSION_EXPIRED'
-              )
+              throw new Error('SESSION_EXPIRED')
             }
-
 
             if (!response.ok) {
               return null
             }
 
-
-            const quote =
-              await response.json()
-
+            const quote = await response.json()
 
             return {
               ...quote,
 
+              // Internal database ID.
               orderId: order.id,
+
+              // Customer-visible order number.
+              customerOrderNumber: order.customerOrderNumber,
+
               orderStatus: order.status,
               cargoType: order.cargoType,
               originPort: order.originPort,
-              destinationPort:
-                order.destinationPort
+              destinationPort: order.destinationPort
             }
-
           } catch (requestError) {
             if (
-              requestError.message ===
-              'SESSION_EXPIRED'
+              requestError.message === 'SESSION_EXPIRED'
             ) {
               throw requestError
             }
@@ -192,48 +145,33 @@ function CustomerQuotes({
         })
       )
 
-
-      const availableQuotes =
-        results
-          .filter(Boolean)
-          .sort(
-            (a, b) =>
-              Number(b.id) -
-              Number(a.id)
-          )
-
+      const availableQuotes = results
+        .filter(Boolean)
+        .sort(
+          (a, b) => Number(b.id) - Number(a.id)
+        )
 
       setQuotes(availableQuotes)
-
     } catch (loadError) {
-
-      if (
-        loadError.message ===
-        'SESSION_EXPIRED'
-      ) {
+      if (loadError.message === 'SESSION_EXPIRED') {
         setError(
           'Your session has expired. Please sign in again.'
         )
       } else {
-        setError(
-          'Unable to load quotations.'
-        )
+        setError('Unable to load quotations.')
       }
-
     } finally {
       setIsLoading(false)
     }
   }
 
-
   useEffect(() => {
     loadQuotes()
   }, [orders])
 
-
-  /* =====================================
-     ACCEPT
-  ====================================== */
+  // ==========================================
+  // ACCEPT QUOTE
+  // ==========================================
 
   const handleAccept = async (quote) => {
     const token = getToken()
@@ -242,51 +180,40 @@ function CustomerQuotes({
       setError(
         'Your session has expired. Please sign in again.'
       )
-
       return
     }
-
 
     setActionQuoteId(quote.id)
     setError('')
 
-
     try {
+      // IMPORTANT: API uses internal order ID.
       const response = await fetch(
-        `https://localhost:44328/api/shipping-orders/${quote.orderId}/quote/accept`,
+        `${API_URL}/api/shipping-orders/${quote.orderId}/quote/accept`,
         {
           method: 'PATCH',
-
           headers: {
             Authorization: `Bearer ${token}`
           }
         }
       )
 
-
       if (response.status === 401) {
         setError(
           'Your session has expired. Please sign in again.'
         )
-
         return
       }
 
-
       if (!response.ok) {
-        let message =
-          'Unable to accept quotation.'
-
+        let message = 'Unable to accept quotation.'
 
         try {
-          const data =
-            await response.json()
-
+          const data = await response.json()
 
           if (data?.message) {
             message = data.message
           }
-
 
           if (
             Array.isArray(data?.errors) &&
@@ -294,39 +221,29 @@ function CustomerQuotes({
           ) {
             message = data.errors[0]
           }
-
         } catch {
           // Keep default message.
         }
 
-
         setError(message)
-
         return
       }
-
 
       if (onOrdersChanged) {
         await onOrdersChanged()
       }
 
-
       await loadQuotes()
-
     } catch {
-      setError(
-        'Unable to connect to SeaTrack.'
-      )
-
+      setError('Unable to connect to SeaTrack.')
     } finally {
       setActionQuoteId(null)
     }
   }
 
-
-  /* =====================================
-     REJECT
-  ====================================== */
+  // ==========================================
+  // REJECT QUOTE
+  // ==========================================
 
   const handleReject = async (quote) => {
     const token = getToken()
@@ -335,51 +252,40 @@ function CustomerQuotes({
       setError(
         'Your session has expired. Please sign in again.'
       )
-
       return
     }
-
 
     setActionQuoteId(quote.id)
     setError('')
 
-
     try {
+      // IMPORTANT: API uses internal order ID.
       const response = await fetch(
-        `https://localhost:44328/api/shipping-orders/${quote.orderId}/quote/reject`,
+        `${API_URL}/api/shipping-orders/${quote.orderId}/quote/reject`,
         {
           method: 'PATCH',
-
           headers: {
             Authorization: `Bearer ${token}`
           }
         }
       )
 
-
       if (response.status === 401) {
         setError(
           'Your session has expired. Please sign in again.'
         )
-
         return
       }
 
-
       if (!response.ok) {
-        let message =
-          'Unable to reject quotation.'
-
+        let message = 'Unable to reject quotation.'
 
         try {
-          const data =
-            await response.json()
-
+          const data = await response.json()
 
           if (data?.message) {
             message = data.message
           }
-
 
           if (
             Array.isArray(data?.errors) &&
@@ -387,126 +293,91 @@ function CustomerQuotes({
           ) {
             message = data.errors[0]
           }
-
         } catch {
           // Keep default message.
         }
 
-
         setError(message)
-
         return
       }
-
 
       if (onOrdersChanged) {
         await onOrdersChanged()
       }
 
-
       await loadQuotes()
-
     } catch {
-      setError(
-        'Unable to connect to SeaTrack.'
-      )
-
+      setError('Unable to connect to SeaTrack.')
     } finally {
       setActionQuoteId(null)
     }
   }
 
+  // ==========================================
+  // COUNTERS
+  // ==========================================
 
-  /* =====================================
-     COUNTERS
-  ====================================== */
+  const pendingCount = quotes.filter(
+    (quote) => quote.orderStatus === 2
+  ).length
 
-  const pendingCount =
-    quotes.filter(
-      (quote) => quote.orderStatus === 2
-    ).length
+  const acceptedCount = quotes.filter(
+    (quote) =>
+      [3, 5, 6, 7].includes(quote.orderStatus)
+  ).length
 
+  const rejectedCount = quotes.filter(
+    (quote) => quote.orderStatus === 4
+  ).length
 
-  const acceptedCount =
-    quotes.filter(
-      (quote) =>
-        quote.orderStatus === 3 ||
-        quote.orderStatus === 5 ||
-        quote.orderStatus === 6 ||
-        quote.orderStatus === 7
-    ).length
-
-
-  const rejectedCount =
-    quotes.filter(
-      (quote) => quote.orderStatus === 4
-    ).length
-
-
-  /* =====================================
-     RENDER
-  ====================================== */
+  // ==========================================
+  // RENDER
+  // ==========================================
 
   return (
     <section className="customer-quotes">
 
-
       {/* HEADER */}
 
       <div className="customer-quotes-header">
-
         <div>
-
           <span className="customer-quotes-label">
             SHIPPING QUOTATIONS
           </span>
 
-
-          <h2>
-            Quotes
-          </h2>
-
+          <h2>Quotes</h2>
 
           <p>
             Review quotations prepared for your
             shipping orders and accept or reject
             available offers.
           </p>
-
         </div>
-
       </div>
-
 
       {/* SUMMARY */}
 
       <div className="customer-quotes-summary">
-
         <div>
           <span>TOTAL QUOTES</span>
           <strong>{quotes.length}</strong>
         </div>
-
 
         <div>
           <span>AWAITING DECISION</span>
           <strong>{pendingCount}</strong>
         </div>
 
-
         <div>
           <span>ACCEPTED</span>
           <strong>{acceptedCount}</strong>
         </div>
 
-
         <div>
           <span>REJECTED</span>
           <strong>{rejectedCount}</strong>
         </div>
-
       </div>
-
 
       {/* ERROR */}
 
@@ -516,39 +387,27 @@ function CustomerQuotes({
         </div>
       )}
 
-
-      {/* LOADING */}
+      {/* LOADING / EMPTY / LIST */}
 
       {isLoading ? (
-
         <div className="customer-quotes-loading">
           Loading quotations...
         </div>
-
       ) : quotes.length === 0 ? (
-
         <div className="customer-quotes-empty">
-
           <span>QUOTATIONS</span>
 
-          <h3>
-            No quotations yet
-          </h3>
+          <h3>No quotations yet</h3>
 
           <p>
             When a SeaTrack operator prepares a
             quote for one of your shipping orders,
             it will appear here.
           </p>
-
         </div>
-
       ) : (
-
         <div className="customer-quotes-list">
-
           {quotes.map((quote) => (
-
             <article
               className="customer-quote-card"
               key={`${quote.orderId}-${quote.id}`}
@@ -557,203 +416,112 @@ function CustomerQuotes({
               {/* TOP */}
 
               <div className="customer-quote-top">
-
                 <div>
-
                   <span>
                     QUOTE #{quote.id}
                   </span>
 
                   <h3>
-                    Order #{quote.orderId}
+                    Order #{quote.customerOrderNumber ?? '—'}
                   </h3>
-
                 </div>
 
-
                 <div
-                  className={
-                    `customer-quote-status ${
-                      getStatusClass(
-                        quote.orderStatus
-                      )
-                    }`
-                  }
+                  className={`customer-quote-status ${getStatusClass(
+                    quote.orderStatus
+                  )}`}
                 >
                   <i></i>
 
-                  {
-                    getQuoteStatus(
-                      quote.orderStatus
-                    )
-                  }
+                  {getQuoteStatus(quote.orderStatus)}
                 </div>
-
               </div>
-
 
               {/* ROUTE */}
 
               <div className="customer-quote-route">
-
                 <div>
-
-                  <span>
-                    ORIGIN
-                  </span>
-
-                  <strong>
-                    {quote.originPort}
-                  </strong>
-
+                  <span>ORIGIN</span>
+                  <strong>{quote.originPort}</strong>
                 </div>
-
 
                 <div className="customer-quote-route-line">
-
                   <i></i>
-
                   <span>→</span>
-
                 </div>
-
 
                 <div className="customer-quote-destination">
-
-                  <span>
-                    DESTINATION
-                  </span>
-
-                  <strong>
-                    {quote.destinationPort}
-                  </strong>
-
+                  <span>DESTINATION</span>
+                  <strong>{quote.destinationPort}</strong>
                 </div>
-
               </div>
-
 
               {/* PRICE */}
 
               <div className="customer-quote-price">
-
-                <span>
-                  TOTAL QUOTATION
-                </span>
+                <span>TOTAL QUOTATION</span>
 
                 <strong>
-                  {
-                    formatPrice(
-                      quote.price,
-                      quote.currency
-                    )
-                  }
+                  {formatPrice(
+                    quote.price,
+                    quote.currency
+                  )}
                 </strong>
-
               </div>
-
 
               {/* INFO */}
 
               <div className="customer-quote-info">
-
                 <div>
-
-                  <span>
-                    CARGO
-                  </span>
-
-                  <strong>
-                    {quote.cargoType}
-                  </strong>
-
+                  <span>CARGO</span>
+                  <strong>{quote.cargoType}</strong>
                 </div>
 
-
                 <div>
-
-                  <span>
-                    TRANSIT TIME
-                  </span>
-
+                  <span>TRANSIT TIME</span>
                   <strong>
-                    {
-                      quote.estimatedTransitDays
-                    } days
+                    {quote.estimatedTransitDays} days
                   </strong>
-
                 </div>
 
-
                 <div>
-
-                  <span>
-                    VALID UNTIL
-                  </span>
-
+                  <span>VALID UNTIL</span>
                   <strong>
-                    {
-                      formatDate(
-                        quote.validUntil
-                      )
-                    }
+                    {formatDate(quote.validUntil)}
                   </strong>
-
                 </div>
 
-
                 <div>
-
-                  <span>
-                    CURRENCY
-                  </span>
-
+                  <span>CURRENCY</span>
                   <strong>
                     {quote.currency || '—'}
                   </strong>
-
                 </div>
-
               </div>
-
 
               {/* NOTES */}
 
               {quote.notes && (
                 <div className="customer-quote-notes">
-
-                  <span>
-                    OPERATOR NOTES
-                  </span>
-
-                  <p>
-                    {quote.notes}
-                  </p>
-
+                  <span>OPERATOR NOTES</span>
+                  <p>{quote.notes}</p>
                 </div>
               )}
-
 
               {/* ACTIONS */}
 
               <div className="customer-quote-footer">
-
                 <span>
-                  SeaTrack quotation for
-                  shipping order #{quote.orderId}
+                  SeaTrack quotation for shipping order #{quote.customerOrderNumber ?? '—'}
                 </span>
 
-
                 {quote.orderStatus === 2 ? (
-
                   <div className="customer-quote-actions">
-
                     <button
                       type="button"
                       className="customer-quote-reject"
                       disabled={
-                        actionQuoteId ===
-                        quote.id
+                        actionQuoteId === quote.id
                       }
                       onClick={() =>
                         handleReject(quote)
@@ -762,59 +530,38 @@ function CustomerQuotes({
                       Reject
                     </button>
 
-
                     <button
                       type="button"
                       className="customer-quote-accept"
                       disabled={
-                        actionQuoteId ===
-                        quote.id
+                        actionQuoteId === quote.id
                       }
                       onClick={() =>
                         handleAccept(quote)
                       }
                     >
-                      {
-                        actionQuoteId ===
-                        quote.id
-                          ? 'Processing...'
-                          : 'Accept Quote'
-                      }
+                      {actionQuoteId === quote.id
+                        ? 'Processing...'
+                        : 'Accept Quote'}
 
-                      {
-                        actionQuoteId !==
-                        quote.id &&
+                      {actionQuoteId !== quote.id && (
                         <span>→</span>
-                      }
+                      )}
                     </button>
-
                   </div>
-
                 ) : (
-
                   <strong className="customer-quote-completed">
-                    {
-                      getQuoteStatus(
-                        quote.orderStatus
-                      )
-                    }
+                    {getQuoteStatus(quote.orderStatus)}
                   </strong>
-
                 )}
-
               </div>
 
             </article>
-
           ))}
-
         </div>
-
       )}
-
     </section>
   )
 }
-
 
 export default CustomerQuotes

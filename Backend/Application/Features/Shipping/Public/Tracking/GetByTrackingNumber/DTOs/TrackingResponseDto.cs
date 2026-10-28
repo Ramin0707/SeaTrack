@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿
+using Domain.Enums;
 
 namespace Application.Features.Shipping.Public.Tracking.GetByTrackingNumber.DTOs;
 
@@ -11,6 +12,8 @@ public class TrackingResponseDto
     public string OriginPort { get; set; } = string.Empty;
 
     public string DestinationPort { get; set; } = string.Empty;
+
+    public string? VoyageNumber { get; set; }
 
     public DateTime CreatedAtUtc { get; set; }
 
